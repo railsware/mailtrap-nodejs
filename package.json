@@ -1,0 +1,36 @@
+{
+  "name": "mailtrap",
+  "version": "3.0.0",
+  "description": "Official mailtrap.io API client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prepublish": "rm -rf dist && tsc",
+    "lint:eslint": "yarn run eslint . --ext .js,.ts",
+    "lint:tsc": "tsc -p . --noEmit --incremental false",
+    "lint": "yarn lint:eslint && yarn lint:tsc"
+  },
+  "repository": "https://github.com/railsware/mailtrap-nodejs",
+  "author": "Railsware Products Studio, Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "axios": ">=0.27"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.1",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
