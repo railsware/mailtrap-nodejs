@@ -1,3 +1,7 @@
+## [3.0.1] - 2022-09-07
+
+- Improve compatibility with the Node.js module system.
+
 ## [3.0.0] - 2022-06-14
 
 - Initial release of the official mailtrap.io API client

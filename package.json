@@ -1,6 +1,6 @@
 {
   "name": "mailtrap",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Official mailtrap.io API client",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
