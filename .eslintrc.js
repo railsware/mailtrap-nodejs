@@ -14,5 +14,5 @@ module.exports = {
   },
   plugins: ["@typescript-eslint"],
   rules: {},
-  ignorePatterns: ["dist/**", "examples/**", ".eslintrc.js"],
+  ignorePatterns: ["dist/**", "examples/**", "babel.config.js", "jest.config.js", ".eslintrc.js"],
 };
