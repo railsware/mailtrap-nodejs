@@ -1,6 +1,5 @@
 ## Motivation
 
-https://railsware.atlassian.net/browse/MT-XXXX
 
 ## Changes
 
