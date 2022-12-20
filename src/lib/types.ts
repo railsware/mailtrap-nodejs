@@ -1,14 +1,22 @@
 export type Mail = {
-  subject: string;
   from: Address;
   to: Address[];
   cc?: Address[];
   bcc?: Address[];
   attachments?: Attachment[];
   headers?: Record<string, string>;
-  category?: string;
   custom_variables?: Record<string, string | number | boolean>;
-} & MailContent;
+} & (MailContent | MailFromTemplateContent);
+
+type MailContent = {
+  subject: string;
+  category?: string;
+} & (TextMailContent | HTMLMailContent);
+
+type MailFromTemplateContent = {
+  template_uuid: string;
+  template_variables?: Record<string, string | number | boolean>;
+};
 
 type TextMailContent = {
   text: string | Buffer;
@@ -17,8 +25,6 @@ type TextMailContent = {
 type HTMLMailContent = {
   html: string | Buffer;
 };
-
-type MailContent = TextMailContent | HTMLMailContent;
 
 export type Address = {
   name?: string;
