@@ -15,7 +15,7 @@
     "test": "jest"
   },
   "repository": "https://github.com/railsware/mailtrap-nodejs",
-  "author": "Railsware Products Studio, Inc.",
+  "author": "Railsware Products Studio LLC",
   "license": "MIT",
   "dependencies": {
     "axios": ">=0.27"
