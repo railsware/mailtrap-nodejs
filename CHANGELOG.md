@@ -1,3 +1,8 @@
+## [3.1.0] - 2023-03-02
+
+- Add support for Mail Templates.
+- Cover main send method with basic tests.
+
 ## [3.0.1] - 2022-09-07
 
 - Improve compatibility with the Node.js module system.
