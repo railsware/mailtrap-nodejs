@@ -1,10 +1,25 @@
 import { describe, expect, it, beforeAll, afterEach } from "@jest/globals";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import { MailtrapClient } from "../index";
+import { Mail, MailtrapClient } from "../index";
+import MailtrapError from "../lib/MailtrapError";
 
 describe("MailtrapClient#send", () => {
   let mock: AxiosMockAdapter;
+
+  const goodMail: Mail = {
+    from: {
+      name: "Mailtrap",
+      email: "sender@mailtrap.io",
+    },
+    to: [
+      {
+        email: "recipient@mailtrap.io",
+      },
+    ],
+    subject: "My Subject",
+    text: "My TEXT",
+  };
 
   beforeAll(() => {
     mock = new AxiosMockAdapter(axios);
@@ -26,19 +41,7 @@ describe("MailtrapClient#send", () => {
         .reply(200, successData);
 
       const client = new MailtrapClient({ token: "MY_API_TOKEN" });
-      const result = await client.send({
-        from: {
-          name: "Mailtrap",
-          email: "sender@mailtrap.io",
-        },
-        to: [
-          {
-            email: "recipient@mailtrap.io",
-          },
-        ],
-        subject: "My Subject",
-        text: "My TEXT",
-      });
+      const result = await client.send(goodMail);
 
       expect(mock.history.post[0].baseURL).toEqual(
         "https://send.api.mailtrap.io"
@@ -113,6 +116,47 @@ describe("MailtrapClient#send", () => {
           "}"
       );
       expect(result).toEqual(successData);
+    });
+  });
+
+  describe("server error", () => {
+    it("throws error returned from the server", async () => {
+      mock.onPost("https://send.api.mailtrap.io/api/send").reply(400, {
+        success: false,
+        errors: ["subject is missing", "message is missing"],
+      });
+
+      const client = new MailtrapClient({ token: "MY_API_TOKEN" });
+
+      try {
+        await client.send(goodMail);
+      } catch (err) {
+        expect(err).toBeInstanceOf(MailtrapError);
+        if (err instanceof MailtrapError) {
+          expect(err.message).toEqual("subject is missing, message is missing");
+          // @ts-expect-error ES5 types don't know about cause property
+          expect(err.cause).toBeInstanceOf(AxiosError);
+        }
+      }
+    });
+  });
+
+  describe("network error", () => {
+    it("wraps other network errors", async () => {
+      // don't provide mocks, to generate 404 error
+
+      const client = new MailtrapClient({ token: "MY_API_TOKEN" });
+
+      try {
+        await client.send(goodMail);
+      } catch (err) {
+        expect(err).toBeInstanceOf(MailtrapError);
+        if (err instanceof MailtrapError) {
+          expect(err.message).toEqual("Request failed with status code 404");
+          // @ts-expect-error ES5 types don't know about cause property
+          expect(err.cause).toBeInstanceOf(AxiosError);
+        }
+      }
     });
   });
 });
