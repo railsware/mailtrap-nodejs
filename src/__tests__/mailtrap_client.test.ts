@@ -49,6 +49,8 @@ describe("MailtrapClient#send", () => {
         "Content-Type": "application/json",
         Authorization: "Bearer MY_API_TOKEN",
         Connection: "keep-alive",
+        "User-Agent":
+          "mailtrap-nodejs (https://github.com/railsware/mailtrap-nodejs)",
       });
       expect(mock.history.post[0].data).toEqual(
         "{" +
@@ -99,6 +101,8 @@ describe("MailtrapClient#send", () => {
         "Content-Type": "application/json",
         Authorization: "Bearer MY_API_TOKEN",
         Connection: "keep-alive",
+        "User-Agent":
+          "mailtrap-nodejs (https://github.com/railsware/mailtrap-nodejs)",
       });
       expect(mock.history.post[0].data).toEqual(
         "{" +

@@ -22,6 +22,8 @@ export class MailtrapClient {
       headers: {
         Authorization: `Bearer ${token}`,
         Connection: "keep-alive",
+        "User-Agent":
+          "mailtrap-nodejs (https://github.com/railsware/mailtrap-nodejs)",
       },
       maxRedirects: 0,
       timeout: 10000,
