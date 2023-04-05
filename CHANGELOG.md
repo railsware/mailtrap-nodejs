@@ -1,3 +1,8 @@
+## [3.1.1] - 2023-04-06
+
+- Improve error reporting for connection errors.
+- Send identifiable user agent to the API.
+
 ## [3.1.0] - 2023-03-02
 
 - Add support for Mail Templates.
