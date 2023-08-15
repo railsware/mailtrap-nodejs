@@ -1,12 +1,16 @@
-const fs = require("fs");
-const path = require("path");
-const { MailtrapClient } = require("mailtrap");
+import fs from "node:fs"
+import path from "node:path"
+import { MailtrapClient } from "../src"
 
-// For this example to work, you need to set up a sending domain,
-// and obtain a token that is authorized to send from the domain
-const TOKEN = "your-api-token";
-const SENDER_EMAIL = "sender@yourdomain.com";
-const RECIPIENT_EMAIL = "recipient@email.com";
+/**
+ * For this example to work, you need to set up a sending domain,
+ * and obtain a token that is authorized to send from the domain.
+ * @see https://help.mailtrap.io/article/69-sending-domain-setup
+ */
+
+const TOKEN = "<YOUR-TOKEN-HERE>";
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
