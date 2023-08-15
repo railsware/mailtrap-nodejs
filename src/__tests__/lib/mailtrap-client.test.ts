@@ -1,10 +1,10 @@
-import { describe, expect, it, beforeAll, afterEach } from "@jest/globals";
 import axios, { AxiosError } from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import { Mail, MailtrapClient } from "../index";
-import MailtrapError from "../lib/MailtrapError";
 
-describe("MailtrapClient#send", () => {
+import { Mail, MailtrapClient } from "../..";
+import MailtrapError from "../../lib/MailtrapError";
+
+describe("lib/mailtrap-client: ", () => {
   let mock: AxiosMockAdapter;
 
   const goodMail: Mail = {
@@ -29,7 +29,7 @@ describe("MailtrapClient#send", () => {
     mock.reset();
   });
 
-  describe("mail", () => {
+  describe("send():", () => {
     it("sends request to mailtrap api", async () => {
       const successData = {
         success: "true",
@@ -65,10 +65,8 @@ describe("MailtrapClient#send", () => {
       );
       expect(result).toEqual(successData);
     });
-  });
 
-  describe("template", () => {
-    it("sends request to mailtrap api", async () => {
+    it("sends request to mailtrap api with template", async () => {
       const successData = {
         success: "true",
         message_ids: ["00000000-00000000-00000000-00000001"],
@@ -89,6 +87,7 @@ describe("MailtrapClient#send", () => {
             email: "recipient@mailtrap.io",
           },
         ],
+        // @ts-ignore
         template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
         template_variables: {
           user_name: "John Doe",
@@ -117,9 +116,7 @@ describe("MailtrapClient#send", () => {
       );
       expect(result).toEqual(successData);
     });
-  });
 
-  describe("server error", () => {
     it("throws error returned from the server", async () => {
       mock.onPost("https://send.api.mailtrap.io/api/send").reply(400, {
         success: false,
@@ -139,12 +136,9 @@ describe("MailtrapClient#send", () => {
         }
       }
     });
-  });
 
-  describe("network error", () => {
     it("wraps other network errors", async () => {
       // don't provide mocks, to generate 404 error
-
       const client = new MailtrapClient({ token: "MY_API_TOKEN" });
 
       try {
