@@ -27,14 +27,17 @@ Refer to the [`examples`](examples) folder for the source code of these examples
 
 ### Minimal
 
-```js
-const { MailtrapClient } = require("mailtrap");
+```ts
+import { MailtrapClient } from "../src"
 
-// For this example to work, you need to set up a sending domain,
-// and obtain a token that is authorized to send from the domain
-const TOKEN = "your-api-token";
-const SENDER_EMAIL = "sender@yourdomain.com";
-const RECIPIENT_EMAIL = "recipient@email.com";
+/**
+ * For this example to work, you need to set up a sending domain,
+ * and obtain a token that is authorized to send from the domain.
+ */
+
+const TOKEN = "<YOUR-TOKEN-HERE>";
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
@@ -47,21 +50,25 @@ client
     subject: "Hello from Mailtrap!",
     text: "Welcome to Mailtrap Sending!",
   })
-  .then(console.log, console.error);
+  .then(console.log)
+  .catch(console.error);
 ```
 
 ### Full
 
-```js
-const fs = require("fs");
-const path = require("path");
-const { MailtrapClient } = require("mailtrap");
+```ts
+import fs from "node:fs"
+import path from "node:path"
+import { MailtrapClient } from "../src"
 
-// For this example to work, you need to set up a sending domain,
-// and obtain a token that is authorized to send from the domain
-const TOKEN = "your-api-token";
-const SENDER_EMAIL = "sender@yourdomain.com";
-const RECIPIENT_EMAIL = "recipient@email.com";
+/**
+ * For this example to work, you need to set up a sending domain,
+ * and obtain a token that is authorized to send from the domain.
+ */
+
+const TOKEN = "<YOUR-TOKEN-HERE>";
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
@@ -111,34 +118,104 @@ client
       },
     ],
   })
-  .then(console.log, console.error);
+  .then(console.log)
+  .catch(console.error)
 ```
 
 ### Mail from template
 
-```js
-const { MailtrapClient } = require("mailtrap");
+```ts
+import { MailtrapClient } from "../src"
 
-// For this example to work, you need to set up a sending domain,
-// and obtain a token that is authorized to send from the domain
-const TOKEN = "your-api-token";
-const SENDER_EMAIL = "sender@yourdomain.com";
-const RECIPIENT_EMAIL = "recipient@email.com";
+/**
+ * For this example to work, you need to set up a sending domain,
+ * and obtain a token that is authorized to send from the domain.
+ */
+
+const TOKEN = "<YOUR-TOKEN-HERE>";
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
-const sender = { name: "Mailtrap Test", email: SENDER_EMAIL };
-
 client
   .send({
-    from: sender,
+    from: { name: "Mailtrap Test", email: SENDER_EMAIL },
     to: [{ email: RECIPIENT_EMAIL }],
     template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
     template_variables: {
       user_name: "John Doe",
     },
+    subject: "Hello from Mailtrap!"
   })
-  .then(console.log, console.error);
+  .then(console.log)
+  .catch(console.error);
+```
+
+### Nodemailer Transport
+
+You can provide Mailtrap specific keys like `category` and `customVariables`.
+
+```ts
+import { readFileSync } from "fs";
+import Nodemailer from "nodemailer";
+import { MailtrapTransport } from "../src"
+
+/**
+ * For this example to work, you need to set up a sending domain,
+ * and obtain a token that is authorized to send from the domain.
+ */
+
+const TOKEN = "<YOUR-TOKEN-HERE>"
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
+
+const transport = Nodemailer.createTransport(MailtrapTransport({
+  token: TOKEN
+}))
+
+transport.sendMail({
+  text: "Welcome to Mailtrap Sending!",
+  to: {
+    address: RECIPIENT_EMAIL,
+    name: "John Doe"
+  },
+  from: {
+    address: SENDER_EMAIL,
+    name: "Mailtrap Test"
+  },
+  subject: "Hello from Mailtrap!",
+  html: `
+  <!doctype html>
+  <html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body style="font-family: sans-serif;">
+      <div style="display: block; margin: auto; max-width: 600px;" class="main">
+        <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Congrats for sending test email with Mailtrap!</h1>
+        <p>Inspect it using the tabs you see above and learn how this email can be improved.</p>
+        <img alt="Inspect with Tabs" src="cid:welcome.png" style="width: 100%;">
+        <p>Now send your email using our fake SMTP server and integration of your choice!</p>
+        <p>Good luck! Hope it works.</p>
+      </div>
+      <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->
+      <style>
+        .main { background-color: white; }
+        a:hover { border-left-width: 1em; min-height: 2em; }
+      </style>
+    </body>
+  </html>
+`,
+attachments: [
+  {
+    filename: "welcome.png", 
+    content: readFileSync("./welcome.png"),    
+  },
+],
+}).then(console.log)
+.catch(console.error)
+
 ```
 
 ## Development
