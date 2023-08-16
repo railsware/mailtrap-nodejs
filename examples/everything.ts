@@ -14,8 +14,6 @@ const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
-const sender = { name: "Mailtrap Test", email: SENDER_EMAIL };
-
 const welcomeImage = fs.readFileSync(path.join(__dirname, "welcome.png"));
 
 client
@@ -26,7 +24,7 @@ client
       year: 2022,
       anticipated: true,
     },
-    from: sender,
+    from: { name: "Mailtrap Test", email: SENDER_EMAIL },
     to: [{ email: RECIPIENT_EMAIL }],
     subject: "Hello from Mailtrap!",
     html: `
@@ -60,4 +58,5 @@ client
       },
     ],
   })
-  .then(console.log, console.error);
+  .then(console.log)
+  .catch(console.error);

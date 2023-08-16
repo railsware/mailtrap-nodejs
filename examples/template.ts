@@ -16,8 +16,11 @@ client
   .send({
     from: { name: "Mailtrap Test", email: SENDER_EMAIL },
     to: [{ email: RECIPIENT_EMAIL }],
-    subject: "Hello from Mailtrap!",
-    text: "Welcome to Mailtrap Sending!",
+    template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
+    template_variables: {
+      user_name: "John Doe",
+    },
+    subject: "Hello from Mailtrap!"
   })
   .then(console.log)
   .catch(console.error);

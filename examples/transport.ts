@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from "fs";
 import Nodemailer from "nodemailer";
-import { MailtrapTransport } from '../src'
+import { MailtrapTransport } from "../src"
 
 /**
  * For this example to work, you need to set up a sending domain,
@@ -8,21 +8,25 @@ import { MailtrapTransport } from '../src'
  * @see https://help.mailtrap.io/article/69-sending-domain-setup
  */
 
+const TOKEN = "<YOUR-TOKEN-HERE>"
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
+
 const transport = Nodemailer.createTransport(MailtrapTransport({
-  token: '<YOUR-TOKEN-HERE>'
+  token: TOKEN
 }))
 
 transport.sendMail({
-  text: 'mock-text',
+  text: "Welcome to Mailtrap Sending!",
   to: {
-    address: 'mock@mail.com',
-    name: 'mock-name'
+    address: RECIPIENT_EMAIL,
+    name: "John Doe"
   },
   from: {
-    address: 'mock@mail.com',
-    name: 'mock-name'
+    address: SENDER_EMAIL,
+    name: "Mailtrap Test"
   },
-  subject: 'mock-subject',
+  subject: "Hello from Mailtrap!",
   html: `
   <!doctype html>
   <html>
@@ -48,7 +52,7 @@ transport.sendMail({
 attachments: [
   {
     filename: "welcome.png", 
-    content: readFileSync('./welcome.png'),    
+    content: readFileSync("./welcome.png"),    
   },
 ],
 }).then(console.log)
