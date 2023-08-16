@@ -33,7 +33,7 @@ export type Address = {
 
 export type Attachment = {
   filename: string;
-  type: string;
+  type?: string;
   content: string | Buffer;
   disposition?: string;
   content_id?: string;
@@ -47,4 +47,9 @@ export type SendResponse = {
 export type SendError = {
   success: false;
   error: string[];
+};
+
+export type MailtrapClientConfig = {
+  endpoint?: string;
+  token: string;
 };
