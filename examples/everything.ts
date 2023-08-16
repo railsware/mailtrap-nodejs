@@ -1,16 +1,19 @@
-const fs = require("fs");
-const path = require("path");
-const { MailtrapClient } = require("mailtrap");
+import fs from "node:fs"
+import path from "node:path"
 
-// For this example to work, you need to set up a sending domain,
-// and obtain a token that is authorized to send from the domain
-const TOKEN = "your-api-token";
-const SENDER_EMAIL = "sender@yourdomain.com";
-const RECIPIENT_EMAIL = "recipient@email.com";
+import { MailtrapClient } from "../src"
+
+/**
+ * For this example to work, you need to set up a sending domain,
+ * and obtain a token that is authorized to send from the domain.
+ * @see https://help.mailtrap.io/article/69-sending-domain-setup
+ */
+
+const TOKEN = "<YOUR-TOKEN-HERE>";
+const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
+const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
-
-const sender = { name: "Mailtrap Test", email: SENDER_EMAIL };
 
 const welcomeImage = fs.readFileSync(path.join(__dirname, "welcome.png"));
 
@@ -22,7 +25,7 @@ client
       year: 2022,
       anticipated: true,
     },
-    from: sender,
+    from: { name: "Mailtrap Test", email: SENDER_EMAIL },
     to: [{ email: RECIPIENT_EMAIL }],
     subject: "Hello from Mailtrap!",
     html: `
@@ -56,4 +59,6 @@ client
       },
     ],
   })
-  .then(console.log, console.error);
+  .then(console.log)
+  .catch(console.error);
+  
