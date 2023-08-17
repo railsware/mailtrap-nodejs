@@ -28,7 +28,7 @@ Refer to the [`examples`](examples) folder for the source code of these examples
 ### Minimal
 
 ```ts
-import { MailtrapClient } from "../src"
+import { MailtrapClient } from "mailtrap"
 
 /**
  * For this example to work, you need to set up a sending domain,
@@ -59,7 +59,8 @@ client
 ```ts
 import fs from "node:fs"
 import path from "node:path"
-import { MailtrapClient } from "../src"
+
+import { MailtrapClient } from "mailtrap"
 
 /**
  * For this example to work, you need to set up a sending domain,
@@ -125,7 +126,7 @@ client
 ### Mail from template
 
 ```ts
-import { MailtrapClient } from "../src"
+import { MailtrapClient } from "mailtrap"
 
 /**
  * For this example to work, you need to set up a sending domain,
