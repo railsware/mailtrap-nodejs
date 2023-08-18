@@ -11,7 +11,7 @@ import {
   MailtrapResponse,
   MailtrapTransporter,
   NormalizeCallback,
-} from "../types/transporter";
+} from "../types/transport";
 
 const { TRANSPORT_SETTINGS } = CONFIG;
 const { NAME } = TRANSPORT_SETTINGS;

@@ -9,7 +9,7 @@ import {
   NormalizeCallbackData,
   NormalizeCallbackError,
   NormalizeCallback,
-} from "../types/transporter";
+} from "../types/transport";
 
 const { ERRORS } = CONFIG;
 const { INVALID_MAIL, SENDING_FAILED, NO_DATA_ERROR } = ERRORS;

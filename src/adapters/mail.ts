@@ -6,7 +6,7 @@ import adaptRecipients, { adaptSingleRecipient } from "./recipients";
 import CONFIG from "../config";
 
 import { CommonMail, Mail, MailContent, SendError } from "../types/mailtrap";
-import { MailtrapMailOptions } from "../types/transporter";
+import { MailtrapMailOptions } from "../types/transport";
 
 const { ERRORS } = CONFIG;
 const { SUBJECT_REQUIRED, FROM_REQUIRED } = ERRORS;
