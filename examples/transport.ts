@@ -1,6 +1,5 @@
 import { readFileSync } from "fs";
 import Nodemailer from "nodemailer";
-
 import { MailtrapTransport } from "mailtrap"
 
 /**
