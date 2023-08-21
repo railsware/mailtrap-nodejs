@@ -41,11 +41,13 @@ export default function adaptMail(data: MailtrapMailOptions): Mail | SendError {
     mail.custom_variables = data.customVariables;
   }
 
-  if (data.templateUuid && data.templateVariables) {
+  if (data.templateUuid) {
     return {
       ...mail,
       template_uuid: data.templateUuid,
-      template_variables: data.templateVariables,
+      ...(data.templateVariables && {
+        template_variables: data.templateVariables,
+      }),
     };
   }
 
