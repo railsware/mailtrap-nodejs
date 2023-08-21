@@ -12,7 +12,7 @@ import {
 } from "../types/transport";
 
 const { ERRORS } = CONFIG;
-const { INVALID_MAIL, SENDING_FAILED, NO_DATA_ERROR } = ERRORS;
+const { SENDING_FAILED, NO_DATA_ERROR } = ERRORS;
 
 /**
  * Callback function for `Nodemailer.normalize` method which introduces Mailtrap integration.
@@ -31,9 +31,9 @@ export default function normalizeCallback(
       const mail = adaptMail(data);
 
       if ("errors" in mail) {
-        return callback(new Error(INVALID_MAIL), {
+        return callback(new Error(...mail.errors), {
           success: false,
-          errors: [INVALID_MAIL],
+          errors: mail.errors,
         });
       }
 
