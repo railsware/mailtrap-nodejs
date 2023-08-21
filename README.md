@@ -154,6 +154,8 @@ client
 
 ### Nodemailer Transport
 
+***[Nodemailer](https://www.npmjs.com/package/nodemailer) needed as a dependency.***
+
 You can provide Mailtrap specific keys like `category`, `customVariables`, `templateUuid` and `templateVariables`.
 
 ```ts
