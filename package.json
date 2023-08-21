@@ -1,25 +1,10 @@
 {
   "name": "mailtrap",
-  "version": "3.1.1",
   "description": "Official mailtrap.io API client",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
-  "scripts": {
-    "prepublish": "rm -rf dist && tsc --project tsconfig.build.json",
-    "lint:eslint": "yarn run eslint . --ext .js,.ts",
-    "lint:tsc": "tsc -p . --noEmit --incremental false",
-    "lint": "yarn lint:eslint && yarn lint:tsc",
-    "test": "jest"
-  },
-  "repository": "https://github.com/railsware/mailtrap-nodejs",
+  "version": "3.1.1",
   "author": "Railsware Products Studio LLC",
-  "license": "MIT",
   "dependencies": {
-    "axios": ">=0.27",
-    "nodemailer": "^6.9.4"
+    "axios": ">=0.27"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
@@ -43,5 +28,31 @@
     "prettier": "^2.6.2",
     "ts-node": "^10.2.1",
     "typescript": "^5.0.3"
-  }
+  },
+  "engines": {
+    "node": ">=16.20.1",
+    "yarn": ">=1.22.17"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "peerDependencies": {
+    "nodemailer": "^6.9.4"
+  },
+  "peerDependenciesMeta": {
+    "nodemailer": {
+      "optional": true
+    }
+  },
+  "repository": "https://github.com/railsware/mailtrap-nodejs",
+  "scripts": {
+    "lint": "yarn lint:eslint && yarn lint:tsc",
+    "lint:eslint": "yarn run eslint . --ext .js,.ts",
+    "lint:tsc": "tsc -p . --noEmit --incremental false",
+    "prepublish": "rm -rf dist && tsc --project tsconfig.build.json",
+    "test": "jest"
+  },
+  "types": "dist/index.d.ts"
 }
