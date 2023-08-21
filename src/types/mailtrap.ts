@@ -1,30 +1,6 @@
-export type Mail = {
-  from: Address;
-  to: Address[];
-  cc?: Address[];
-  bcc?: Address[];
-  attachments?: Attachment[];
-  headers?: Record<string, string>;
-  custom_variables?: Record<string, string | number | boolean>;
-} & (MailContent | MailFromTemplateContent);
+export type CustomVariables = Record<string, string | number | boolean>;
 
-type MailContent = {
-  subject: string;
-  category?: string;
-} & (TextMailContent | HTMLMailContent);
-
-type MailFromTemplateContent = {
-  template_uuid: string;
-  template_variables?: Record<string, string | number | boolean>;
-};
-
-type TextMailContent = {
-  text: string | Buffer;
-};
-
-type HTMLMailContent = {
-  html: string | Buffer;
-};
+export type MailtrapHeaders = Record<string, string>;
 
 export type Address = {
   name?: string;
@@ -39,6 +15,41 @@ export type Attachment = {
   content_id?: string;
 };
 
+export type CommonMail = {
+  from: Address;
+  to: Address[];
+  cc?: Address[];
+  bcc?: Address[];
+  attachments?: Attachment[];
+  headers?: MailtrapHeaders;
+  custom_variables?: CustomVariables;
+};
+
+export type TemplateVariables = Record<string, string | number | boolean>;
+
+type MailFromTemplateContent = {
+  template_uuid: string;
+  template_variables?: TemplateVariables;
+};
+
+type TextMailContent = {
+  text?: string | Buffer;
+};
+
+type HTMLMailContent = {
+  html?: string | Buffer;
+};
+
+type CommonMailParams = CommonMail & {
+  subject: string;
+  category?: string;
+};
+
+export type MailContent = CommonMailParams &
+  (TextMailContent | HTMLMailContent);
+
+export type Mail = CommonMail & (MailContent | MailFromTemplateContent);
+
 export type SendResponse = {
   success: true;
   message_ids: string[];
@@ -46,7 +57,7 @@ export type SendResponse = {
 
 export type SendError = {
   success: false;
-  error: string[];
+  errors: string[];
 };
 
 export type MailtrapClientConfig = {

@@ -6,9 +6,13 @@ import axios, { AxiosInstance } from "axios";
 import encodeMailBuffers from "./mail-buffer-encoder";
 import MailtrapError from "./MailtrapError";
 
+import CONFIG from "../config";
+
 import { Mail, SendResponse, MailtrapClientConfig } from "../types/mailtrap";
 
-const MAILTRAP_ENDPOINT = "https://send.api.mailtrap.io";
+const { CLIENT_SETTINGS } = CONFIG;
+const { MAILTRAP_ENDPOINT, MAX_REDIRECTS, USER_AGENT, TIMEOUT } =
+  CLIENT_SETTINGS;
 
 /**
  * Mailtrap client class. Initializes instance with available methods.
@@ -27,11 +31,10 @@ export default class MailtrapClient {
       headers: {
         Authorization: `Bearer ${token}`,
         Connection: "keep-alive",
-        "User-Agent":
-          "mailtrap-nodejs (https://github.com/railsware/mailtrap-nodejs)",
+        "User-Agent": USER_AGENT,
       },
-      maxRedirects: 0,
-      timeout: 10000,
+      maxRedirects: MAX_REDIRECTS,
+      timeout: TIMEOUT,
     });
   }
 
