@@ -4,7 +4,6 @@ export default {
     CONTENT_REQUIRED: "Content is required.",
     SUBJECT_REQUIRED: "Subject is required.",
     FROM_REQUIRED: "From is required.",
-    INVALID_MAIL: "Mail is invalid.",
     SENDING_FAILED: "Sending failed.",
     NO_DATA_ERROR: "No Data.",
   },
