@@ -161,7 +161,7 @@ You can provide Mailtrap specific keys like `category`, `customVariables`, `temp
 ```ts
 import { readFileSync } from "fs";
 import Nodemailer from "nodemailer";
-import { MailtrapClient } from "mailtrap"
+import { MailtrapTransport } from "mailtrap"
 
 /**
  * For this example to work, you need to set up a sending domain,
