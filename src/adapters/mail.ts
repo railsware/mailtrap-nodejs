@@ -64,17 +64,11 @@ export default function adaptMail(data: MailtrapMailOptions): Mail | SendError {
     mailWithSubject.category = data.category;
   }
 
-  if (data.text) {
+  if (data.text || data.html) {
     return {
       ...mailWithSubject,
-      text: adaptContent(data.text),
-    };
-  }
-
-  if (data.html) {
-    return {
-      ...mailWithSubject,
-      html: adaptContent(data.html),
+      ...(data.text && { text: adaptContent(data.text) }),
+      ...(data.html && { html: adaptContent(data.html) }),
     };
   }
 
