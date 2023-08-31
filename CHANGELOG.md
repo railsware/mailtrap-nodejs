@@ -1,3 +1,7 @@
+## [3.2.0] - 2023-08-30
+- Add `mailtrap-nodemailer-transporter` for sending emails using HTTP API via `nodemailer`.
+- Security updates.
+
 ## [3.1.1] - 2023-04-06
 
 - Improve error reporting for connection errors.
