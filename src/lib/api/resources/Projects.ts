@@ -91,7 +91,7 @@ export default class ProjectsApi {
     const url = `${this.projectsURL}/${projectId}`;
 
     try {
-      const apiResponse = await this.client.delete(url);
+      const apiResponse = await this.client.delete<Project>(url);
 
       return apiResponse.data;
     } catch (error) {
