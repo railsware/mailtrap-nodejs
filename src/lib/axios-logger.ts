@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+
 import MailtrapError from "./MailtrapError";
 
 /**
