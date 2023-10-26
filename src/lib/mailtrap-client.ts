@@ -4,14 +4,15 @@ import * as https from "https";
 import axios, { AxiosInstance } from "axios";
 
 import encodeMailBuffers from "./mail-buffer-encoder";
-import MailtrapError from "./MailtrapError";
+import handleSendingError from "./axios-logger";
+import TestingAPI from "./api/Testing";
 
 import CONFIG from "../config";
 
 import { Mail, SendResponse, MailtrapClientConfig } from "../types/mailtrap";
 
 const { CLIENT_SETTINGS } = CONFIG;
-const { MAILTRAP_ENDPOINT, MAX_REDIRECTS, USER_AGENT, TIMEOUT } =
+const { SENDING_ENDPOINT, MAX_REDIRECTS, USER_AGENT, TIMEOUT } =
   CLIENT_SETTINGS;
 
 /**
@@ -20,14 +21,19 @@ const { MAILTRAP_ENDPOINT, MAX_REDIRECTS, USER_AGENT, TIMEOUT } =
 export default class MailtrapClient {
   private axios: AxiosInstance;
 
+  private testInboxId?: number;
+
+  private accountId?: number;
+
+  public testing: TestingAPI;
+
   /**
    * Initalizes axios instance with Mailtrap params.
    */
-  constructor({ endpoint = MAILTRAP_ENDPOINT, token }: MailtrapClientConfig) {
+  constructor({ token, testInboxId, accountId }: MailtrapClientConfig) {
     this.axios = axios.create({
       httpAgent: new http.Agent({ keepAlive: true }),
       httpsAgent: new https.Agent({ keepAlive: true }),
-      baseURL: endpoint,
       headers: {
         Authorization: `Bearer ${token}`,
         Connection: "keep-alive",
@@ -36,39 +42,32 @@ export default class MailtrapClient {
       maxRedirects: MAX_REDIRECTS,
       timeout: TIMEOUT,
     });
+    this.testInboxId = testInboxId;
+    this.accountId = accountId;
+
+    this.testing = new TestingAPI(this.axios, this.testInboxId, this.accountId);
   }
 
   /**
    * Sends mail with given `mail` params. If there is error, rejects with `MailtrapError`.
    */
   public async send(mail: Mail): Promise<SendResponse> {
+    const url = `${SENDING_ENDPOINT}/api/send`;
     const preparedMail = encodeMailBuffers(mail);
 
     try {
       const axiosResponse = await this.axios.post<SendResponse>(
-        "/api/send",
+        url,
         preparedMail
       );
 
       return axiosResponse.data;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const serverErrors =
-          err.response?.data &&
-          typeof err.response.data === "object" &&
-          "errors" in err.response.data &&
-          err.response.data.errors instanceof Array
-            ? err.response.data.errors
-            : undefined;
-
-        const message = serverErrors ? serverErrors.join(", ") : err.message;
-
-        // @ts-expect-error weird typing around Error class, but it's tested to work
-        throw new MailtrapError(message, { cause: err });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        handleSendingError(error);
       }
 
-      // should not happen, but otherwise rethrow error as is
-      throw err;
+      throw error; // should not happen, but otherwise rethrow error as is
     }
   }
 }
