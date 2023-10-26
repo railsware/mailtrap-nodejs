@@ -4,7 +4,7 @@ import handleSendingError from "../../axios-logger";
 
 import CONFIG from "../../../config";
 
-import { UpdateInboxParams } from "../../../types/api/inboxes";
+import { Inbox, UpdateInboxParams } from "../../../types/api/inboxes";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
@@ -14,11 +14,12 @@ export default class InboxesApi {
 
   private accountId?: number;
 
-  private inboxesURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/inboxes`;
+  private inboxesURL: string;
 
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
     this.accountId = accountId;
+    this.inboxesURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/inboxes`;
   }
 
   /**
@@ -29,7 +30,7 @@ export default class InboxesApi {
     const data = { inbox: { name: inboxName } };
 
     try {
-      const apiResponse = await this.client.post(url, data);
+      const apiResponse = await this.client.post<Inbox>(url, data);
 
       return apiResponse.data;
     } catch (error) {
@@ -44,7 +45,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<Inbox>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -59,7 +60,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}`;
 
     try {
-      const apiResponse = await this.client.delete(url);
+      const apiResponse = await this.client.delete<Inbox>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -80,7 +81,7 @@ export default class InboxesApi {
     };
 
     try {
-      const apiRespone = await this.client.patch(url, data);
+      const apiRespone = await this.client.patch<Inbox>(url, data);
 
       return apiRespone.data;
     } catch (error) {
@@ -95,7 +96,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}/clean`;
 
     try {
-      const apiRespone = await this.client.patch(url);
+      const apiRespone = await this.client.patch<Inbox>(url);
 
       return apiRespone.data;
     } catch (error) {
@@ -110,7 +111,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}/all_read`;
 
     try {
-      const apiRespone = await this.client.patch(url);
+      const apiRespone = await this.client.patch<Inbox>(url);
 
       return apiRespone.data;
     } catch (error) {
@@ -125,7 +126,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}/reset_credentials`;
 
     try {
-      const apiRespone = await this.client.patch(url);
+      const apiRespone = await this.client.patch<Inbox>(url);
 
       return apiRespone.data;
     } catch (error) {
@@ -140,7 +141,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}/toggle_email_username`;
 
     try {
-      const apiRespone = await this.client.patch(url);
+      const apiRespone = await this.client.patch<Inbox>(url);
 
       return apiRespone.data;
     } catch (error) {
@@ -155,7 +156,7 @@ export default class InboxesApi {
     const url = `${this.inboxesURL}/${inboxId}/reset_email_username`;
 
     try {
-      const apiRespone = await this.client.patch(url);
+      const apiRespone = await this.client.patch<Inbox>(url);
 
       return apiRespone.data;
     } catch (error) {
@@ -168,7 +169,7 @@ export default class InboxesApi {
    */
   public async getList() {
     try {
-      const apiRespone = await this.client.get(this.inboxesURL);
+      const apiRespone = await this.client.get<Inbox[]>(this.inboxesURL);
 
       return apiRespone.data;
     } catch (error) {
