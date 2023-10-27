@@ -43,10 +43,9 @@ describe("lib/mailtrap-client: ", () => {
       const client = new MailtrapClient({ token: "MY_API_TOKEN" });
       const result = await client.send(goodMail);
 
-      expect(mock.history.post[0].baseURL).toEqual(
-        "https://send.api.mailtrap.io"
+      expect(mock.history.post[0].url).toEqual(
+        "https://send.api.mailtrap.io/api/send"
       );
-      expect(mock.history.post[0].url).toEqual("/api/send");
       expect(mock.history.post[0].headers).toEqual({
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
@@ -94,10 +93,9 @@ describe("lib/mailtrap-client: ", () => {
         },
       });
 
-      expect(mock.history.post[0].baseURL).toEqual(
-        "https://send.api.mailtrap.io"
+      expect(mock.history.post[0].url).toEqual(
+        "https://send.api.mailtrap.io/api/send"
       );
-      expect(mock.history.post[0].url).toEqual("/api/send");
       expect(mock.history.post[0].headers).toEqual({
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
@@ -130,7 +128,7 @@ describe("lib/mailtrap-client: ", () => {
       } catch (err) {
         expect(err).toBeInstanceOf(MailtrapError);
         if (err instanceof MailtrapError) {
-          expect(err.message).toEqual("subject is missing, message is missing");
+          expect(err.message).toEqual("subject is missing,message is missing");
           // @ts-expect-error ES5 types don't know about cause property
           expect(err.cause).toBeInstanceOf(AxiosError);
         }
