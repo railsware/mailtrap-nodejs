@@ -31,10 +31,12 @@ export default class TestingAPI {
   constructor(client: AxiosInstance, testInboxId?: number, accountId?: number) {
     this.client = client;
     if (!testInboxId) {
+      // eslint-disable-next-line no-console
       console.warn(TEST_INBOX_ID_MISSING);
     }
     this.testInboxId = testInboxId;
     if (!accountId) {
+      // eslint-disable-next-line no-console
       console.warn(ACCOUNT_ID_MISSING);
     }
     this.accountId = accountId;
