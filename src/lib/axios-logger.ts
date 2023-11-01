@@ -7,9 +7,12 @@ import { AxiosErrorObject } from "../types/axios";
 /**
  * Axios error names guard.
  */
-const hasErrorNames = (obj: unknown): obj is AxiosErrorObject =>
-  (obj as AxiosErrorObject)?.name !== undefined &&
-  Array.isArray((obj as AxiosErrorObject).name);
+const hasErrorProperty = <T extends keyof AxiosErrorObject>(
+  obj: unknown,
+  propertyName: T
+): obj is AxiosErrorObject => {
+  return (obj as AxiosErrorObject)?.[propertyName] !== undefined;
+};
 
 /**
  * Error handler for axios response.
@@ -22,11 +25,16 @@ export default function handleSendingError(error: AxiosError | unknown) {
       "errors" in error.response.data &&
       error.response.data.errors;
 
-    const errorNames = hasErrorNames(serverErrorsObject)
-      ? serverErrorsObject.name.join(", ")
-      : serverErrorsObject;
+    const errorNames =
+      hasErrorProperty(serverErrorsObject, "name") &&
+      serverErrorsObject.name.join(", ");
 
-    const message = errorNames || error.message;
+    const errorBase =
+      hasErrorProperty(serverErrorsObject, "base") &&
+      serverErrorsObject.base.join(", ");
+
+    const message =
+      errorNames || errorBase || serverErrorsObject || error.message;
 
     // @ts-expect-error weird typing around Error class, but it's tested to work
     throw new MailtrapError(message, { cause: error });
