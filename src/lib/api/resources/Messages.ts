@@ -1,8 +1,16 @@
 import { AxiosInstance } from "axios";
 
+import handleSendingError from "../../axios-logger";
+
 import CONFIG from "../../../config";
 
-import handleSendingError from "../../axios-logger";
+import {
+  EmailHeaders,
+  Message,
+  MessageUpdateParams,
+  Report,
+  SpamReport,
+} from "../../../types/api/messages";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
@@ -10,13 +18,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class MessagesApi {
   private client: AxiosInstance;
 
-  private accountId?: number;
-
-  private messagesURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/inboxes`;
+  private messagesURL: string;
 
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
-    this.accountId = accountId;
+    this.messagesURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes`;
   }
 
   /**
@@ -26,7 +32,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<Message>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -37,12 +43,16 @@ export default class MessagesApi {
   /**
    * Updates message attributes (right now only the is_read attribute is available for modification).
    */
-  public async updateMessage(inboxId: number, messageId: number, params: any) {
+  public async updateMessage(
+    inboxId: number,
+    messageId: number,
+    params: MessageUpdateParams
+  ) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
     const data = { message: { is_read: params.isRead } };
 
     try {
-      const apiResponse = await this.client.patch(url, data);
+      const apiResponse = await this.client.patch<Message>(url, data);
 
       return apiResponse.data;
     } catch (error) {
@@ -57,7 +67,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
 
     try {
-      const apiResponse = await this.client.delete(url);
+      const apiResponse = await this.client.delete<Message>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -72,7 +82,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<Message[]>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -88,11 +98,11 @@ export default class MessagesApi {
     messageId: number,
     emailToForward: string
   ) {
-    const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
+    const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/forward`;
     const data = { email: emailToForward };
 
     try {
-      const apiResponse = await this.client.post(url, data);
+      const apiResponse = await this.client.post<Message>(url, data);
 
       return apiResponse.data;
     } catch (error) {
@@ -107,7 +117,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/spam_report`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<SpamReport>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -122,7 +132,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/analyze`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<Report>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -137,7 +147,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.txt`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<string>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -152,7 +162,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.raw`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<string>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -163,11 +173,11 @@ export default class MessagesApi {
   /**
    * Gets HTML source of email.
    */
-  public async getMessageSource(inboxId: number, messageId: number) {
+  public async getMessageHtmlSource(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.htmlsource`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<string>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -178,11 +188,11 @@ export default class MessagesApi {
   /**
    * Gets formatted HTML email body. Not applicable for plain text emails.
    */
-  public async getHtmlMessages(inboxId: number, messageId: number) {
+  public async getHtmlMessage(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.html`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<string>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -197,7 +207,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.eml`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<string>(url);
 
       return apiResponse.data;
     } catch (error) {
@@ -212,7 +222,7 @@ export default class MessagesApi {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/mail_headers`;
 
     try {
-      const apiResponse = await this.client.get(url);
+      const apiResponse = await this.client.get<EmailHeaders>(url);
 
       return apiResponse.data;
     } catch (error) {
