@@ -23,7 +23,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Create an inbox in a project.
+   * Creates an inbox in a project.
    */
   public async create(projectId: number, inboxName: string) {
     const url = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/projects/${projectId}/inboxes`;
@@ -39,7 +39,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Get inbox attributes by inbox id.
+   * Gets inbox attributes by inbox id.
    */
   public async getInboxAttributes(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
@@ -54,7 +54,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Delete an inbox with all its emails.
+   * Deletes an inbox with all its emails.
    */
   public async delete(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
@@ -69,7 +69,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Update inbox name, inbox email username.
+   * Updates inbox name, inbox email username.
    */
   public async updateInbox(inboxId: number, params: UpdateInboxParams) {
     const url = `${this.inboxesURL}/${inboxId}`;
@@ -90,7 +90,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Delete all messages (emails) from inbox.
+   * Deletes all messages (emails) from inbox.
    */
   public async cleanInbox(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/clean`;
@@ -105,7 +105,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Mark all messages in the inbox as read.
+   * Marks all messages in the inbox as read.
    */
   public async markAsRead(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/all_read`;
@@ -120,7 +120,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Reset SMTP credentials of the inbox.
+   * Resets SMTP credentials of the inbox.
    */
   public async resetCredentials(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/reset_credentials`;
@@ -135,7 +135,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Turn the email address of the inbox on/off.
+   * Turns the email address of the inbox on/off.
    */
   public async enableEmailAddress(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/toggle_email_username`;
@@ -150,7 +150,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Reset username of email address per inbox.
+   * Resets username of email address per inbox.
    */
   public async resetEmailAddress(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/reset_email_username`;
@@ -165,7 +165,7 @@ export default class InboxesApi {
   }
 
   /**
-   * Get a list of inboxes.
+   * Gets a list of inboxes.
    */
   public async getList() {
     try {
