@@ -41,7 +41,7 @@ export default class ProjectsApi {
   }
 
   /**
-   * List projects and their inboxes to which the API token has access.
+   * Lists projects and their inboxes to which the API token has access.
    */
   public async getList() {
     try {
@@ -54,7 +54,7 @@ export default class ProjectsApi {
   }
 
   /**
-   * Get the project and it's inboxes.
+   * Gets the project and it's inboxes.
    */
   public async getById(projectId: number) {
     const url = `${this.projectsURL}/${projectId}`;
@@ -69,7 +69,7 @@ export default class ProjectsApi {
   }
 
   /**
-   * Update project name. The project name is min 2 characters and max 100 characters long.
+   * Updates project name. The project name is min 2 characters and max 100 characters long.
    */
   public async update(projectId: number, updatedName: string) {
     const url = `${this.projectsURL}/${projectId}`;
@@ -85,7 +85,7 @@ export default class ProjectsApi {
   }
 
   /**
-   * Delete a project by its ID.
+   * Deletes a project by its ID.
    */
   public async delete(projectId: number) {
     const url = `${this.projectsURL}/${projectId}`;
