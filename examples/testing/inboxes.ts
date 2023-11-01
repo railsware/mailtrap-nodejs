@@ -1,4 +1,4 @@
-import { MailtrapClient } from "../..//src"
+import { MailtrapClient } from "../../src"
 
 const TOKEN = "<YOUR-TOKEN-HERE>";
 const TEST_INBOX_ID = "<YOUR-TEST-INBOX-ID-HERE>"
