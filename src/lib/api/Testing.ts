@@ -10,10 +10,8 @@ import CONFIG from "../../config";
 
 import { Mail, SendResponse } from "../../types/mailtrap";
 
-const { CLIENT_SETTINGS, ERRORS } = CONFIG;
+const { CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT } = CLIENT_SETTINGS;
-
-const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING } = ERRORS;
 
 export default class TestingAPI {
   private client: AxiosInstance;
@@ -30,16 +28,8 @@ export default class TestingAPI {
 
   constructor(client: AxiosInstance, testInboxId?: number, accountId?: number) {
     this.client = client;
-    if (!testInboxId) {
-      // eslint-disable-next-line no-console
-      console.warn(TEST_INBOX_ID_MISSING);
-    }
-    this.testInboxId = testInboxId;
-    if (!accountId) {
-      // eslint-disable-next-line no-console
-      console.warn(ACCOUNT_ID_MISSING);
-    }
     this.accountId = accountId;
+    this.testInboxId = testInboxId;
     this.projects = new ProjectsApi(this.client, this.accountId);
     this.inboxes = new InboxesApi(this.client, this.accountId);
     this.messages = new MessagesApi(this.client, this.accountId);
