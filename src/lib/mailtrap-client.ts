@@ -11,9 +11,10 @@ import CONFIG from "../config";
 
 import { Mail, SendResponse, MailtrapClientConfig } from "../types/mailtrap";
 
-const { CLIENT_SETTINGS } = CONFIG;
+const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const { SENDING_ENDPOINT, MAX_REDIRECTS, USER_AGENT, TIMEOUT } =
   CLIENT_SETTINGS;
+const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING } = ERRORS;
 
 /**
  * Mailtrap client class. Initializes instance with available methods.
@@ -25,7 +26,7 @@ export default class MailtrapClient {
 
   private accountId?: number;
 
-  public testing: TestingAPI;
+  private testingAPI: TestingAPI;
 
   /**
    * Initalizes axios instance with Mailtrap params.
@@ -45,7 +46,28 @@ export default class MailtrapClient {
     this.testInboxId = testInboxId;
     this.accountId = accountId;
 
-    this.testing = new TestingAPI(this.axios, this.testInboxId, this.accountId);
+    this.testingAPI = new TestingAPI(
+      this.axios,
+      this.testInboxId,
+      this.accountId
+    );
+  }
+
+  /**
+   * Getter for testing API. Warns if some of the required keys are missing.
+   */
+  get testing() {
+    if (!this.testInboxId) {
+      // eslint-disable-next-line no-console
+      console.warn(TEST_INBOX_ID_MISSING);
+    }
+
+    if (!this.accountId) {
+      // eslint-disable-next-line no-console
+      console.warn(ACCOUNT_ID_MISSING);
+    }
+
+    return this.testingAPI;
   }
 
   /**
