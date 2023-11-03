@@ -14,7 +14,7 @@ projectsClient.getList()
     if (projects && projects.length > 0) {
       const firstProjectId = projects[0].id
 
-      // const inbox = await inboxesClient.create(firstProjectId, 'test-inbox')
+      await inboxesClient.create(firstProjectId, 'test-inbox')
 
       const inboxes = await inboxesClient.getList()
 
