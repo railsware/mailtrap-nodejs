@@ -1,7 +1,5 @@
 import { AxiosInstance } from "axios";
 
-import handleSendingError from "../../axios-logger";
-
 import CONFIG from "../../../config";
 
 import { Inbox, UpdateInboxParams } from "../../../types/api/inboxes";
@@ -28,14 +26,9 @@ export default class InboxesApi {
   public async create(projectId: number, inboxName: string) {
     const url = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/projects/${projectId}/inboxes`;
     const data = { inbox: { name: inboxName } };
+    const apiResponse = await this.client.post<Inbox>(url, data);
 
-    try {
-      const apiResponse = await this.client.post<Inbox>(url, data);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -43,14 +36,9 @@ export default class InboxesApi {
    */
   public async getInboxAttributes(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
+    const apiResponse = await this.client.get<Inbox>(url);
 
-    try {
-      const apiResponse = await this.client.get<Inbox>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -58,14 +46,9 @@ export default class InboxesApi {
    */
   public async delete(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
+    const apiResponse = await this.client.delete<Inbox>(url);
 
-    try {
-      const apiResponse = await this.client.delete<Inbox>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -79,14 +62,9 @@ export default class InboxesApi {
         email_username: params.emailUsername,
       },
     };
+    const apiRespone = await this.client.patch<Inbox>(url, data);
 
-    try {
-      const apiRespone = await this.client.patch<Inbox>(url, data);
-
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 
   /**
@@ -94,14 +72,9 @@ export default class InboxesApi {
    */
   public async cleanInbox(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/clean`;
+    const apiRespone = await this.client.patch<Inbox>(url);
 
-    try {
-      const apiRespone = await this.client.patch<Inbox>(url);
-
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 
   /**
@@ -109,14 +82,9 @@ export default class InboxesApi {
    */
   public async markAsRead(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/all_read`;
+    const apiRespone = await this.client.patch<Inbox>(url);
 
-    try {
-      const apiRespone = await this.client.patch<Inbox>(url);
-
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 
   /**
@@ -124,14 +92,9 @@ export default class InboxesApi {
    */
   public async resetCredentials(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/reset_credentials`;
+    const apiRespone = await this.client.patch<Inbox>(url);
 
-    try {
-      const apiRespone = await this.client.patch<Inbox>(url);
-
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 
   /**
@@ -139,14 +102,9 @@ export default class InboxesApi {
    */
   public async enableEmailAddress(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/toggle_email_username`;
+    const apiRespone = await this.client.patch<Inbox>(url);
 
-    try {
-      const apiRespone = await this.client.patch<Inbox>(url);
-
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 
   /**
@@ -154,26 +112,17 @@ export default class InboxesApi {
    */
   public async resetEmailAddress(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/reset_email_username`;
+    const apiRespone = await this.client.patch<Inbox>(url);
 
-    try {
-      const apiRespone = await this.client.patch<Inbox>(url);
-
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 
   /**
    * Gets a list of inboxes.
    */
   public async getList() {
-    try {
-      const apiRespone = await this.client.get<Inbox[]>(this.inboxesURL);
+    const apiRespone = await this.client.get<Inbox[]>(this.inboxesURL);
 
-      return apiRespone.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiRespone.data;
   }
 }
