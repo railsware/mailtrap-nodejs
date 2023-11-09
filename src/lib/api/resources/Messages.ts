@@ -1,7 +1,5 @@
 import { AxiosInstance } from "axios";
 
-import handleSendingError from "../../axios-logger";
-
 import CONFIG from "../../../config";
 
 import {
@@ -30,14 +28,9 @@ export default class MessagesApi {
    */
   public async showEmailMessage(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
+    const apiResponse = await this.client.get<Message>(url);
 
-    try {
-      const apiResponse = await this.client.get<Message>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -50,14 +43,9 @@ export default class MessagesApi {
   ) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
     const data = { message: { is_read: params.isRead } };
+    const apiResponse = await this.client.patch<Message>(url, data);
 
-    try {
-      const apiResponse = await this.client.patch<Message>(url, data);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -65,14 +53,9 @@ export default class MessagesApi {
    */
   public async deleteMessage(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}`;
+    const apiResponse = await this.client.delete<Message>(url);
 
-    try {
-      const apiResponse = await this.client.delete<Message>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -80,14 +63,9 @@ export default class MessagesApi {
    */
   public async get(inboxId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages`;
+    const apiResponse = await this.client.get<Message[]>(url);
 
-    try {
-      const apiResponse = await this.client.get<Message[]>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -100,14 +78,9 @@ export default class MessagesApi {
   ) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/forward`;
     const data = { email: emailToForward };
+    const apiResponse = await this.client.post<Message>(url, data);
 
-    try {
-      const apiResponse = await this.client.post<Message>(url, data);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -115,14 +88,9 @@ export default class MessagesApi {
    */
   public async getSpamScore(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/spam_report`;
+    const apiResponse = await this.client.get<SpamReport>(url);
 
-    try {
-      const apiResponse = await this.client.get<SpamReport>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -130,14 +98,9 @@ export default class MessagesApi {
    */
   public async getHtmlAnalysis(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/analyze`;
+    const apiResponse = await this.client.get<Report>(url);
 
-    try {
-      const apiResponse = await this.client.get<Report>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -145,14 +108,9 @@ export default class MessagesApi {
    */
   public async getTextMessage(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.txt`;
+    const apiResponse = await this.client.get<string>(url);
 
-    try {
-      const apiResponse = await this.client.get<string>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -160,14 +118,9 @@ export default class MessagesApi {
    */
   public async getRawMessage(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.raw`;
+    const apiResponse = await this.client.get<string>(url);
 
-    try {
-      const apiResponse = await this.client.get<string>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -175,14 +128,9 @@ export default class MessagesApi {
    */
   public async getMessageHtmlSource(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.htmlsource`;
+    const apiResponse = await this.client.get<string>(url);
 
-    try {
-      const apiResponse = await this.client.get<string>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -190,14 +138,9 @@ export default class MessagesApi {
    */
   public async getHtmlMessage(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.html`;
+    const apiResponse = await this.client.get<string>(url);
 
-    try {
-      const apiResponse = await this.client.get<string>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -205,14 +148,9 @@ export default class MessagesApi {
    */
   public async getMessageAsEml(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.eml`;
+    const apiResponse = await this.client.get<string>(url);
 
-    try {
-      const apiResponse = await this.client.get<string>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -220,13 +158,8 @@ export default class MessagesApi {
    */
   public async getMailHeaders(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/mail_headers`;
+    const apiResponse = await this.client.get<EmailHeaders>(url);
 
-    try {
-      const apiResponse = await this.client.get<EmailHeaders>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 }
