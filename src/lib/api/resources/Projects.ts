@@ -1,7 +1,5 @@
 import { AxiosInstance } from "axios";
 
-import handleSendingError from "../../axios-logger";
-
 import CONFIG from "../../../config";
 
 import { Project } from "../../../types/api/projects";
@@ -27,30 +25,18 @@ export default class ProjectsApi {
    */
   public async create(projectName: string) {
     const data = { project: { name: projectName } };
+    const apiResponse = await this.client.post<Project>(this.projectsURL, data);
 
-    try {
-      const apiResponse = await this.client.post<Project>(
-        this.projectsURL,
-        data
-      );
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
    * Lists projects and their inboxes to which the API token has access.
    */
   public async getList() {
-    try {
-      const apiResponse = await this.client.get<Project[]>(this.projectsURL);
+    const apiResponse = await this.client.get<Project[]>(this.projectsURL);
 
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -58,14 +44,9 @@ export default class ProjectsApi {
    */
   public async getById(projectId: number) {
     const url = `${this.projectsURL}/${projectId}`;
+    const apiResponse = await this.client.get<Project>(url);
 
-    try {
-      const apiResponse = await this.client.get<Project>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -74,14 +55,9 @@ export default class ProjectsApi {
   public async update(projectId: number, updatedName: string) {
     const url = `${this.projectsURL}/${projectId}`;
     const data = { project: { name: updatedName } };
+    const apiResponse = await this.client.patch<Project>(url, data);
 
-    try {
-      const apiResponse = await this.client.patch<Project>(url, data);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 
   /**
@@ -89,13 +65,8 @@ export default class ProjectsApi {
    */
   public async delete(projectId: number) {
     const url = `${this.projectsURL}/${projectId}`;
+    const apiResponse = await this.client.delete<Project>(url);
 
-    try {
-      const apiResponse = await this.client.delete<Project>(url);
-
-      return apiResponse.data;
-    } catch (error) {
-      return handleSendingError(error);
-    }
+    return apiResponse.data;
   }
 }
