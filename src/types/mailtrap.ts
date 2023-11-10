@@ -61,6 +61,7 @@ export type SendError = {
 };
 
 export type MailtrapClientConfig = {
-  endpoint?: string;
   token: string;
+  testInboxId?: number;
+  accountId?: number;
 };
