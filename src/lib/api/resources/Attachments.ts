@@ -23,7 +23,7 @@ export default class AttachmentsApi {
   /**
    * Get message attachments by `inboxId` and `messageId`.
    */
-  public async getList(messageId: number, inboxId: number) {
+  public async getList(inboxId: number, messageId: number) {
     const url = `${this.inboxesURL}/${inboxId}/messages/${messageId}/attachments`;
 
     return this.client.get<Attachment[], Attachment[]>(url);
@@ -32,7 +32,7 @@ export default class AttachmentsApi {
   /**
    * Get message attachments by `inboxId`.`messageId` and `attachmentId`.
    */
-  public async get(attachmentId: number, messageId: number, inboxId: number) {
+  public async get(inboxId: number, messageId: number, attachmentId: number) {
     const url = `${this.inboxesURL}/${inboxId}/messages/${messageId}/attachments/${attachmentId}`;
 
     return this.client.get<Attachment, Attachment>(url);
