@@ -45,12 +45,10 @@ export default class TestingAPI {
     const preparedMail = encodeMailBuffers(mail);
 
     try {
-      const axiosResponse = await this.client.post<SendResponse>(
+      return await this.client.post<SendResponse, SendResponse>(
         url,
         preparedMail
       );
-
-      return axiosResponse.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         handleSendingError(error);
