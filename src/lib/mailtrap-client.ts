@@ -43,13 +43,20 @@ export default class MailtrapClient {
       maxRedirects: MAX_REDIRECTS,
       timeout: TIMEOUT,
     });
+
+    /**
+     * Init Axios interceptors for handling response.data, errors.
+     */
     this.axios.interceptors.response.use(
-      (response) => response,
+      (response) => response.data,
       handleSendingError
     );
     this.testInboxId = testInboxId;
     this.accountId = accountId;
 
+    /**
+     * Initialize testing API.
+     */
     this.testingAPI = new TestingAPI(
       this.axios,
       this.testInboxId,
