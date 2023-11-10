@@ -20,10 +20,14 @@ inboxesClient.getList()
       if (messages && messages.length > 0) {
         const firstMessageId = messages[0].id
 
-        await attachmentsClient.getList(firstMessageId, firstInboxId)
-        const attachment = await attachmentsClient.get(559735926, firstMessageId, firstInboxId)
+        const attachments = await attachmentsClient.getList(firstMessageId, firstInboxId)
 
-        console.log(attachment)
+        if (attachments && attachments.length > 0) {
+          const firstAttachment = attachments[0].id
+          const attachmentData = await attachmentsClient.get(firstInboxId, firstMessageId, firstAttachment)
+  
+          console.log(attachmentData)
+        }
       }
     }
   })
