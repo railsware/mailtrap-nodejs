@@ -3,6 +3,8 @@ import axios, { AxiosInstance } from "axios";
 import ProjectsApi from "./resources/Projects";
 import InboxesApi from "./resources/Inboxes";
 import MessagesApi from "./resources/Messages";
+import AttachmentsApi from "./resources/Attachments";
+
 import encodeMailBuffers from "../mail-buffer-encoder";
 import handleSendingError from "../axios-logger";
 
@@ -26,6 +28,8 @@ export default class TestingAPI {
 
   public messages: MessagesApi;
 
+  public attachments: AttachmentsApi;
+
   constructor(client: AxiosInstance, testInboxId?: number, accountId?: number) {
     this.client = client;
     this.accountId = accountId;
@@ -33,6 +37,7 @@ export default class TestingAPI {
     this.projects = new ProjectsApi(this.client, this.accountId);
     this.inboxes = new InboxesApi(this.client, this.accountId);
     this.messages = new MessagesApi(this.client, this.accountId);
+    this.attachments = new AttachmentsApi(this.client, this.accountId);
   }
 
   public async send(mail: Mail): Promise<SendResponse> {
@@ -40,12 +45,10 @@ export default class TestingAPI {
     const preparedMail = encodeMailBuffers(mail);
 
     try {
-      const axiosResponse = await this.client.post<SendResponse>(
+      return await this.client.post<SendResponse, SendResponse>(
         url,
         preparedMail
       );
-
-      return axiosResponse.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         handleSendingError(error);

@@ -26,9 +26,8 @@ export default class InboxesApi {
   public async create(projectId: number, inboxName: string) {
     const url = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/projects/${projectId}/inboxes`;
     const data = { inbox: { name: inboxName } };
-    const apiResponse = await this.client.post<Inbox>(url, data);
 
-    return apiResponse.data;
+    return this.client.post<Inbox, Inbox>(url, data);
   }
 
   /**
@@ -36,9 +35,8 @@ export default class InboxesApi {
    */
   public async getInboxAttributes(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
-    const apiResponse = await this.client.get<Inbox>(url);
 
-    return apiResponse.data;
+    return this.client.get<Inbox, Inbox>(url);
   }
 
   /**
@@ -46,9 +44,7 @@ export default class InboxesApi {
    */
   public async delete(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
-    const apiResponse = await this.client.delete<Inbox>(url);
-
-    return apiResponse.data;
+    return this.client.delete<Inbox, Inbox>(url);
   }
 
   /**
@@ -62,9 +58,8 @@ export default class InboxesApi {
         email_username: params.emailUsername,
       },
     };
-    const apiRespone = await this.client.patch<Inbox>(url, data);
 
-    return apiRespone.data;
+    return this.client.patch<Inbox, Inbox>(url, data);
   }
 
   /**
@@ -72,9 +67,8 @@ export default class InboxesApi {
    */
   public async cleanInbox(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/clean`;
-    const apiRespone = await this.client.patch<Inbox>(url);
 
-    return apiRespone.data;
+    return this.client.patch<Inbox, Inbox>(url);
   }
 
   /**
@@ -82,9 +76,8 @@ export default class InboxesApi {
    */
   public async markAsRead(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/all_read`;
-    const apiRespone = await this.client.patch<Inbox>(url);
 
-    return apiRespone.data;
+    return this.client.patch<Inbox, Inbox>(url);
   }
 
   /**
@@ -92,9 +85,8 @@ export default class InboxesApi {
    */
   public async resetCredentials(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/reset_credentials`;
-    const apiRespone = await this.client.patch<Inbox>(url);
 
-    return apiRespone.data;
+    return this.client.patch<Inbox, Inbox>(url);
   }
 
   /**
@@ -102,9 +94,8 @@ export default class InboxesApi {
    */
   public async enableEmailAddress(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/toggle_email_username`;
-    const apiRespone = await this.client.patch<Inbox>(url);
 
-    return apiRespone.data;
+    return this.client.patch<Inbox, Inbox>(url);
   }
 
   /**
@@ -112,17 +103,14 @@ export default class InboxesApi {
    */
   public async resetEmailAddress(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}/reset_email_username`;
-    const apiRespone = await this.client.patch<Inbox>(url);
 
-    return apiRespone.data;
+    return this.client.patch<Inbox, Inbox>(url);
   }
 
   /**
    * Gets a list of inboxes.
    */
   public async getList() {
-    const apiRespone = await this.client.get<Inbox[]>(this.inboxesURL);
-
-    return apiRespone.data;
+    return this.client.get<Inbox[], Inbox[]>(this.inboxesURL);
   }
 }
