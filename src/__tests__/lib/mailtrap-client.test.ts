@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosHeaders } from "axios";
+import axios, { AxiosError } from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 import { Mail, MailtrapClient } from "../..";
