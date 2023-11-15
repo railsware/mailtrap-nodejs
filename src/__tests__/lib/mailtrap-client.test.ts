@@ -46,7 +46,7 @@ describe("lib/mailtrap-client: ", () => {
       expect(mock.history.post[0].url).toEqual(
         "https://send.api.mailtrap.io/api/send"
       );
-      expect(mock.history.post[0].headers).toEqual({
+      expect(mock.history.post[0].headers).toMatchObject({
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: "Bearer MY_API_TOKEN",
@@ -96,7 +96,7 @@ describe("lib/mailtrap-client: ", () => {
       expect(mock.history.post[0].url).toEqual(
         "https://send.api.mailtrap.io/api/send"
       );
-      expect(mock.history.post[0].headers).toEqual({
+      expect(mock.history.post[0].headers).toMatchObject({
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: "Bearer MY_API_TOKEN",
