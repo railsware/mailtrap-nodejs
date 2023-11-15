@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 
 import ProjectsApi from "./resources/Projects";
 import InboxesApi from "./resources/Inboxes";
@@ -6,7 +6,6 @@ import MessagesApi from "./resources/Messages";
 import AttachmentsApi from "./resources/Attachments";
 
 import encodeMailBuffers from "../mail-buffer-encoder";
-import handleSendingError from "../axios-logger";
 
 import CONFIG from "../../config";
 
@@ -44,17 +43,6 @@ export default class TestingAPI {
     const url = `${TESTING_ENDPOINT}/api/send/${this.testInboxId}`;
     const preparedMail = encodeMailBuffers(mail);
 
-    try {
-      return await this.client.post<SendResponse, SendResponse>(
-        url,
-        preparedMail
-      );
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        handleSendingError(error);
-      }
-
-      throw error; // should not happen, but otherwise rethrow error as is
-    }
+    return this.client.post<SendResponse, SendResponse>(url, preparedMail);
   }
 }
