@@ -138,7 +138,7 @@ export default class MessagesApi {
   public async getMessageAsEml(inboxId: number, messageId: number) {
     const url = `${this.messagesURL}/${inboxId}/messages/${messageId}/body.eml`;
 
-    return this.client.get<string>(url);
+    return this.client.get<string, string>(url);
   }
 
   /**
