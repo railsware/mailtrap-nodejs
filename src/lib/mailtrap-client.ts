@@ -88,17 +88,6 @@ export default class MailtrapClient {
     const url = `${SENDING_ENDPOINT}/api/send`;
     const preparedMail = encodeMailBuffers(mail);
 
-    try {
-      return await this.axios.post<SendResponse, SendResponse>(
-        url,
-        preparedMail
-      );
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        handleSendingError(error);
-      }
-
-      throw error; // should not happen, but otherwise rethrow error as is
-    }
+    return this.axios.post<SendResponse, SendResponse>(url, preparedMail);
   }
 }
