@@ -14,6 +14,13 @@ describe("lib/api/resources/Projects: ", () => {
   let mock: AxiosMockAdapter;
   const accountId = 100;
   const projectsAPI = new Projects(axios, accountId);
+  const responseData = {
+    id: 100,
+    name: "mock-name",
+    share_links: "links",
+    inboxes: [],
+    permissions: [],
+  };
 
   describe("class Projects(): ", () => {
     describe("init: ", () => {
@@ -45,14 +52,8 @@ describe("lib/api/resources/Projects: ", () => {
   describe("create(): ", () => {
     it("successfully creates project.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/projects`;
-      const expectedResponseData = {
-        id: 100,
-        name: "mock-name",
-        share_links: "links",
-        inboxes: [],
-        permissions: [],
-      };
-      mock.onPost(endpoint).reply(200, expectedResponseData);
+
+      mock.onPost(endpoint).reply(200, responseData);
 
       const projectName = "mock-projectName";
       const result = await projectsAPI.create(projectName);
@@ -61,7 +62,7 @@ describe("lib/api/resources/Projects: ", () => {
 
       expect(mock.history.post[0].url).toEqual(endpoint);
       expect(mock.history.post[0].data).toEqual(JSON.stringify(sentData));
-      expect(result).toEqual(expectedResponseData);
+      expect(result).toEqual(responseData);
     });
 
     it("fails with error.", async () => {
@@ -85,15 +86,7 @@ describe("lib/api/resources/Projects: ", () => {
   describe("getList(): ", () => {
     it("successfully gets projects list.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/projects`;
-      const expectedResponseData = [
-        {
-          id: 100,
-          name: "mock-name",
-          share_links: "links",
-          inboxes: [],
-          permissions: [],
-        },
-      ];
+      const expectedResponseData = [responseData];
       mock.onGet(endpoint).reply(200, expectedResponseData);
 
       const result = await projectsAPI.getList();
@@ -123,15 +116,7 @@ describe("lib/api/resources/Projects: ", () => {
     it("successfully gets projects list.", async () => {
       const projectId = 1;
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/projects/${projectId}`;
-      const expectedResponseData = [
-        {
-          id: 100,
-          name: "mock-name",
-          share_links: "links",
-          inboxes: [],
-          permissions: [],
-        },
-      ];
+      const expectedResponseData = [responseData];
       mock.onGet(endpoint).reply(200, expectedResponseData);
 
       const result = await projectsAPI.getById(projectId);
@@ -163,14 +148,7 @@ describe("lib/api/resources/Projects: ", () => {
       const projectId = 1;
       const updatedName = "mock-updatedName";
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/projects/${projectId}`;
-      const expectedResponseData = {
-        id: 100,
-        name: "mock-name",
-        share_links: "links",
-        inboxes: [],
-        permissions: [],
-      };
-      mock.onPatch(endpoint).reply(200, expectedResponseData);
+      mock.onPatch(endpoint).reply(200, responseData);
 
       const result = await projectsAPI.update(projectId, updatedName);
 
@@ -178,7 +156,7 @@ describe("lib/api/resources/Projects: ", () => {
 
       expect(mock.history.patch[0].url).toEqual(endpoint);
       expect(mock.history.patch[0].data).toEqual(JSON.stringify(sentData));
-      expect(result).toEqual(expectedResponseData);
+      expect(result).toEqual(responseData);
     });
 
     it("fails with error.", async () => {
@@ -204,15 +182,7 @@ describe("lib/api/resources/Projects: ", () => {
     it("successfully deletes project.", async () => {
       const projectId = 1;
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/projects/${projectId}`;
-      const expectedResponseData = [
-        {
-          id: 100,
-          name: "mock-name",
-          share_links: "links",
-          inboxes: [],
-          permissions: [],
-        },
-      ];
+      const expectedResponseData = [responseData];
       mock.onDelete(endpoint).reply(200, expectedResponseData);
 
       const result = await projectsAPI.delete(projectId);
