@@ -86,7 +86,6 @@ describe("lib/mailtrap-client: ", () => {
             email: "recipient@mailtrap.io",
           },
         ],
-        // @ts-ignore
         template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
         template_variables: {
           user_name: "John Doe",
