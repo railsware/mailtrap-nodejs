@@ -16,7 +16,7 @@ describe("lib/api/resources/Inboxes: ", () => {
   const inboxesAPI = new Inboxes(axios, accountId);
   const responseData = {
     id: 10,
-    name: "mokc-name",
+    name: "mock-name",
     username: "mock-username",
     password: "mock-password",
     max_size: 10,
