@@ -1,8 +1,14 @@
+/* eslint-disable no-console */
 import axios, { AxiosError } from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 import { Mail, MailtrapClient } from "../..";
 import MailtrapError from "../../lib/MailtrapError";
+
+import CONFIG from "../../config";
+
+const { ERRORS } = CONFIG;
+const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING } = ERRORS;
 
 describe("lib/mailtrap-client: ", () => {
   let mock: AxiosMockAdapter;
@@ -148,6 +154,48 @@ describe("lib/mailtrap-client: ", () => {
           expect(err.cause).toBeInstanceOf(AxiosError);
         }
       }
+    });
+  });
+
+  describe("get testing(): ", () => {
+    it("returns testing API object, console warn is called twice.", () => {
+      const originalWarn = console.warn;
+      const mockLogger = jest.fn();
+      console.warn = mockLogger;
+      const client = new MailtrapClient({ token: "MY_API_TOKEN" });
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const testingAPI = client.testing;
+
+      expect.assertions(3);
+
+      expect(mockLogger).toBeCalledTimes(2);
+      expect(mockLogger).toBeCalledWith(TEST_INBOX_ID_MISSING);
+      expect(mockLogger).toBeCalledWith(ACCOUNT_ID_MISSING);
+
+      console.warn = originalWarn;
+    });
+
+    it("return testing API object, without calling console warn.", () => {
+      const originalWarn = console.warn;
+      const mockLogger = jest.fn();
+      console.warn = mockLogger;
+      const testInboxId = 1;
+      const accountId = 1;
+      const client = new MailtrapClient({
+        token: "MY_API_TOKEN",
+        testInboxId,
+        accountId,
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const testingAPI = client.testing;
+
+      expect.assertions(1);
+
+      expect(mockLogger).toBeCalledTimes(0);
+
+      console.warn = originalWarn;
     });
   });
 });
