@@ -7,6 +7,8 @@ describe("lib/axios-logger: ", () => {
     it("re-throws error if it's not axios error.", () => {
       const unknownError = new Error("mock-error");
 
+      expect.assertions(1);
+
       try {
         axiosLogger(unknownError);
       } catch (error) {
