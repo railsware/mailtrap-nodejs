@@ -57,7 +57,8 @@
     "lint:eslint": "yarn run eslint . --ext .js,.ts",
     "lint:tsc": "tsc -p . --noEmit --incremental false",
     "prepublish": "rm -rf dist && tsc --project tsconfig.build.json",
-    "test": "jest"
+    "test": "jest --verbose",
+    "coverage": "jest --coverage"
   },
   "types": "dist/index.d.ts"
 }

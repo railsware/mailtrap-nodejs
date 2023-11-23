@@ -44,6 +44,7 @@ export default class InboxesApi {
    */
   public async delete(inboxId: number) {
     const url = `${this.inboxesURL}/${inboxId}`;
+
     return this.client.delete<Inbox, Inbox>(url);
   }
 
