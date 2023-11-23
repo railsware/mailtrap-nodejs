@@ -285,11 +285,11 @@ describe("lib/api/resources/Inboxes: ", () => {
   describe("resetCredentials(): ", () => {
     it("succesfully resets credentials.", async () => {
       const inboxId = 1;
-      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes/${inboxId}/all_read`;
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes/${inboxId}/reset_credentials`;
 
       mock.onPatch(endpoint).reply(200, responseData);
 
-      const result = await inboxesAPI.markAsRead(inboxId);
+      const result = await inboxesAPI.resetCredentials(inboxId);
 
       expect(mock.history.patch[0].url).toEqual(endpoint);
       expect(mock.history.patch[0].data).toBeUndefined();
