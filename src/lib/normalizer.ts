@@ -37,7 +37,9 @@ export default function normalizeCallback(
         });
       }
 
-      return client
+      const mailtrapClient = data.sandbox ? client.testing : client;
+
+      return mailtrapClient
         .send(mail as MailtrapMail)
         .then((sendResponse) => callback(null, sendResponse))
         .catch((error) => {
