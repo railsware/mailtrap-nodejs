@@ -13,6 +13,7 @@ type AdditionalFields = {
   custom_variables?: CustomVariables;
   template_uuid?: string;
   template_variables?: TemplateVariables;
+  sandbox?: boolean | undefined;
 };
 
 export type NormalizeCallbackData =
@@ -26,19 +27,28 @@ export type NormalizeCallback = (
   info: SendResponse | SendError
 ) => void;
 
+interface MailtrapMailOptionsSandbox extends NodemailerMail.Options {
+  customVariables?: CustomVariables;
+  category?: string;
+  sandbox: boolean;
+}
+
 export interface MailtrapMailOptions extends NodemailerMail.Options {
   customVariables?: CustomVariables;
   category?: string;
   templateUuid?: string;
   templateVariables?: Record<string, string | number | boolean>;
+  sandbox?: boolean | undefined;
 }
 
 export type MailtrapResponse = SendResponse | SendError;
 
 export interface MailtrapTransporter extends Transporter<MailtrapResponse> {
   sendMail(
-    mailOptions: MailtrapMailOptions,
+    mailOptions: MailtrapMailOptions | MailtrapMailOptionsSandbox,
     callback: (err: Error | null, info: MailtrapResponse) => void
   ): void;
-  sendMail(mailOptions: MailtrapMailOptions): Promise<MailtrapResponse>;
+  sendMail(
+    mailOptions: MailtrapMailOptions | MailtrapMailOptionsSandbox
+  ): Promise<MailtrapResponse>;
 }
