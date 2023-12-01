@@ -16,6 +16,7 @@ const transport = Nodemailer.createTransport(MailtrapTransport({
   token: TOKEN
 }))
 
+// Note: 'sandbox: true' can be passed for making requests to testing API
 transport.sendMail({
   text: "Welcome to Mailtrap Sending!",
   to: {
