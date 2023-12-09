@@ -1,4 +1,4 @@
-import MailtrapClient from "./lib/mailtrap-client";
+import MailtrapClient from "./lib/MailtrapClient";
 import MailtrapTransport from "./lib/transport";
 
 export * from "./types/mailtrap";
