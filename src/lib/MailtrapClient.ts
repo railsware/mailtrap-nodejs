@@ -5,6 +5,7 @@ import axios, { AxiosInstance } from "axios";
 
 import encodeMailBuffers from "./mail-buffer-encoder";
 import handleSendingError from "./axios-logger";
+import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
 
 import CONFIG from "../config";
@@ -27,6 +28,8 @@ export default class MailtrapClient {
   private accountId?: number;
 
   private testingAPI: TestingAPI;
+
+  public general: GeneralAPI;
 
   /**
    * Initalizes axios instance with Mailtrap params.
@@ -62,6 +65,8 @@ export default class MailtrapClient {
       this.testInboxId,
       this.accountId
     );
+
+    this.general = new GeneralAPI(this.axios, this.accountId);
   }
 
   /**
