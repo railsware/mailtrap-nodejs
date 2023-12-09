@@ -1,7 +1,7 @@
 import { Transport } from "nodemailer";
 import MailMessage from "nodemailer/lib/mailer/mail-message";
 
-import MailtrapClient from "./mailtrap-client";
+import MailtrapClient from "./MailtrapClient";
 import normalizeCallback from "./normalizer";
 
 import CONFIG from "../config";
