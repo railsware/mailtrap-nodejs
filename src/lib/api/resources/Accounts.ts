@@ -22,7 +22,7 @@ export default class AccountsApi {
    * @returns Returns the list of accounts to which the API token has access.
    * access_levels can return 1000 (account owner), 100 (admin), 10 (viewer).
    */
-  public async getAllAcounts() {
+  public async getAllAccounts() {
     const url = this.accountsURL;
 
     return this.client.get<User[], User[]>(url);
