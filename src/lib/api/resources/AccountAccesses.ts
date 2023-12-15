@@ -2,8 +2,11 @@ import { AxiosInstance } from "axios";
 
 import CONFIG from "../../../config";
 
-import { Attachment } from "../../../types/api/attachments";
-import { AccountAccessFilters } from "../../../types/api/account-accesses";
+import {
+  AccountAccessFilters,
+  DeleteAccountAccessResponse,
+} from "../../../types/api/account-accesses";
+import { Resource } from "../../../types/api/permissions";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
@@ -39,7 +42,7 @@ export default class AccountsAccessesApi {
         }
       : {};
 
-    return this.client.get<Attachment[], Attachment[]>(url, { params });
+    return this.client.get<Resource[], Resource[]>(url, { params });
   }
 
   /**
@@ -50,6 +53,9 @@ export default class AccountsAccessesApi {
   public async removeAccountAccess(accountAccessId: number) {
     const url = `${this.accountAccessesURL}/${accountAccessId}`;
 
-    return this.client.get<Attachment, Attachment>(url);
+    return this.client.delete<
+      DeleteAccountAccessResponse,
+      DeleteAccountAccessResponse
+    >(url);
   }
 }
