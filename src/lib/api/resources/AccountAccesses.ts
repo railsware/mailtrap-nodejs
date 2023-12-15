@@ -22,7 +22,8 @@ export default class AccountsAccessesApi {
   }
 
   /**
-   * Get list of account accesses for which specifier_type is User or Invite. You have to have account admin/owner permissions for this endpoint to work.
+   * Get list of account accesses for which specifier_type is User or Invite.
+   * You have to have account admin/owner permissions for this endpoint to work.
    * If you specify project_ids, inbox_ids or domain_uuids, the endpoint will return account accesses for these resources.
    */
   public async listUserAndInviteAccountAccesses(
@@ -32,15 +33,13 @@ export default class AccountsAccessesApi {
 
     const params = filters
       ? {
-          params: {
-            ...(filters.domainUuids && { domain_uuids: filters.domainUuids }),
-            ...(filters.inboxIds && { inbox_ids: filters.inboxIds }),
-            ...(filters.projectIds && { project_ids: filters.projectIds }),
-          },
+          ...(filters.domainUuids && { domain_uuids: filters.domainUuids }),
+          ...(filters.inboxIds && { inbox_ids: filters.inboxIds }),
+          ...(filters.projectIds && { project_ids: filters.projectIds }),
         }
       : {};
 
-    return this.client.get<Attachment[], Attachment[]>(url, params);
+    return this.client.get<Attachment[], Attachment[]>(url, { params });
   }
 
   /**
