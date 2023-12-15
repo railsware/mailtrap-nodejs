@@ -44,7 +44,7 @@ describe("lib/api/resources/Accounts: ", () => {
   });
 
   describe("removeAccountAccess(): ", () => {
-    it("removes account access.", async () => {
+    it("successfully removes account access.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts`;
 
       expect.assertions(2);
