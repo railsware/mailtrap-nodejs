@@ -3,3 +3,7 @@ export type AccountAccessFilters = {
   inboxIds?: string[];
   projectIds?: string[];
 };
+
+export type DeleteAccountAccessResponse = {
+  id: number;
+};
