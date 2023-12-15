@@ -14,20 +14,30 @@ describe("lib/api/resources/AccountAccesses: ", () => {
   let mock: AxiosMockAdapter;
   const accountId = 100;
   const accountAccessesAPI = new AccountAccesses(axios, accountId);
-  const responseData = {
-    id: "mock-id",
-    message_id: "mock-message_id",
-    filename: "mock-filename",
-    attachment_type: "mock-attachment_type",
-    content_type: "mock-content_type",
-    content_id: "mock-content_id",
-    transfer_encoding: "mock-transfer_encoding",
-    attachment_size: 999,
-    created_at: "mock-created_at",
-    updated_at: "mock-updated_at",
-    attachment_human_size: "mock-attachment_human_size",
-    download_path: "mock-download_path",
-  };
+  const responseData = [
+    {
+      id: 42,
+      specifier_type: "User",
+      specifier: {
+        id: 0,
+        email: "user@example.com",
+        name: "string",
+      },
+      resources: [
+        {
+          resource_id: 0,
+          resource_type: "account",
+          access_level: 100,
+        },
+      ],
+      permissions: {
+        can_read: true,
+        can_update: true,
+        can_destroy: true,
+        can_leave: true,
+      },
+    },
+  ];
   const accountAccessId = 100;
 
   describe("class AccountAccesses(): ", () => {
@@ -79,11 +89,10 @@ describe("lib/api/resources/AccountAccesses: ", () => {
       };
 
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/account_accesses`;
-      const expectedResponseData = [responseData];
 
       expect.assertions(3);
 
-      mock.onGet(endpoint).reply(200, expectedResponseData);
+      mock.onGet(endpoint).reply(200, responseData);
 
       const result = await accountAccessesAPI.listUserAndInviteAccountAccesses(
         filters
@@ -96,7 +105,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
 
       expect(mock.history.get[0].url).toEqual(endpoint);
       expect(mock.history.get[0].params).toEqual(expectedParams);
-      expect(result).toEqual(expectedResponseData);
+      expect(result).toEqual(responseData);
     });
 
     it("fails with error.", async () => {
@@ -122,12 +131,12 @@ describe("lib/api/resources/AccountAccesses: ", () => {
 
       expect.assertions(2);
 
-      mock.onGet(endpoint).reply(200, responseData);
+      mock.onDelete(endpoint).reply(200, responseData);
       const result = await accountAccessesAPI.removeAccountAccess(
         accountAccessId
       );
 
-      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(mock.history.delete[0].url).toEqual(endpoint);
       expect(result).toEqual(responseData);
     });
 
