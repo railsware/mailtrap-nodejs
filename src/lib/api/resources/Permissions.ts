@@ -2,7 +2,6 @@ import { AxiosInstance } from "axios";
 
 import CONFIG from "../../../config";
 
-import { Attachment } from "../../../types/api/attachments";
 import {
   PermissionResourceParams,
   Resource,
@@ -49,7 +48,7 @@ export default class PermissionsApi {
     }));
     const body = { permissions: flattenPermissionObjects };
 
-    return this.client.put<Attachment[], Attachment[]>(url, body);
+    return this.client.put<Resource[], Resource[]>(url, body);
   }
 
   /**
