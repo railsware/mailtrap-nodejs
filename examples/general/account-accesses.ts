@@ -8,7 +8,7 @@ const client = new MailtrapClient({ token: TOKEN, testInboxId: TEST_INBOX_ID, ac
 
 const accountAccessesClient = client.general.accountAccesses
 
-accountAccessesClient.listUserAndInviteAccountAccesses()
+accountAccessesClient.listAccountAccesses()
   .then((result) => {
     const firstResult = result[0]
     
