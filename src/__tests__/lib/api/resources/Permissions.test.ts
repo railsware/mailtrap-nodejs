@@ -30,7 +30,7 @@ describe("lib/api/resources/Permissions: ", () => {
     describe("init: ", () => {
       it("initalizes with all necessary params.", () => {
         expect(permissionsAPI).toHaveProperty("getResources");
-        expect(permissionsAPI).toHaveProperty("manageUserOrToken");
+        expect(permissionsAPI).toHaveProperty("bulkPermissionsUpdate");
       });
     });
   });
@@ -50,7 +50,7 @@ describe("lib/api/resources/Permissions: ", () => {
     mock.reset();
   });
 
-  describe("manageUserOrToken(): ", () => {
+  describe("bulkPermissionsUpdate(): ", () => {
     it("successfully manages user or token with access level and destroy.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/account_accesses/${accountAccessId}/permissions/bulk`;
       const expectedResponseData = [responseData];
@@ -70,7 +70,7 @@ describe("lib/api/resources/Permissions: ", () => {
       expect.assertions(2);
 
       mock.onPut(endpoint).reply(200, expectedResponseData);
-      const result = await permissionsAPI.manageUserOrToken(
+      const result = await permissionsAPI.bulkPermissionsUpdate(
         accountAccessId,
         permissions
       );
@@ -96,7 +96,7 @@ describe("lib/api/resources/Permissions: ", () => {
       expect.assertions(2);
 
       mock.onPut(endpoint).reply(200, expectedResponseData);
-      const result = await permissionsAPI.manageUserOrToken(
+      const result = await permissionsAPI.bulkPermissionsUpdate(
         accountAccessId,
         permissions
       );
@@ -121,7 +121,7 @@ describe("lib/api/resources/Permissions: ", () => {
       expect.assertions(2);
 
       try {
-        await permissionsAPI.manageUserOrToken(accountAccessId, permissions);
+        await permissionsAPI.bulkPermissionsUpdate(accountAccessId, permissions);
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
 
