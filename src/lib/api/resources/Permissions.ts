@@ -32,7 +32,7 @@ export default class PermissionsApi {
    *
    * If you send a combination of resource_type and resource_id that already exists, the permission is updated. If the combination doesn’t exist, the permission is created.
    */
-  public async manageUserOrToken(
+  public async bulkPermissionsUpdate(
     accountAccessId: number,
     permissions: PermissionResourceParams[]
   ) {
