@@ -43,9 +43,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
   describe("class AccountAccesses(): ", () => {
     describe("init: ", () => {
       it("initalizes with all necessary params.", () => {
-        expect(accountAccessesAPI).toHaveProperty(
-          "listUserAndInviteAccountAccesses"
-        );
+        expect(accountAccessesAPI).toHaveProperty("listAccountAccesses");
         expect(accountAccessesAPI).toHaveProperty("removeAccountAccess");
       });
     });
@@ -66,7 +64,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
     mock.reset();
   });
 
-  describe("listUserAndInviteAccountAccesses(): ", () => {
+  describe("listAccountAccesses(): ", () => {
     it("successfully gets list of user and invite account accesses.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/account_accesses`;
       const expectedResponseData = [responseData];
@@ -74,8 +72,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
       expect.assertions(2);
 
       mock.onGet(endpoint).reply(200, expectedResponseData);
-      const result =
-        await accountAccessesAPI.listUserAndInviteAccountAccesses();
+      const result = await accountAccessesAPI.listAccountAccesses();
 
       expect(mock.history.get[0].url).toEqual(endpoint);
       expect(result).toEqual(expectedResponseData);
@@ -94,9 +91,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
 
       mock.onGet(endpoint).reply(200, responseData);
 
-      const result = await accountAccessesAPI.listUserAndInviteAccountAccesses(
-        filters
-      );
+      const result = await accountAccessesAPI.listAccountAccesses(filters);
       const expectedParams = {
         domain_uuids: filters.domainUuids,
         inbox_ids: filters.inboxIds,
@@ -114,7 +109,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
       expect.assertions(2);
 
       try {
-        await accountAccessesAPI.listUserAndInviteAccountAccesses();
+        await accountAccessesAPI.listAccountAccesses();
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
 
