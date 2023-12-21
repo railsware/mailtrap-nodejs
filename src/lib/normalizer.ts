@@ -1,4 +1,4 @@
-import MailtrapClient from "./mailtrap-client";
+import MailtrapClient from "./MailtrapClient";
 
 import adaptMail from "../adapters/mail";
 
