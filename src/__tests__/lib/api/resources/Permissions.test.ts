@@ -121,7 +121,10 @@ describe("lib/api/resources/Permissions: ", () => {
       expect.assertions(2);
 
       try {
-        await permissionsAPI.bulkPermissionsUpdate(accountAccessId, permissions);
+        await permissionsAPI.bulkPermissionsUpdate(
+          accountAccessId,
+          permissions
+        );
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
 
