@@ -13,7 +13,7 @@ permissionsClient.getResources()
     const firstResult = result[0]
     console.log(firstResult)
 
-    return permissionsClient.manageUserOrToken(5142, [
+    return permissionsClient.bulkPermissionsUpdate(5142, [
       {resourceId: '3281', resourceType: 'account', accessLevel: 'viewer'},
       {resourceId: '3809', resourceType: 'inbox', destroy: 'true'}
     ])
