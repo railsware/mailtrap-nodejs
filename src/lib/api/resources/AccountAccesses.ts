@@ -29,9 +29,7 @@ export default class AccountsAccessesApi {
    * You have to have account admin/owner permissions for this endpoint to work.
    * If you specify project_ids, inbox_ids or domain_uuids, the endpoint will return account accesses for these resources.
    */
-  public async listUserAndInviteAccountAccesses(
-    filters?: AccountAccessFilters
-  ) {
+  public async listAccountAccesses(filters?: AccountAccessFilters) {
     const url = this.accountAccessesURL;
 
     const params = filters
