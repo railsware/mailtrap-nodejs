@@ -6,6 +6,27 @@ import { MailtrapTransport } from "mailtrap"
  * For this example to work, you need to set up a sending domain,
  * and obtain a token that is authorized to send from the domain.
  * @see https://help.mailtrap.io/article/69-sending-domain-setup
+ * 
+ * @description Nodemailer is needed as a dependency. 
+ *  Note: 'sandbox: true' can be passed for making requests to Testing API.
+ * 
+ * ```sh
+ * yarn add nodemailer
+ * 
+ * # or, if you are using NPM:
+ * npm install --s nodemailer
+ * ```
+ * 
+ * If you're using Typescript, install `@types/nodemailer` as a `devDependency`.
+ * 
+ * ```sh
+ * yarn add --dev @types/nodemailer
+ * 
+ * # or, if you are using NPM:
+ * npm install --s-dev @types/nodemailer
+ * ```
+ * 
+ * You can provide Mailtrap specific keys like `category`, `customVariables`, `templateUuid` and `templateVariables`.
  */
 
 const TOKEN = "<YOUR-TOKEN-HERE>"
@@ -16,7 +37,6 @@ const transport = Nodemailer.createTransport(MailtrapTransport({
   token: TOKEN
 }))
 
-// Note: 'sandbox: true' can be passed for making requests to Testing API
 transport.sendMail({
   text: "Welcome to Mailtrap Sending!",
   to: {
