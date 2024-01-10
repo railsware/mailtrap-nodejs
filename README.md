@@ -23,8 +23,6 @@ npm install mailtrap
 
 ## Usage
 
-Refer to the [`examples`](examples) folder for the source code of these examples.
-
 ### Minimal
 
 ```ts
@@ -54,103 +52,20 @@ client
   .catch(console.error);
 ```
 
-### Full
+Refer to the [`examples`](examples) folder for the source code of this and other advanced examples.
 
-```ts
-import fs from "node:fs"
-import path from "node:path"
+### General API
 
-import { MailtrapClient } from "mailtrap"
+ - [List User & Invite account accesses](examples/general/account-accesses.ts)
+ - [Remove account access](examples/general/accounts.ts)
+ - [Permissions](examples/general/permissions.ts)
 
-/**
- * For this example to work, you need to set up a sending domain,
- * and obtain a token that is authorized to send from the domain.
- */
+### Email testing API
 
-const TOKEN = "<YOUR-TOKEN-HERE>";
-const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
-const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
-
-const client = new MailtrapClient({ token: TOKEN });
-
-const sender = { name: "Mailtrap Test", email: SENDER_EMAIL };
-
-const welcomeImage = fs.readFileSync(path.join(__dirname, "welcome.png"));
-
-client
-  .send({
-    category: "test",
-    custom_variables: {
-      hello: "world",
-      year: 2022,
-      anticipated: true,
-    },
-    from: sender,
-    to: [{ email: RECIPIENT_EMAIL }],
-    subject: "Hello from Mailtrap!",
-    html: `
-    <!doctype html>
-    <html>
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      </head>
-      <body style="font-family: sans-serif;">
-        <div style="display: block; margin: auto; max-width: 600px;" class="main">
-          <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Congrats for sending test email with Mailtrap!</h1>
-          <p>Inspect it using the tabs you see above and learn how this email can be improved.</p>
-          <img alt="Inspect with Tabs" src="cid:welcome.png" style="width: 100%;">
-          <p>Now send your email using our fake SMTP server and integration of your choice!</p>
-          <p>Good luck! Hope it works.</p>
-        </div>
-        <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->
-        <style>
-          .main { background-color: white; }
-          a:hover { border-left-width: 1em; min-height: 2em; }
-        </style>
-      </body>
-    </html>
-  `,
-    attachments: [
-      {
-        filename: "welcome.png",
-        content_id: "welcome.png",
-        disposition: "inline",
-        content: welcomeImage,
-      },
-    ],
-  })
-  .then(console.log)
-  .catch(console.error)
-```
-
-### Mail from template
-
-```ts
-import { MailtrapClient } from "mailtrap"
-
-/**
- * For this example to work, you need to set up a sending domain,
- * and obtain a token that is authorized to send from the domain.
- */
-
-const TOKEN = "<YOUR-TOKEN-HERE>";
-const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
-const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
-
-const client = new MailtrapClient({ token: TOKEN });
-
-client
-  .send({
-    from: { name: "Mailtrap Test", email: SENDER_EMAIL },
-    to: [{ email: RECIPIENT_EMAIL }],
-    template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
-    template_variables: {
-      user_name: "John Doe",
-    },
-  })
-  .then(console.log)
-  .catch(console.error);
-```
+ - [Attachments](examples/testing/attachments.ts)
+ - [Inboxes](examples/testing/inboxes.ts)
+ - [Messages](examples/testing/messages.ts)
+ - [Projects](examples/testing/projects.ts)
 
 ### Nodemailer Transport
 
@@ -170,71 +85,13 @@ yarn add --dev @types/nodemailer
 
 # or, if you are using NPM:
 npm install --s-dev @types/nodemailer
-```
 
 You can provide Mailtrap specific keys like `category`, `customVariables`, `templateUuid` and `templateVariables`.
 
-```ts
-import { readFileSync } from "fs";
-import Nodemailer from "nodemailer";
-import { MailtrapTransport } from "mailtrap"
-
-/**
- * For this example to work, you need to set up a sending domain,
- * and obtain a token that is authorized to send from the domain.
- */
-
-const TOKEN = "<YOUR-TOKEN-HERE>"
-const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
-const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
-
-const transport = Nodemailer.createTransport(MailtrapTransport({
-  token: TOKEN
-}))
-
-transport.sendMail({
-  text: "Welcome to Mailtrap Sending!",
-  to: {
-    address: RECIPIENT_EMAIL,
-    name: "John Doe"
-  },
-  from: {
-    address: SENDER_EMAIL,
-    name: "Mailtrap Test"
-  },
-  subject: "Hello from Mailtrap!",
-  html: `
-  <!doctype html>
-  <html>
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body style="font-family: sans-serif;">
-      <div style="display: block; margin: auto; max-width: 600px;" class="main">
-        <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Congrats for sending test email with Mailtrap!</h1>
-        <p>Inspect it using the tabs you see above and learn how this email can be improved.</p>
-        <img alt="Inspect with Tabs" src="cid:welcome.png" style="width: 100%;">
-        <p>Now send your email using our fake SMTP server and integration of your choice!</p>
-        <p>Good luck! Hope it works.</p>
-      </div>
-      <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->
-      <style>
-        .main { background-color: white; }
-        a:hover { border-left-width: 1em; min-height: 2em; }
-      </style>
-    </body>
-  </html>
-`,
-attachments: [
-  {
-    filename: "welcome.png", 
-    content: readFileSync("./welcome.png"),    
-  },
-],
-}).then(console.log)
-.catch(console.error)
-
 ```
+See transport usage below:
+
+ - [Transport](examples/transport.ts)
 
 ## Development
 
