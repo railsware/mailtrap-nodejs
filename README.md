@@ -69,8 +69,29 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
 ### Nodemailer Transport
 
- - [Transport](examples/transport.ts)
+> NOTE: [Nodemailer](https://www.npmjs.com/package/nodemailer) is needed as a dependency.
+
+```sh
+yarn add nodemailer
+
+# or, if you are using NPM:
+npm install --s nodemailer
 ```
+
+If you're using Typescript, install `@types/nodemailer` as a `devDependency`.
+
+```sh
+yarn add --dev @types/nodemailer
+
+# or, if you are using NPM:
+npm install --s-dev @types/nodemailer
+
+You can provide Mailtrap specific keys like `category`, `customVariables`, `templateUuid` and `templateVariables`.
+
+```
+See transport usage below:
+
+ - [Transport](examples/transport.ts)
 
 ## Development
 
