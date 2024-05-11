@@ -8,6 +8,6 @@ const client = new MailtrapClient({ token: TOKEN, testInboxId: TEST_INBOX_ID, ac
 
 const accountsClient = client.general.accounts
 
-accountsClient.getAllAcounts()
+accountsClient.getAllAccounts()
   .then(console.log)
   .catch(console.error)
