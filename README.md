@@ -60,12 +60,20 @@ Refer to the [`examples`](examples) folder for the source code of this and other
  - [Remove account access](examples/general/accounts.ts)
  - [Permissions](examples/general/permissions.ts)
 
+### Sending API
+
+ - [Advanced](examples/sending/everything.ts)
+ - [Minimal](examples/sending/minimal.ts)
+ - [Send email using template](examples/sending/template.ts)
+ - [Nodemailer transport](examples/sending/transport.ts)
+
 ### Email testing API
 
  - [Attachments](examples/testing/attachments.ts)
  - [Inboxes](examples/testing/inboxes.ts)
  - [Messages](examples/testing/messages.ts)
  - [Projects](examples/testing/projects.ts)
+ - [Send mail using template](examples/testing/template.ts)
 
 ### Nodemailer Transport
 
