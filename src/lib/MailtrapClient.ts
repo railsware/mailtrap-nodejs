@@ -5,8 +5,10 @@ import axios, { AxiosInstance } from "axios";
 
 import encodeMailBuffers from "./mail-buffer-encoder";
 import handleSendingError from "./axios-logger";
+
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
+import BulkSendingAPI from "./api/BulkSending";
 
 import CONFIG from "../config";
 
@@ -30,6 +32,8 @@ export default class MailtrapClient {
   private testingAPI: TestingAPI;
 
   public general: GeneralAPI;
+
+  public bulkSending: BulkSendingAPI;
 
   /**
    * Initalizes axios instance with Mailtrap params.
@@ -58,15 +62,15 @@ export default class MailtrapClient {
     this.accountId = accountId;
 
     /**
-     * Initialize testing API.
+     * Initialize APIs.
      */
     this.testingAPI = new TestingAPI(
       this.axios,
       this.testInboxId,
       this.accountId
     );
-
     this.general = new GeneralAPI(this.axios, this.accountId);
+    this.bulkSending = new BulkSendingAPI(this.axios);
   }
 
   /**
