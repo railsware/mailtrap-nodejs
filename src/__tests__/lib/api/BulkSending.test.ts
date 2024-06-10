@@ -68,7 +68,7 @@ describe("lib/api/BulkSending: ", () => {
         expect(result).toEqual(expectedResponseData);
       });
 
-      it("rejects with api error.", async () => {
+      it("handles an API error.", async () => {
         const responseData = {
           success: false,
           errors: ["mock-error-1", "mock-error-2"],
@@ -110,7 +110,7 @@ describe("lib/api/BulkSending: ", () => {
         }
       });
 
-      it("rejects with axios error.", async () => {
+      it("handles an HTTP transport error.", async () => {
         const emailData = {
           from: {
             email: "sender.mock@email.com",
