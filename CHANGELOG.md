@@ -1,6 +1,6 @@
 ## [3.4.0] - 2024-06-10
 - Add support for Bulk product API.
-  - Refer to the [`examples`](examples) folder for code examples.
+  - Refer to the [`examples/bulk`](examples/bulk) folder for code examples.
 - Restructure examples folder.
 
 ## [3.3.0] - 2024-01-31
