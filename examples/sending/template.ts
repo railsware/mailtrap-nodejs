@@ -1,8 +1,8 @@
 import { MailtrapClient } from "mailtrap"
 
 /**
- * For this example to work, you need to set up a sending domain,
- * and obtain a token that is authorized to send from the domain.
+ * For this example, you need to have ready-to-use sending domain or,
+ * a Demo domain that allows sending emails to your own account email.
  * @see https://help.mailtrap.io/article/69-sending-domain-setup
  */
 
