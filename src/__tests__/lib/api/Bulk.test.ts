@@ -1,23 +1,23 @@
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-import BulkSendingAPI from "../../../lib/api/BulkSending";
+import BulkAPI from "../../../lib/api/Bulk";
 import handleSendingError from "../../../lib/axios-logger";
 import MailtrapError from "../../../lib/MailtrapError";
 
 import CONFIG from "../../../config";
 
 const { CLIENT_SETTINGS } = CONFIG;
-const { BULK_SENDING_ENDPOINT } = CLIENT_SETTINGS;
+const { BULK_ENDPOINT } = CLIENT_SETTINGS;
 
-describe("lib/api/BulkSending: ", () => {
+describe("lib/api/Bulk: ", () => {
   let mock: AxiosMockAdapter;
-  const bulkSendingAPI = new BulkSendingAPI(axios);
+  const bulkAPI = new BulkAPI(axios);
 
   describe("class Testing(): ", () => {
     describe("init: ", () => {
       it("initalizes with all necessary params.", () => {
-        expect(bulkSendingAPI).toHaveProperty("send");
+        expect(bulkAPI).toHaveProperty("send");
       });
     });
 
@@ -38,7 +38,7 @@ describe("lib/api/BulkSending: ", () => {
 
     describe("send(): ", () => {
       it("successfully sends email.", async () => {
-        const endpoint = `${BULK_SENDING_ENDPOINT}/api/send`;
+        const endpoint = `${BULK_ENDPOINT}/api/send`;
         const expectedResponseData = {
           success: true,
           message_ids: ["0c7fd939-02cf-11ed-88c2-0a58a9feac02"],
@@ -61,7 +61,7 @@ describe("lib/api/BulkSending: ", () => {
           html: "<div>Mock text</div>",
         };
 
-        const result = await bulkSendingAPI.send(emailData);
+        const result = await bulkAPI.send(emailData);
 
         expect(mock.history.post[0].url).toEqual(endpoint);
         expect(mock.history.post[0].data).toEqual(JSON.stringify(emailData));
@@ -74,7 +74,7 @@ describe("lib/api/BulkSending: ", () => {
           errors: ["mock-error-1", "mock-error-2"],
         };
 
-        const endpoint = `${BULK_SENDING_ENDPOINT}/api/send`;
+        const endpoint = `${BULK_ENDPOINT}/api/send`;
 
         mock.onPost(endpoint).reply(400, responseData);
 
@@ -99,7 +99,7 @@ describe("lib/api/BulkSending: ", () => {
         expect.assertions(3);
 
         try {
-          await bulkSendingAPI.send(emailData);
+          await bulkAPI.send(emailData);
         } catch (error) {
           expect(mock.history.post[0].url).toEqual(endpoint);
           expect(mock.history.post[0].data).toEqual(JSON.stringify(emailData));
@@ -132,7 +132,7 @@ describe("lib/api/BulkSending: ", () => {
         expect.assertions(2);
 
         try {
-          await bulkSendingAPI.send(emailData);
+          await bulkAPI.send(emailData);
         } catch (error) {
           expect(error).toBeInstanceOf(MailtrapError);
 
