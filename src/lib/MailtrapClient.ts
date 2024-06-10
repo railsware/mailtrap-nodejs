@@ -8,7 +8,7 @@ import handleSendingError from "./axios-logger";
 
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
-import BulkSendingAPI from "./api/BulkSending";
+import BulkAPI from "./api/Bulk";
 
 import CONFIG from "../config";
 
@@ -33,7 +33,7 @@ export default class MailtrapClient {
 
   public general: GeneralAPI;
 
-  public bulkSending: BulkSendingAPI;
+  public bulk: BulkAPI;
 
   /**
    * Initalizes axios instance with Mailtrap params.
@@ -70,7 +70,7 @@ export default class MailtrapClient {
       this.accountId
     );
     this.general = new GeneralAPI(this.axios, this.accountId);
-    this.bulkSending = new BulkSendingAPI(this.axios);
+    this.bulk = new BulkAPI(this.axios);
   }
 
   /**
