@@ -77,7 +77,7 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
 ### Bulk sending API
 
- - [Send mail](examples/bulk-sending/send-mail.ts)
+ - [Send mail](examples/bulk/send-mail.ts)
 
 ### Nodemailer Transport
 
