@@ -7,9 +7,9 @@ import CONFIG from "../../config";
 import { Mail, SendResponse } from "../../types/mailtrap";
 
 const { CLIENT_SETTINGS } = CONFIG;
-const { BULK_SENDING_ENDPOINT } = CLIENT_SETTINGS;
+const { BULK_ENDPOINT } = CLIENT_SETTINGS;
 
-export default class BulkSendingAPI {
+export default class BulkAPI {
   private client: AxiosInstance;
 
   constructor(client: AxiosInstance) {
@@ -17,7 +17,7 @@ export default class BulkSendingAPI {
   }
 
   public async send(mail: Mail): Promise<SendResponse> {
-    const url = `${BULK_SENDING_ENDPOINT}/api/send`;
+    const url = `${BULK_ENDPOINT}/api/send`;
     const preparedMail = encodeMailBuffers(mail);
 
     return this.client.post<SendResponse, SendResponse>(url, preparedMail);
