@@ -75,6 +75,10 @@ Refer to the [`examples`](examples) folder for the source code of this and other
  - [Projects](examples/testing/projects.ts)
  - [Send mail using template](examples/testing/template.ts)
 
+### Bulk sending API
+
+ - [Send mail](examples/bulk/send-mail.ts)
+
 ### Nodemailer Transport
 
 > NOTE: [Nodemailer](https://www.npmjs.com/package/nodemailer) is needed as a dependency.

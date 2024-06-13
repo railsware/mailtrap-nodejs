@@ -1,28 +1,23 @@
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-import Testing from "../../../lib/api/Testing";
+import BulkAPI from "../../../lib/api/Bulk";
 import handleSendingError from "../../../lib/axios-logger";
-
-import CONFIG from "../../../config";
 import MailtrapError from "../../../lib/MailtrapError";
 
-const { CLIENT_SETTINGS } = CONFIG;
-const { TESTING_ENDPOINT } = CLIENT_SETTINGS;
+import CONFIG from "../../../config";
 
-describe("lib/api/Testing: ", () => {
+const { CLIENT_SETTINGS } = CONFIG;
+const { BULK_ENDPOINT } = CLIENT_SETTINGS;
+
+describe("lib/api/Bulk: ", () => {
   let mock: AxiosMockAdapter;
-  const testInboxId = 100;
-  const testingAPI = new Testing(axios, testInboxId);
+  const bulkAPI = new BulkAPI(axios);
 
   describe("class Testing(): ", () => {
     describe("init: ", () => {
       it("initalizes with all necessary params.", () => {
-        expect(testingAPI).toHaveProperty("send");
-        expect(testingAPI).toHaveProperty("projects");
-        expect(testingAPI).toHaveProperty("inboxes");
-        expect(testingAPI).toHaveProperty("messages");
-        expect(testingAPI).toHaveProperty("attachments");
+        expect(bulkAPI).toHaveProperty("send");
       });
     });
 
@@ -43,7 +38,7 @@ describe("lib/api/Testing: ", () => {
 
     describe("send(): ", () => {
       it("successfully sends email.", async () => {
-        const endpoint = `${TESTING_ENDPOINT}/api/send/${testInboxId}`;
+        const endpoint = `${BULK_ENDPOINT}/api/send`;
         const expectedResponseData = {
           success: true,
           message_ids: ["0c7fd939-02cf-11ed-88c2-0a58a9feac02"],
@@ -66,7 +61,7 @@ describe("lib/api/Testing: ", () => {
           html: "<div>Mock text</div>",
         };
 
-        const result = await testingAPI.send(emailData);
+        const result = await bulkAPI.send(emailData);
 
         expect(mock.history.post[0].url).toEqual(endpoint);
         expect(mock.history.post[0].data).toEqual(JSON.stringify(emailData));
@@ -79,7 +74,7 @@ describe("lib/api/Testing: ", () => {
           errors: ["mock-error-1", "mock-error-2"],
         };
 
-        const endpoint = `${TESTING_ENDPOINT}/api/send/${testInboxId}`;
+        const endpoint = `${BULK_ENDPOINT}/api/send`;
 
         mock.onPost(endpoint).reply(400, responseData);
 
@@ -104,7 +99,7 @@ describe("lib/api/Testing: ", () => {
         expect.assertions(3);
 
         try {
-          await testingAPI.send(emailData);
+          await bulkAPI.send(emailData);
         } catch (error) {
           expect(mock.history.post[0].url).toEqual(endpoint);
           expect(mock.history.post[0].data).toEqual(JSON.stringify(emailData));
@@ -137,7 +132,7 @@ describe("lib/api/Testing: ", () => {
         expect.assertions(2);
 
         try {
-          await testingAPI.send(emailData);
+          await bulkAPI.send(emailData);
         } catch (error) {
           expect(error).toBeInstanceOf(MailtrapError);
 

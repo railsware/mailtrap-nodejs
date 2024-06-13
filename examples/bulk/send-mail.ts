@@ -6,20 +6,19 @@ import { MailtrapClient } from "mailtrap"
  * @see https://help.mailtrap.io/article/69-sending-domain-setup
  */
 
+", @see https://help.mailtrap.io/article/69-sending-domain-setup#Demo-Domain--oYOU5"
+
 const TOKEN = "<YOUR-TOKEN-HERE>";
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
-client
-  .send({
-    from: { name: "Mailtrap Test", email: SENDER_EMAIL },
-    to: [{ email: RECIPIENT_EMAIL }],
-    template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
-    template_variables: {
-      user_name: "John Doe",
-    }
-  })
-  .then(console.log)
-  .catch(console.error);
+client.bulk.send({
+  from: { name: "Mailtrap Test", email: SENDER_EMAIL },
+  to: [{ email: RECIPIENT_EMAIL }],
+  subject: "Hello from Mailtrap!",
+  text: "Welcome to Mailtrap Sending!",
+})
+.then(console.log)
+.catch(console.error);
