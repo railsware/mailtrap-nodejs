@@ -103,7 +103,7 @@ You can provide Mailtrap specific keys like `category`, `customVariables`, `temp
 ```
 See transport usage below:
 
- - [Transport](examples/transport.ts)
+ - [Transport](examples/sending/transport.ts)
 
 ## Development
 
