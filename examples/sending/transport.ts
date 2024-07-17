@@ -54,6 +54,8 @@ transport.sendMail({
     {
       filename: "welcome.png",
       content: readFileSync("./welcome.png"),
+      cid: "welcome.png",
+      contentDisposition: "inline",
     },
   ],
 }).then(console.log)
