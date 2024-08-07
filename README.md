@@ -1,4 +1,7 @@
-![TypeScript](https://badgen.net/badge/icon/TypeScript/?icon=typescript&label) [![test](https://github.com/railsware/mailtrap-nodejs/actions/workflows/test.yml/badge.svg)](https://github.com/railsware/mailtrap-nodejs/actions/workflows/test.yml)
+![TypeScript](https://img.shields.io/npm/types/mailtrap?logo=typescript&logoColor=white&label=%20)
+[![test](https://github.com/railsware/mailtrap-nodejs/actions/workflows/test.yml/badge.svg)](https://github.com/railsware/mailtrap-nodejs/actions/workflows/test.yml)
+[![NPM](https://shields.io/npm/v/mailtrap?logo=npm&logoColor=white)](https://www.npmjs.com/package/mailtrap)
+[![downloads](https://shields.io/npm/d18m/mailtrap)](https://www.npmjs.com/package/mailtrap)
 
 # Official Mailtrap Node.js client
 
