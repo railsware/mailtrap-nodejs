@@ -8,7 +8,7 @@ Quickly add email sending functionality to your Node.js application with Mailtra
 
 ## Compatibility with previous releases
 
-Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. It is still under development and does not support the testing API yet. Please continue using version 2 if you need access to the testing API.
+Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. 
 
 ## Installation
 
