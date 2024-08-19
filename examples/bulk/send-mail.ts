@@ -12,9 +12,9 @@ const TOKEN = "<YOUR-TOKEN-HERE>";
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
-const client = new MailtrapClient({ token: TOKEN });
+const client = new MailtrapClient({ token: TOKEN, bulk: true });
 
-client.bulk.send({
+client.send({
   from: { name: "Mailtrap Test", email: SENDER_EMAIL },
   to: [{ email: RECIPIENT_EMAIL }],
   subject: "Hello from Mailtrap!",
