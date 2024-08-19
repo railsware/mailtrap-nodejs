@@ -13,10 +13,9 @@ const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const transport = Nodemailer.createTransport(MailtrapTransport({
-  token: TOKEN
+  token: TOKEN,
 }))
 
-// Note: 'sandbox: true' can be passed for making requests to Testing API
 transport.sendMail({
   text: "Welcome to Mailtrap Sending!",
   to: {
