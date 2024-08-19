@@ -13,7 +13,6 @@ type AdditionalFields = {
   custom_variables?: CustomVariables;
   template_uuid?: string;
   template_variables?: TemplateVariables;
-  sandbox?: boolean | undefined;
 };
 
 export type NormalizeCallbackData =
