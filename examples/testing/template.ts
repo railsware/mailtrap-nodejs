@@ -1,4 +1,4 @@
-import { MailtrapClient } from "../../src"
+import { MailtrapClient } from "mailtrap"
 
 /**
  * For this example to work, you need to set up a sending domain,
