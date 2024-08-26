@@ -11,9 +11,6 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-      - uses: github/codeql-action/init@v3
-        with:
-          config-file: ./.github/codeql/codeql-config.yml
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn test
