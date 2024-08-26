@@ -1,8 +1,0 @@
-paths:
-  - 'src'
-paths-ignore:
-  - 'src/**/*.test.js'
-  - 'src/**/*.test.ts'
-  - 'src/**/*.test.tsx'
-  - 'src/__tests__/**/**'
-  
