@@ -1,7 +1,7 @@
-queries:
-  - exclude:
-      patterns:
-        - 'src/__tests__/**/*.js'  
-        - 'src/__tests__/**/*.ts'  
-        - 'src/__tests__/**/*.jsx' 
-        - 'src/__tests__/**/*.tsx' 
+paths:
+  - 'src'
+paths-ignore:
+  - 'src/__tests__/**/*.js'  
+  - 'src/__tests__/**/*.ts'  
+  - 'src/__tests__/**/*.jsx' 
+  - 'src/__tests__/**/*.tsx' 
