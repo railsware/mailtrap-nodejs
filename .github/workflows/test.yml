@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: github/codeql-action/init@v3
         with:
-          config-file: .github/codeql/codeql-config.yml
+          config-file: ./.github/codeql/codeql-config.yml
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
