@@ -32,14 +32,6 @@ describe("lib/mailtrap-client: ", () => {
     text: "My TEXT",
   };
 
-  // beforeAll(() => {
-  //   mock = new AxiosMockAdapter(axios);
-  // });
-
-  // afterEach(() => {
-  //   mock.reset();
-  // });
-
   describe("send():", () => {
     beforeAll(() => {
       mock = new AxiosMockAdapter(axios);
