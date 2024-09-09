@@ -6,10 +6,6 @@ This NPM package offers integration with the [official API](https://api-docs.mai
 
 Quickly add email sending functionality to your Node.js application with Mailtrap.
 
-## Compatibility with previous releases
-
-Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. 
-
 ## Installation
 
 Use yarn or npm to install the package:
@@ -122,3 +118,7 @@ The package is available as open source under the terms of the [MIT License](htt
 ## Code of Conduct
 
 Everyone interacting in the Mailtrap project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
+
+## Compatibility with previous releases
+
+Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. 
