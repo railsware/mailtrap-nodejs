@@ -97,9 +97,11 @@ export default class MailtrapClient {
   }
 
   /**
-   * Sends mail with given `mail` params. If there is error, rejects with `MailtrapError`.
+   * Returns configured host. Checks if `bulk` and `sandbox` modes are activated simultaneously,
+   *   then reject with Mailtrap Error.
+   * Otherwise returns appropriate host url.
    */
-  public async send(mail: Mail): Promise<SendResponse> {
+  private determineHost() {
     let host;
 
     if (this.bulk && this.sandbox) {
@@ -112,10 +114,17 @@ export default class MailtrapClient {
       host = SENDING_ENDPOINT;
     }
 
+    return host;
+  }
+
+  /**
+   * Sends mail with given `mail` params. If there is error, rejects with `MailtrapError`.
+   */
+  public async send(mail: Mail): Promise<SendResponse> {
+    const host = this.determineHost();
     const url = `${host}/api/send${
       this.testInboxId ? `/${this.testInboxId}` : ""
     }`;
-    console.log(url);
     const preparedMail = encodeMailBuffers(mail);
 
     return this.axios.post<SendResponse, SendResponse>(url, preparedMail);
