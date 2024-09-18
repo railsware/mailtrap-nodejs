@@ -15,7 +15,7 @@ const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const transport = Nodemailer.createTransport(MailtrapTransport({
   token: TOKEN,
-  testInboxId: TEST_INBOX_ID
+  testInboxId: TEST_INBOX_ID,
   sandbox: true
 }))
 
