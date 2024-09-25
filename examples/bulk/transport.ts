@@ -14,6 +14,7 @@ const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const transport = Nodemailer.createTransport(MailtrapTransport({
   token: TOKEN,
+  bulk: true
 }))
 
 transport.sendMail({
@@ -53,8 +54,6 @@ transport.sendMail({
     {
       filename: "welcome.png",
       content: readFileSync("./welcome.png"),
-      cid: "welcome.png",
-      contentDisposition: "inline",
     },
   ],
 }).then(console.log)

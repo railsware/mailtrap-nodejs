@@ -9,10 +9,11 @@ import { MailtrapClient } from "mailtrap"
 ", @see https://help.mailtrap.io/article/69-sending-domain-setup#Demo-Domain--oYOU5"
 
 const TOKEN = "<YOUR-TOKEN-HERE>";
+const TEST_INBOX_ID = "<YOUR-TEST-INBOX-ID-HERE>"
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
-const client = new MailtrapClient({ token: TOKEN, bulk: true });
+const client = new MailtrapClient({ token: TOKEN, sandbox: true, testInboxId: TEST_INBOX_ID });
 
 client.send({
   from: { name: "Mailtrap Test", email: SENDER_EMAIL },

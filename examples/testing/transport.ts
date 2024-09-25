@@ -9,11 +9,14 @@ import { MailtrapTransport } from "mailtrap"
  */
 
 const TOKEN = "<YOUR-TOKEN-HERE>"
+const TEST_INBOX_ID = "<YOUR-TEST-INBOX-ID-HERE>"
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 const transport = Nodemailer.createTransport(MailtrapTransport({
   token: TOKEN,
+  testInboxId: TEST_INBOX_ID,
+  sandbox: true
 }))
 
 transport.sendMail({
@@ -53,8 +56,6 @@ transport.sendMail({
     {
       filename: "welcome.png",
       content: readFileSync("./welcome.png"),
-      cid: "welcome.png",
-      contentDisposition: "inline",
     },
   ],
 }).then(console.log)

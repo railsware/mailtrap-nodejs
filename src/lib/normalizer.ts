@@ -37,12 +37,10 @@ export default function normalizeCallback(
         });
       }
 
-      const mailtrapClient = data.sandbox ? client.testing : client;
-
-      return mailtrapClient
+      return client
         .send(mail as MailtrapMail)
         .then((sendResponse) => callback(null, sendResponse))
-        .catch((error) => {
+        .catch((error: any) => {
           callback(new Error(error), {
             success: false,
             errors: [SENDING_FAILED],
