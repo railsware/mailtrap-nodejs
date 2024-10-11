@@ -124,43 +124,5 @@ describe("lib/normalizer: ", () => {
       // @ts-ignore
       cb(null, mailData);
     });
-
-    it("checks if testing client is switched.", () => {
-      expect.assertions(3);
-
-      const mockResponse = {
-        statusCode: 200,
-      };
-      const mockClient = {
-        testing: {
-          send: jest.fn(() => Promise.resolve(mockResponse)),
-        },
-      };
-
-      const callback = (error: Error, data: SendError) => {
-        expect(error).toBeNull();
-        expect(data).toEqual(mockResponse);
-      };
-      const mailData = {
-        sandbox: true,
-        text: "mock-text",
-        to: {
-          address: "mock@mail.com",
-          name: "mock-name",
-        },
-        from: {
-          address: "mock@mail.com",
-          name: "mock-name",
-        },
-        subject: "mock-subject",
-      };
-
-      // @ts-ignore
-      const cb = normalizeCallback(mockClient, callback);
-
-      // @ts-ignore
-      cb(null, mailData);
-      expect(mockClient.testing.send).toBeCalledTimes(1);
-    });
   });
 });

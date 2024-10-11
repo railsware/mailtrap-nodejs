@@ -9,6 +9,7 @@ export default {
     TEST_INBOX_ID_MISSING: "testInboxId is missing, testing API will not work.",
     ACCOUNT_ID_MISSING:
       "accountId is missing, some features of testing API may not work properly.",
+    BULK_SANDBOX_INCOMPATIBLE: "Bulk mode is not applicable for sandbox API.",
   },
   CLIENT_SETTINGS: {
     SENDING_ENDPOINT: "https://send.api.mailtrap.io",
