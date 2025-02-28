@@ -1,6 +1,6 @@
 ## [4.0.0] - 2025-02-28
-- BRAKING CHANGE: Missing params for the Testing API (here) are treated as errors (throw new Error(...)), not warnings.
-- BRAKING CHANGE: Removes send methods from the `BulkSendingAPI` and `TestingAPI` classes. There should be only one send method on the `MailtrapClient`.
+- BREAKING CHANGE: Missing params for the Testing API (here) are treated as errors (throw new Error(...)), not warnings.
+- BREAKING CHANGE: Removes send methods from the `BulkSendingAPI` and `TestingAPI` classes. There should be only one send method on the `MailtrapClient`.
 - The `general` and `testing` APIs are created lazily, after the first access to the corresponding getters.
 - Updated the MailtrapClient to accept two more params: bulk: Boolean and sandbox: Boolean. They are changing the behavior of the send method of the client in the following way:
 - Security updates for dependencies
