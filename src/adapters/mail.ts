@@ -1,7 +1,10 @@
 import adaptAttachment from "./attachement";
 import adaptContent from "./content";
 import adaptHeaders from "./headers";
-import adaptRecipients, { adaptSingleRecipient, adaptReplyToRecipient } from "./recipients";
+import adaptRecipients, {
+  adaptSingleRecipient,
+  adaptReplyToRecipient,
+} from "./recipients";
 
 import CONFIG from "../config";
 

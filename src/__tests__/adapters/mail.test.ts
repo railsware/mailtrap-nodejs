@@ -1,7 +1,10 @@
 import adaptMail from "../../adapters/mail";
 
 import config from "../../config";
-import { adaptSingleRecipient, adaptReplyToRecipient } from "../../adapters/recipients";
+import {
+  adaptSingleRecipient,
+  adaptReplyToRecipient,
+} from "../../adapters/recipients";
 
 const { ERRORS } = config;
 const { SUBJECT_REQUIRED, FROM_REQUIRED } = ERRORS;
