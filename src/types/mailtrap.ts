@@ -23,6 +23,7 @@ export type CommonMail = {
   attachments?: Attachment[];
   headers?: MailtrapHeaders;
   custom_variables?: CustomVariables;
+  reply_to?: Address;
 };
 
 export type TemplateVariables = Record<string, string | number | boolean>;
