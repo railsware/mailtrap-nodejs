@@ -1,7 +1,7 @@
 import adaptMail from "../../adapters/mail";
 
 import config from "../../config";
-import { adaptSingleRecipient } from "../../adapters/recipients";
+import { adaptSingleRecipient, adaptReplyToRecipient } from "../../adapters/recipients";
 
 const { ERRORS } = config;
 const { SUBJECT_REQUIRED, FROM_REQUIRED } = ERRORS;
@@ -24,6 +24,7 @@ describe("adapters/mail: ", () => {
           mockKey: "mock-value",
         },
         subject: "mock-subject",
+        replyTo: "mock-reply-to",
       };
 
       const expectedResult = {
@@ -33,6 +34,7 @@ describe("adapters/mail: ", () => {
         bcc: [],
         headers: data.headers,
         subject: data.subject,
+        reply_to: adaptReplyToRecipient(data.replyTo),
       };
       const result = adaptMail(data);
 
@@ -47,6 +49,7 @@ describe("adapters/mail: ", () => {
           mockKey: "mock-value",
         },
         attachments: [{ filename: "mock-filename", content: "mock-content" }],
+        replyTo: [],
       };
 
       const expectedResult = {
@@ -57,6 +60,7 @@ describe("adapters/mail: ", () => {
         bcc: [],
         headers: data.headers,
         attachments: data.attachments,
+        reply_to: adaptReplyToRecipient(data.replyTo),
       };
       const result = adaptMail(data);
 
@@ -74,6 +78,7 @@ describe("adapters/mail: ", () => {
         customVariables: {
           user_id: "mock-user_id",
         },
+        replyTo: ["mock-reply-to"],
       };
 
       const expectedResult = {
@@ -85,6 +90,7 @@ describe("adapters/mail: ", () => {
         headers: data.headers,
         attachments: data.attachments,
         custom_variables: data.customVariables,
+        reply_to: adaptReplyToRecipient(data.replyTo),
       };
       const result = adaptMail(data);
 
