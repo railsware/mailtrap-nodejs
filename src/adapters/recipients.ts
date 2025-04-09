@@ -38,3 +38,27 @@ export default function adaptRecipients(
 
   return recipients.map(adaptSingleRecipient);
 }
+
+/**
+ * If there is no recipient or empty array is passed, then return undefined since it is an optional field.
+ * If it's not array, then adapt recipient and returns it.
+ * Otherwise, if type is array as nodemailer allows, we pick the first recipient 
+ * as Mailtrap doesn't support multiple reply-to recipients.
+ */
+export function adaptReplyToRecipient(
+  recipients:
+    | string
+    | NodemailerAddress
+    | Array<string | NodemailerAddress>
+    | undefined
+): Address | undefined {
+  if(!recipients || (Array.isArray(recipients) && recipients.length === 0)) {
+    return undefined;
+  }
+
+  if (!Array.isArray(recipients)) {
+    return adaptSingleRecipient(recipients);
+  }
+
+  return adaptSingleRecipient(recipients[0]);
+}

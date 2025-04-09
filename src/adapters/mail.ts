@@ -1,7 +1,7 @@
 import adaptAttachment from "./attachement";
 import adaptContent from "./content";
 import adaptHeaders from "./headers";
-import adaptRecipients, { adaptSingleRecipient } from "./recipients";
+import adaptRecipients, { adaptSingleRecipient, adaptReplyToRecipient } from "./recipients";
 
 import CONFIG from "../config";
 
@@ -27,6 +27,7 @@ export default function adaptMail(data: MailtrapMailOptions): Mail | SendError {
     to: adaptRecipients(data.to),
     cc: adaptRecipients(data.cc),
     bcc: adaptRecipients(data.bcc),
+    reply_to: adaptReplyToRecipient(data.replyTo),
   };
 
   if (data.headers) {
