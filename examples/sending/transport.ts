@@ -11,6 +11,7 @@ import { MailtrapTransport } from "mailtrap"
 const TOKEN = "<YOUR-TOKEN-HERE>"
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
+const REPLY_TO_EMAIL = "<REPLYTO@EMAIL.COM>";
 
 const transport = Nodemailer.createTransport(MailtrapTransport({
   token: TOKEN,
@@ -26,6 +27,7 @@ transport.sendMail({
     address: SENDER_EMAIL,
     name: "Mailtrap Test"
   },
+  replyTo: REPLY_TO_EMAIL,
   subject: "Hello from Mailtrap!",
   html: `
   <!doctype html>
