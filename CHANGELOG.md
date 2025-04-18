@@ -1,3 +1,6 @@
+## [4.1.0] - 2025-04-18
+- Add support for `reply_to` in Sending API (in https://github.com/railsware/mailtrap-nodejs/pull/58, thanks to @aolamide).
+
 ## [4.0.0] - 2025-02-28
 - BREAKING CHANGE: Missing params for the Testing API (here) are treated as errors (throw new Error(...)), not warnings.
 - BREAKING CHANGE: Removes send methods from the `BulkSendingAPI` and `TestingAPI` classes. There should be only one send method on the `MailtrapClient`.
