@@ -12,6 +12,7 @@ import { MailtrapClient } from "mailtrap"
 const TOKEN = "<YOUR-TOKEN-HERE>";
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
+const REPLY_TO_EMAIL = "<REPLYTO@EMAIL.COM>";
 
 const client = new MailtrapClient({ token: TOKEN });
 
@@ -28,6 +29,7 @@ client
     from: { name: "Mailtrap Test", email: SENDER_EMAIL },
     to: [{ email: RECIPIENT_EMAIL }],
     subject: "Hello from Mailtrap!",
+    reply_to: { email: REPLY_TO_EMAIL },
     html: `
     <!doctype html>
     <html>
