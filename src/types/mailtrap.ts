@@ -68,3 +68,10 @@ export type MailtrapClientConfig = {
   bulk?: boolean;
   sandbox?: boolean;
 };
+
+export type BatchMail = Mail[];
+
+export type BatchSendResponse = {
+  success: true;
+  message_ids: string[];
+};
