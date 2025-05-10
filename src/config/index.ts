@@ -14,6 +14,7 @@ export default {
   CLIENT_SETTINGS: {
     SENDING_ENDPOINT: "https://send.api.mailtrap.io",
     BULK_ENDPOINT: "https://bulk.api.mailtrap.io",
+    BATCH_ENDPOINT: "https://batch.api.mailtrap.io",
     TESTING_ENDPOINT: "https://sandbox.api.mailtrap.io",
     GENERAL_ENDPOINT: "https://mailtrap.io",
     USER_AGENT:
