@@ -8,6 +8,7 @@ import handleSendingError from "./axios-logger";
 
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
+import ContactsApi from "./api/resources/contacts/Contacts";
 
 import CONFIG from "../config";
 
@@ -100,6 +101,13 @@ export default class MailtrapClient {
    */
   get general() {
     return new GeneralAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Contacts API.
+   */
+  get contacts() {
+    return new ContactsApi(this.axios, this.accountId);
   }
 
   /**
