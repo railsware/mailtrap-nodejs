@@ -34,8 +34,9 @@ client.contacts
         }
       })
     console.log("Contact updated:", updateResponse.data);
+
     // Delete contact
-    await client.general.contacts
+    await client.contacts
       .delete(contactId)
     console.log("Contact deleted");
   })
