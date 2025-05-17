@@ -76,26 +76,37 @@ export type BatchSendResponse = {
   message_ids: string[];
 };
 
-export type BatchSendRequestItem = {
-  to: Address[];
-  cc?: Address[];
-  bcc?: Address[];
-  custom_variables?: CustomVariables;
-  template_variables?: TemplateVariables;
-};
+interface BaseAddress {
+  email: string;
+  name?: string;
+}
 
-export type BatchSendRequest = {
-  base: {
-    from: Address;
-    subject?: string;
-    text?: string | Buffer;
-    html?: string | Buffer;
-    template_uuid?: string;
-    category?: string;
-    attachments?: Attachment[];
-    headers?: MailtrapHeaders;
-    custom_variables?: CustomVariables;
-    reply_to?: Address;
-  };
-  requests: BatchSendRequestItem[];
-};
+interface InlineBatchSendBase {
+  from: BaseAddress;
+  subject: string; // Required when using inline content
+  text?: string | Buffer;
+  html?: string | Buffer;
+  attachments?: Attachment[];
+  headers?: Record<string, string>;
+  custom_variables?: Record<string, string>;
+  category?: string;
+  reply_to?: BaseAddress;
+}
+
+interface TemplateBatchSendBase {
+  from: BaseAddress;
+  template_uuid: string; // Required for template usage
+  template_variables?: Record<string, string>;
+  custom_variables?: Record<string, string>;
+  category?: string;
+  reply_to?: BaseAddress;
+}
+
+export interface BatchSendRequest {
+  base: InlineBatchSendBase | TemplateBatchSendBase;
+  requests: {
+    to: BaseAddress[];
+    cc?: BaseAddress[];
+    bcc?: BaseAddress[];
+  }[];
+}
