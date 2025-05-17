@@ -1,7 +1,7 @@
 import { MailtrapClient } from "mailtrap";
 
 const TOKEN = "<YOUR-TOKEN-HERE>";
-const ACCOUNT_ID = 123; // Your account ID
+const ACCOUNT_ID = "<YOUR-ACCOUNT-ID-HERE>"
 
 const client = new MailtrapClient({
   token: TOKEN,
