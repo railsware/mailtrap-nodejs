@@ -8,11 +8,19 @@ import handleSendingError from "./axios-logger";
 
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
+import ContactsApi from "./api/resources/contacts/Contacts";
 
 import CONFIG from "../config";
 
-import { Mail, SendResponse, MailtrapClientConfig } from "../types/mailtrap";
+import {
+  Mail,
+  SendResponse,
+  MailtrapClientConfig,
+  BatchSendResponse,
+  BatchSendRequest,
+} from "../types/mailtrap";
 import MailtrapError from "./MailtrapError";
+import ContactListsApi from "./api/resources/contacts/ContactLists";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
@@ -97,6 +105,20 @@ export default class MailtrapClient {
   }
 
   /**
+   * Getter for Contacts API.
+   */
+  get contacts() {
+    return new ContactsApi(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Contact Lists API.
+   */
+  get contactLists() {
+    return new ContactListsApi(this.axios, this.accountId);
+  }
+
+  /**
    * Returns configured host. Checks if `bulk` and `sandbox` modes are activated simultaneously,
    *   then reject with Mailtrap Error.
    * Otherwise returns appropriate host url.
@@ -128,5 +150,31 @@ export default class MailtrapClient {
     const preparedMail = encodeMailBuffers(mail);
 
     return this.axios.post<SendResponse, SendResponse>(url, preparedMail);
+  }
+
+  /**
+   * Sends a batch of emails with the given array of mail objects.
+   * If there is an error, rejects with MailtrapError.
+   */
+  public async batchSend(
+    request: BatchSendRequest
+  ): Promise<BatchSendResponse> {
+    const host = this.determineHost();
+    const ifSandbox =
+      this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
+    const url = `${host}/api/batch${ifSandbox}`;
+
+    const preparedBase = encodeMailBuffers(request.base);
+    const preparedRequests = request.requests.map((req) => ({
+      to: req.to,
+      cc: req.cc,
+      bcc: req.bcc,
+      custom_variables: req.custom_variables,
+    }));
+
+    return this.axios.post<BatchSendResponse, BatchSendResponse>(url, {
+      base: preparedBase,
+      requests: preparedRequests,
+    });
   }
 }

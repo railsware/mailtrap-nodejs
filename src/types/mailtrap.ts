@@ -68,3 +68,58 @@ export type MailtrapClientConfig = {
   bulk?: boolean;
   sandbox?: boolean;
 };
+
+export type BatchMail = Mail[];
+
+export type BatchSendResponse = {
+  success: true;
+  message_ids: string[];
+};
+
+interface BaseAddress {
+  email: string;
+  name?: string;
+}
+
+interface InlineBatchSendBase {
+  from: BaseAddress;
+  subject: string; // Required when using inline content
+  text?: string | Buffer;
+  html?: string | Buffer;
+  attachments?: Attachment[];
+  headers?: Record<string, string>;
+  custom_variables?: Record<string, string | number | boolean>;
+  category?: string;
+  reply_to?: BaseAddress;
+}
+
+interface TemplateBatchSendBase {
+  from: BaseAddress;
+  template_uuid: string; // Required for template usage
+  template_variables?: Record<string, string | number | boolean>;
+  custom_variables?: Record<string, string | number | boolean>;
+  category?: string;
+  reply_to?: BaseAddress;
+}
+
+export interface BatchSendRequest {
+  base: InlineBatchSendBase | TemplateBatchSendBase;
+  requests: {
+    to: BaseAddress[];
+    cc?: BaseAddress[];
+    bcc?: BaseAddress[];
+    custom_variables?: Record<string, string | number | boolean>;
+  }[];
+}
+
+export interface ContactFields {
+  first_name?: string;
+  last_name?: string;
+  [key: string]: string | undefined;
+}
+
+export interface ContactData {
+  email: string;
+  fields?: ContactFields;
+  list_ids?: number[];
+}
