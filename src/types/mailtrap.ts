@@ -108,5 +108,6 @@ export interface BatchSendRequest {
     to: BaseAddress[];
     cc?: BaseAddress[];
     bcc?: BaseAddress[];
+    custom_variables?: Record<string, string>;
   }[];
 }
