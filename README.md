@@ -66,6 +66,13 @@ Refer to the [`examples`](examples) folder for the source code of this and other
  - [Send email using template](examples/sending/template.ts)
  - [Nodemailer transport](examples/sending/transport.ts)
 
+### Batch Sending API
+
+ - [Send a batch of emails](examples/batch/send-batch.ts)
+ - [Send a batch of transactional emails](examples/batch/transactional-batch.ts)
+ - [Send a batch of bulk emails](examples/batch/bulk-batch.ts)
+ - [Send a batch of sandbox emails](examples/batch/sandbox-batch.ts)
+
 ### Email testing API
 
  - [Attachments](examples/testing/attachments.ts)
