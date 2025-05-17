@@ -36,4 +36,5 @@ client.batchSend({
   ]
 })
   .then(console.log)
-  .catch(console.error); 
+  .catch(console.error);
+ 
