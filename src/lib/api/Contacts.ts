@@ -16,6 +16,6 @@ export default class ContactsAPI {
     this.client = client;
     this.accountId = accountId;
     this.contacts = new ContactsApi(this.client, this.accountId);
-    this.contactLists = new ContactListsApi(this.client);
+    this.contactLists = new ContactListsApi(this.client, this.accountId);
   }
 }
