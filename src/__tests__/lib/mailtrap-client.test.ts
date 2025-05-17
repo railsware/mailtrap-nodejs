@@ -384,6 +384,44 @@ describe("lib/mailtrap-client: ", () => {
     });
 
     describe("batch sending:", () => {
+      it("rejects with Mailtrap error when bulk and sandbox modes are used together", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          bulk: true,
+          sandbox: true,
+        });
+
+        const batchData = {
+          base: {
+            from: {
+              email: "sender@mailtrap.io",
+              name: "Mailtrap",
+            },
+            subject: "Batch Subject",
+            text: "Batch Text",
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+          ],
+        };
+
+        try {
+          await batchClient.batchSend(batchData);
+        } catch (error) {
+          expect(error).toBeInstanceOf(MailtrapError);
+          if (error instanceof MailtrapError) {
+            expect(error.message).toEqual(BULK_SANDBOX_INCOMPATIBLE);
+          }
+        }
+      });
+
       it("successfully sends a batch of emails in bulk mode", async () => {
         const batchClient = new MailtrapClient({
           token: "MY_API_TOKEN",
