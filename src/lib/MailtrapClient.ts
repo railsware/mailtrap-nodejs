@@ -15,8 +15,8 @@ import {
   Mail,
   SendResponse,
   MailtrapClientConfig,
-  BatchMail,
   BatchSendResponse,
+  BatchSendRequest,
 } from "../types/mailtrap";
 import MailtrapError from "./MailtrapError";
 
@@ -140,14 +140,25 @@ export default class MailtrapClient {
    * Sends a batch of emails with the given array of mail objects.
    * If there is an error, rejects with MailtrapError.
    */
-  public async batchSend(mails: BatchMail): Promise<BatchSendResponse> {
+  public async batchSend(
+    request: BatchSendRequest
+  ): Promise<BatchSendResponse> {
     const host = this.determineHost();
-    const url = `${host}/api/send/batch`;
-    const preparedMails = mails.map((mail) => encodeMailBuffers(mail));
+    const ifSandbox =
+      this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
+    const url = `${host}/api/batch${ifSandbox}`;
 
-    return this.axios.post<BatchSendResponse, BatchSendResponse>(
-      url,
-      preparedMails
-    );
+    const preparedBase = encodeMailBuffers(request.base);
+    const preparedRequests = request.requests.map((req) => ({
+      to: req.to,
+      cc: req.cc,
+      bcc: req.bcc,
+      custom_variables: req.custom_variables,
+    }));
+
+    return this.axios.post<BatchSendResponse, BatchSendResponse>(url, {
+      base: preparedBase,
+      requests: preparedRequests,
+    });
   }
 }
