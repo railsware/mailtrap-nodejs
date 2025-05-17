@@ -20,6 +20,7 @@ import {
   BatchSendRequest,
 } from "../types/mailtrap";
 import MailtrapError from "./MailtrapError";
+import ContactListsApi from "./api/resources/contacts/ContactLists";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
@@ -108,6 +109,13 @@ export default class MailtrapClient {
    */
   get contacts() {
     return new ContactsApi(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Contact Lists API.
+   */
+  get contactLists() {
+    return new ContactListsApi(this.axios, this.accountId);
   }
 
   /**
