@@ -58,11 +58,8 @@ Refer to the [`examples`](examples) folder for the source code of this and other
  - [List User & Invite account accesses](examples/general/account-accesses.ts)
  - [Remove account access](examples/general/accounts.ts)
  - [Permissions](examples/general/permissions.ts)
-
-### Contacts API
-
- - [List contacts](examples/contacts/list-contacts.ts)
- - [List contact lists](examples/contacts/list-contact-lists.ts)
+ - [Contacts](examples/contacts/everything.ts.ts)
+ - [Contact Lists](examples/contacts/contact-lists.ts)
 
 ### Sending API
 
