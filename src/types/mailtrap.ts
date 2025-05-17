@@ -88,7 +88,7 @@ interface InlineBatchSendBase {
   html?: string | Buffer;
   attachments?: Attachment[];
   headers?: Record<string, string>;
-  custom_variables?: Record<string, string>;
+  custom_variables?: Record<string, string | number | boolean>;
   category?: string;
   reply_to?: BaseAddress;
 }
@@ -96,8 +96,8 @@ interface InlineBatchSendBase {
 interface TemplateBatchSendBase {
   from: BaseAddress;
   template_uuid: string; // Required for template usage
-  template_variables?: Record<string, string>;
-  custom_variables?: Record<string, string>;
+  template_variables?: Record<string, string | number | boolean>;
+  custom_variables?: Record<string, string | number | boolean>;
   category?: string;
   reply_to?: BaseAddress;
 }
@@ -108,7 +108,7 @@ export interface BatchSendRequest {
     to: BaseAddress[];
     cc?: BaseAddress[];
     bcc?: BaseAddress[];
-    custom_variables?: Record<string, string>;
+    custom_variables?: Record<string, string | number | boolean>;
   }[];
 }
 
