@@ -781,7 +781,9 @@ describe("lib/mailtrap-client: ", () => {
       const result = await client.contacts.update(contactId, updateData);
 
       expect(mock.history.patch[0].url).toEqual(endpoint);
-      expect(mock.history.patch[0].data).toEqual(JSON.stringify({ contact: updateData }));
+      expect(mock.history.patch[0].data).toEqual(
+        JSON.stringify({ contact: updateData })
+      );
       expect(result).toEqual(expectedResponseData);
     });
 
