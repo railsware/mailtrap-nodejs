@@ -75,3 +75,27 @@ export type BatchSendResponse = {
   success: true;
   message_ids: string[];
 };
+
+export type BatchSendRequestItem = {
+  to: Address[];
+  cc?: Address[];
+  bcc?: Address[];
+  custom_variables?: CustomVariables;
+  template_variables?: TemplateVariables;
+};
+
+export type BatchSendRequest = {
+  base: {
+    from: Address;
+    subject?: string;
+    text?: string | Buffer;
+    html?: string | Buffer;
+    template_uuid?: string;
+    category?: string;
+    attachments?: Attachment[];
+    headers?: MailtrapHeaders;
+    custom_variables?: CustomVariables;
+    reply_to?: Address;
+  };
+  requests: BatchSendRequestItem[];
+};
