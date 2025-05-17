@@ -111,3 +111,15 @@ export interface BatchSendRequest {
     custom_variables?: Record<string, string>;
   }[];
 }
+
+export interface ContactFields {
+  first_name?: string;
+  last_name?: string;
+  [key: string]: string | undefined;
+}
+
+export interface ContactData {
+  email: string;
+  fields?: ContactFields;
+  list_ids?: number[];
+}
