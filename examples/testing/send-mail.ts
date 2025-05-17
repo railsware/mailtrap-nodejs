@@ -4,9 +4,9 @@ import { MailtrapClient } from "mailtrap"
  * For this example, you need to have ready-to-use sending domain or,
  * a Demo domain that allows sending emails to your own account email.
  * @see https://help.mailtrap.io/article/69-sending-domain-setup
+ * @see https://help.mailtrap.io/article/69-sending-domain-setup#Demo-Domain--oYOU5"
  */
 
-", @see https://help.mailtrap.io/article/69-sending-domain-setup#Demo-Domain--oYOU5"
 
 const TOKEN = "<YOUR-TOKEN-HERE>";
 const TEST_INBOX_ID = "<YOUR-TEST-INBOX-ID-HERE>"
