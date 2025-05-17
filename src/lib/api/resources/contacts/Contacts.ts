@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-
+import { ContactData } from "../../../../types/mailtrap";
 import CONFIG from "../../../../config";
 
 const { CLIENT_SETTINGS } = CONFIG;
@@ -18,16 +18,16 @@ export default class ContactsApi {
   /**
    * Creates a new contact.
    */
-  public async create(data: any) {
-    return this.client.post(this.contactsURL, data);
+  public async create(data: ContactData) {
+    return this.client.post(this.contactsURL, { contact: data });
   }
 
   /**
    * Updates an existing contact.
    */
-  public async update(id: number, data: any) {
+  public async update(id: number, data: ContactData) {
     const url = `${this.contactsURL}/${id}`;
-    return this.client.patch(url, data);
+    return this.client.patch(url, { contact: data });
   }
 
   /**
