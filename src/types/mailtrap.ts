@@ -75,3 +75,39 @@ export type BatchSendResponse = {
   success: true;
   message_ids: string[];
 };
+
+interface BaseAddress {
+  email: string;
+  name?: string;
+}
+
+interface InlineBatchSendBase {
+  from: BaseAddress;
+  subject: string; // Required when using inline content
+  text?: string | Buffer;
+  html?: string | Buffer;
+  attachments?: Attachment[];
+  headers?: Record<string, string>;
+  custom_variables?: Record<string, string>;
+  category?: string;
+  reply_to?: BaseAddress;
+}
+
+interface TemplateBatchSendBase {
+  from: BaseAddress;
+  template_uuid: string; // Required for template usage
+  template_variables?: Record<string, string>;
+  custom_variables?: Record<string, string>;
+  category?: string;
+  reply_to?: BaseAddress;
+}
+
+export interface BatchSendRequest {
+  base: InlineBatchSendBase | TemplateBatchSendBase;
+  requests: {
+    to: BaseAddress[];
+    cc?: BaseAddress[];
+    bcc?: BaseAddress[];
+    custom_variables?: Record<string, string>;
+  }[];
+}
