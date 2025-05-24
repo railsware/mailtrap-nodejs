@@ -105,9 +105,18 @@ interface TemplateBatchSendBase {
 export interface BatchSendRequest {
   base?: InlineBatchSendBase | TemplateBatchSendBase;
   requests: {
-    to: BaseAddress[];
+    to?: BaseAddress[];
     cc?: BaseAddress[];
     bcc?: BaseAddress[];
+    reply_to?: BaseAddress[];
+    subject?: string;
+    text?: string;
+    html?: string;
+    category?: string;
+    template_uuid?: string;
+    template_variables?: Record<string, string>;
     custom_variables?: Record<string, string>;
+    attachments?: Attachment[];
+    headers?: Record<string, string>;
   }[];
 }
