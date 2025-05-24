@@ -103,7 +103,7 @@ interface TemplateBatchSendBase {
 }
 
 export interface BatchSendRequest {
-  base: InlineBatchSendBase | TemplateBatchSendBase;
+  base?: InlineBatchSendBase | TemplateBatchSendBase;
   requests: {
     to: BaseAddress[];
     cc?: BaseAddress[];
