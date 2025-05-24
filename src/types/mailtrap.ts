@@ -89,7 +89,7 @@ interface InlineBatchSendBase {
   attachments?: Attachment[];
   headers?: Record<string, string>;
   custom_variables?: Record<string, string>;
-  category?: string;
+  category?: string; // Allowed for inline content
   reply_to?: BaseAddress;
 }
 
@@ -98,21 +98,20 @@ interface TemplateBatchSendBase {
   template_uuid: string; // Required for template usage
   template_variables?: Record<string, string>;
   custom_variables?: Record<string, string>;
-  category?: string;
   reply_to?: BaseAddress;
 }
 
 export interface BatchSendRequest {
   base?: InlineBatchSendBase | TemplateBatchSendBase;
   requests: {
-    to?: BaseAddress[];
+    to: BaseAddress[];
     cc?: BaseAddress[];
     bcc?: BaseAddress[];
     reply_to?: BaseAddress[];
     subject?: string;
     text?: string;
     html?: string;
-    category?: string;
+    category?: string; // Only allowed when not using template_uuid
     template_uuid?: string;
     template_variables?: Record<string, string>;
     custom_variables?: Record<string, string>;
