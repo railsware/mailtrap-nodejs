@@ -81,7 +81,7 @@ interface BaseAddress {
   name?: string;
 }
 
-interface InlineBatchSendBase {
+interface InlineBatchSendBase extends Omit<Mail, "to"> {
   from: BaseAddress;
   subject: string; // Required when using inline content
   text?: string | Buffer;
@@ -93,7 +93,7 @@ interface InlineBatchSendBase {
   reply_to?: BaseAddress;
 }
 
-interface TemplateBatchSendBase {
+interface TemplateBatchSendBase extends Omit<Mail, "to"> {
   from: BaseAddress;
   template_uuid: string; // Required for template usage
   template_variables?: Record<string, string>;
