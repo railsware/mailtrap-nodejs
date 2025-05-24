@@ -148,7 +148,9 @@ export default class MailtrapClient {
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
     const url = `${host}/api/batch${ifSandbox}`;
 
-    const preparedBase = encodeMailBuffers(request.base);
+    const preparedBase = request.base
+      ? encodeMailBuffers(request.base)
+      : undefined;
     const preparedRequests = request.requests.map((req) => ({
       to: req.to,
       cc: req.cc,
