@@ -71,10 +71,14 @@ export type MailtrapClientConfig = {
 
 export type BatchMail = Mail[];
 
-export type BatchSendResponse = {
-  success: true;
-  message_ids: string[];
-};
+export interface BatchSendResponse {
+  success: boolean;
+  responses: Array<{
+    success: boolean;
+    message_ids?: string[];
+    errors?: string[];
+  }>;
+}
 
 interface BaseAddress {
   email: string;
