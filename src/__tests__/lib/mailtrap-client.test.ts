@@ -378,11 +378,7 @@ describe("lib/mailtrap-client: ", () => {
           responses: [
             {
               success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
-            },
-            {
-              success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
             },
           ],
         };
@@ -443,11 +439,7 @@ describe("lib/mailtrap-client: ", () => {
           responses: [
             {
               success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
-            },
-            {
-              success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
             },
           ],
         };
@@ -507,11 +499,7 @@ describe("lib/mailtrap-client: ", () => {
           responses: [
             {
               success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
-            },
-            {
-              success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
             },
           ],
         };
@@ -572,11 +560,11 @@ describe("lib/mailtrap-client: ", () => {
           responses: [
             {
               success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
+              message_ids: ["1cc512a0-3936-11f0-0040-f1a6f440b26b"], // First recipient
             },
             {
               success: true,
-              message_id: "0c7fd939-02cf-11ed-88c2-0a58a9feac02",
+              message_ids: ["1cc47660-3936-11f0-0040-f1a6f440b26b"], // Second recipient
             },
           ],
         };
@@ -625,17 +613,26 @@ describe("lib/mailtrap-client: ", () => {
         expect(result).toEqual(expectedBatchResponseData);
       });
 
-      it("handles HTTP transport errors for batch sending", async () => {
+      it("handles API errors for batch sending", async () => {
         const batchClient = new MailtrapClient({
           token: "MY_API_TOKEN",
           bulk: true,
         });
+        const endpoint = `${BULK_ENDPOINT}/api/batch`;
+        const responseData = {
+          success: true,
+          responses: [
+            {
+              success: false,
+              errors: ["'from' is required", "'subject' is required"],
+            },
+          ],
+        };
+        mock.onPost(endpoint).reply(200, responseData);
+
         const batchData = {
           base: {
-            from: {
-              email: "sender@mailtrap.io",
-              name: "Mailtrap",
-            },
+            from: { email: "sender@mailtrap.io", name: "Mailtrap" },
             subject: "Batch Subject",
             text: "Batch Text",
           },
@@ -651,16 +648,11 @@ describe("lib/mailtrap-client: ", () => {
           ],
         };
 
-        try {
-          await batchClient.batchSend(batchData);
-        } catch (error) {
-          expect(error).toBeInstanceOf(MailtrapError);
-          if (error instanceof MailtrapError) {
-            expect(error.message).toEqual(
-              "Request failed with status code 404"
-            );
-          }
-        }
+        const result = await batchClient.batchSend(batchData);
+        expect(result).toEqual(responseData);
+        expect(result.responses[0].success).toBe(false);
+        expect(result.responses[0].errors).toContain("'from' is required");
+        expect(result.responses[0].errors).toContain("'subject' is required");
       });
     });
   });
