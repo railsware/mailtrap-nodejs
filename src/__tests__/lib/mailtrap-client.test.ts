@@ -380,6 +380,10 @@ describe("lib/mailtrap-client: ", () => {
               success: true,
               message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
             },
+            {
+              success: true,
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34199"],
+            },
           ],
         };
         mock.onPost(endpoint).reply(200, expectedBatchResponseData);
@@ -632,8 +636,6 @@ describe("lib/mailtrap-client: ", () => {
 
         const batchData = {
           base: {
-            from: { email: "sender@mailtrap.io", name: "Mailtrap" },
-            subject: "Batch Subject",
             text: "Batch Text",
           },
           requests: [
@@ -648,6 +650,7 @@ describe("lib/mailtrap-client: ", () => {
           ],
         };
 
+        // @ts-ignore
         const result = await batchClient.batchSend(batchData);
         expect(result).toEqual(responseData);
         expect(result.responses[0].success).toBe(false);
