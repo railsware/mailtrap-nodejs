@@ -143,24 +143,17 @@ export default class MailtrapClient {
   public async batchSend(
     request: BatchSendRequest
   ): Promise<BatchSendResponse> {
+    const { requests, base } = request;
     const host = this.determineHost();
     const ifSandbox =
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
     const url = `${host}/api/batch${ifSandbox}`;
 
-    const preparedBase = request.base
-      ? encodeMailBuffers(request.base)
-      : undefined;
-    const preparedRequests = request.requests.map((req) => ({
-      to: req.to,
-      cc: req.cc,
-      bcc: req.bcc,
-      custom_variables: req.custom_variables,
-    }));
+    const preparedBase = base ? encodeMailBuffers(base) : undefined;
 
     return this.axios.post<BatchSendResponse, BatchSendResponse>(url, {
       base: preparedBase,
-      requests: preparedRequests,
+      requests,
     });
   }
 }
