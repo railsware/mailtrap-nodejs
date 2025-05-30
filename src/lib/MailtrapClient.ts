@@ -150,10 +150,13 @@ export default class MailtrapClient {
     const url = `${host}/api/batch${ifSandbox}`;
 
     const preparedBase = base ? encodeMailBuffers(base) : undefined;
+    const preparedRequests = requests.map((singleRequest) =>
+      encodeMailBuffers(singleRequest as Partial<Mail>)
+    );
 
     return this.axios.post<BatchSendResponse, BatchSendResponse>(url, {
       base: preparedBase,
-      requests,
+      requests: preparedRequests,
     });
   }
 }
