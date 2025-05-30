@@ -327,6 +327,337 @@ describe("lib/mailtrap-client: ", () => {
         }
       }
     });
+
+    describe("batch sending:", () => {
+      it("rejects with Mailtrap error when bulk and sandbox modes are used together", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          bulk: true,
+          sandbox: true,
+        });
+
+        const batchData = {
+          base: {
+            from: {
+              email: "sender@mailtrap.io",
+              name: "Mailtrap",
+            },
+            subject: "Batch Subject",
+            text: "Batch Text",
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+          ],
+        };
+
+        try {
+          await batchClient.batchSend(batchData);
+        } catch (error) {
+          expect(error).toBeInstanceOf(MailtrapError);
+          if (error instanceof MailtrapError) {
+            expect(error.message).toEqual(BULK_SANDBOX_INCOMPATIBLE);
+          }
+        }
+      });
+
+      it("successfully sends a batch of emails in bulk mode", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          bulk: true,
+        });
+        const endpoint = `${BULK_ENDPOINT}/api/batch`;
+        const expectedBatchResponseData = {
+          success: true,
+          responses: [
+            {
+              success: true,
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
+            },
+            {
+              success: true,
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34199"],
+            },
+          ],
+        };
+        mock.onPost(endpoint).reply(200, expectedBatchResponseData);
+
+        const batchData = {
+          base: {
+            from: {
+              email: "sender@mailtrap.io",
+              name: "Mailtrap",
+            },
+            subject: "Batch Subject",
+            text: "Batch Text",
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+            {
+              to: [
+                {
+                  email: "recipient2.mock@email.com",
+                  name: "recipient2",
+                },
+              ],
+            },
+          ],
+        };
+
+        const result = await batchClient.batchSend(batchData);
+
+        expect(mock.history.post[0].url).toEqual(endpoint);
+        expect(mock.history.post[0].data).toEqual(
+          JSON.stringify({
+            base: batchData.base,
+            requests: batchData.requests.map((req) => ({
+              to: req.to,
+            })),
+          })
+        );
+        expect(result).toEqual(expectedBatchResponseData);
+      });
+
+      it("successfully sends a batch of emails in sandbox mode", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          sandbox: true,
+          testInboxId: 100,
+        });
+        const endpoint = `${TESTING_ENDPOINT}/api/batch/100`;
+        const expectedBatchResponseData = {
+          success: true,
+          responses: [
+            {
+              success: true,
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
+            },
+          ],
+        };
+        mock.onPost(endpoint).reply(200, expectedBatchResponseData);
+
+        const batchData = {
+          base: {
+            from: {
+              email: "sender@mailtrap.io",
+              name: "Mailtrap",
+            },
+            subject: "Batch Subject",
+            text: "Batch Text",
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+            {
+              to: [
+                {
+                  email: "recipient2.mock@email.com",
+                  name: "recipient2",
+                },
+              ],
+            },
+          ],
+        };
+
+        const result = await batchClient.batchSend(batchData);
+
+        expect(mock.history.post[0].url).toEqual(endpoint);
+        expect(mock.history.post[0].data).toEqual(
+          JSON.stringify({
+            base: batchData.base,
+            requests: batchData.requests.map((req) => ({
+              to: req.to,
+            })),
+          })
+        );
+        expect(result).toEqual(expectedBatchResponseData);
+      });
+
+      it("successfully sends a batch of emails with template", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          bulk: true,
+        });
+        const endpoint = `${BULK_ENDPOINT}/api/batch`;
+        const expectedBatchResponseData = {
+          success: true,
+          responses: [
+            {
+              success: true,
+              message_ids: ["57f17fe0-3935-11f0-0000-f15507b34198"],
+            },
+          ],
+        };
+        mock.onPost(endpoint).reply(200, expectedBatchResponseData);
+
+        const batchData = {
+          base: {
+            from: {
+              email: "sender@mailtrap.io",
+              name: "Mailtrap",
+            },
+            template_uuid: "813e39db-c74a-4830-b037-0e6ba8b1fe88",
+            template_variables: {
+              company_name: "Mailtrap",
+            },
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+            {
+              to: [
+                {
+                  email: "recipient2.mock@email.com",
+                  name: "recipient2",
+                },
+              ],
+            },
+          ],
+        };
+
+        const result = await batchClient.batchSend(batchData);
+
+        expect(mock.history.post[0].url).toEqual(endpoint);
+        expect(mock.history.post[0].data).toEqual(
+          JSON.stringify({
+            base: batchData.base,
+            requests: batchData.requests.map((req) => ({
+              to: req.to,
+            })),
+          })
+        );
+        expect(result).toEqual(expectedBatchResponseData);
+      });
+
+      it("successfully sends a batch of transactional emails", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        const endpoint = `${SENDING_ENDPOINT}/api/batch`;
+        const expectedBatchResponseData = {
+          success: true,
+          responses: [
+            {
+              success: true,
+              message_ids: ["1cc512a0-3936-11f0-0040-f1a6f440b26b"], // First recipient
+            },
+            {
+              success: true,
+              message_ids: ["1cc47660-3936-11f0-0040-f1a6f440b26b"], // Second recipient
+            },
+          ],
+        };
+        mock.onPost(endpoint).reply(200, expectedBatchResponseData);
+
+        const batchData = {
+          base: {
+            from: {
+              email: "sender@mailtrap.io",
+              name: "Mailtrap",
+            },
+            subject: "Transactional Batch Subject",
+            text: "Transactional Batch Text",
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+            {
+              to: [
+                {
+                  email: "recipient2.mock@email.com",
+                  name: "recipient2",
+                },
+              ],
+            },
+          ],
+        };
+
+        const result = await batchClient.batchSend(batchData);
+
+        expect(mock.history.post[0].url).toEqual(endpoint);
+        expect(mock.history.post[0].data).toEqual(
+          JSON.stringify({
+            base: batchData.base,
+            requests: batchData.requests.map((req) => ({
+              to: req.to,
+            })),
+          })
+        );
+        expect(result).toEqual(expectedBatchResponseData);
+      });
+
+      it("handles API errors for batch sending", async () => {
+        const batchClient = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          bulk: true,
+        });
+        const endpoint = `${BULK_ENDPOINT}/api/batch`;
+        const responseData = {
+          success: true,
+          responses: [
+            {
+              success: false,
+              errors: ["'from' is required", "'subject' is required"],
+            },
+          ],
+        };
+        mock.onPost(endpoint).reply(200, responseData);
+
+        const batchData = {
+          base: {
+            text: "Batch Text",
+          },
+          requests: [
+            {
+              to: [
+                {
+                  email: "recipient1.mock@email.com",
+                  name: "recipient1",
+                },
+              ],
+            },
+          ],
+        };
+
+        // @ts-ignore
+        const result = await batchClient.batchSend(batchData);
+        expect(result).toEqual(responseData);
+        expect(result.responses[0].success).toBe(false);
+        expect(result.responses[0].errors).toContain("'from' is required");
+        expect(result.responses[0].errors).toContain("'subject' is required");
+      });
+    });
   });
 
   describe("get testing(): ", () => {

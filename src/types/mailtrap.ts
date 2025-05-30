@@ -68,3 +68,58 @@ export type MailtrapClientConfig = {
   bulk?: boolean;
   sandbox?: boolean;
 };
+
+export type BatchMail = Mail[];
+
+export interface BatchSendResponse {
+  success: boolean;
+  responses: Array<{
+    success: boolean;
+    message_ids?: string[];
+    errors?: string[];
+  }>;
+}
+
+interface BaseAddress {
+  email: string;
+  name?: string;
+}
+
+interface InlineBatchSendBase extends Omit<Mail, "to"> {
+  from: BaseAddress;
+  subject: string; // Required when using inline content
+  text?: string | Buffer;
+  html?: string | Buffer;
+  attachments?: Attachment[];
+  headers?: Record<string, string>;
+  custom_variables?: Record<string, string>;
+  category?: string; // Allowed for inline content
+  reply_to?: BaseAddress;
+}
+
+interface TemplateBatchSendBase extends Omit<Mail, "to"> {
+  from: BaseAddress;
+  template_uuid: string; // Required for template usage
+  template_variables?: Record<string, string>;
+  custom_variables?: Record<string, string>;
+  reply_to?: BaseAddress;
+}
+
+export interface BatchSendRequest {
+  base?: InlineBatchSendBase | TemplateBatchSendBase;
+  requests: {
+    to: BaseAddress[];
+    cc?: BaseAddress[];
+    bcc?: BaseAddress[];
+    reply_to?: BaseAddress[];
+    subject?: string;
+    text?: string;
+    html?: string;
+    category?: string; // Only allowed when not using template_uuid
+    template_uuid?: string;
+    template_variables?: Record<string, string>;
+    custom_variables?: Record<string, string>;
+    attachments?: Attachment[];
+    headers?: Record<string, string>;
+  }[];
+}
