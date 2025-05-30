@@ -71,44 +71,56 @@ export type MailtrapClientConfig = {
 
 export type BatchMail = Mail[];
 
-export type BatchSendResponse = {
-  success: true;
-  message_ids: string[];
-};
+export interface BatchSendResponse {
+  success: boolean;
+  responses: Array<{
+    success: boolean;
+    message_ids?: string[];
+    errors?: string[];
+  }>;
+}
 
 interface BaseAddress {
   email: string;
   name?: string;
 }
 
-interface InlineBatchSendBase {
+interface InlineBatchSendBase extends Omit<Mail, "to"> {
   from: BaseAddress;
   subject: string; // Required when using inline content
   text?: string | Buffer;
   html?: string | Buffer;
   attachments?: Attachment[];
   headers?: Record<string, string>;
-  custom_variables?: Record<string, string | number | boolean>;
-  category?: string;
+  custom_variables?: Record<string, string>;
+  category?: string; // Allowed for inline content
   reply_to?: BaseAddress;
 }
 
-interface TemplateBatchSendBase {
+interface TemplateBatchSendBase extends Omit<Mail, "to"> {
   from: BaseAddress;
   template_uuid: string; // Required for template usage
-  template_variables?: Record<string, string | number | boolean>;
-  custom_variables?: Record<string, string | number | boolean>;
-  category?: string;
+  template_variables?: Record<string, string>;
+  custom_variables?: Record<string, string>;
   reply_to?: BaseAddress;
 }
 
 export interface BatchSendRequest {
-  base: InlineBatchSendBase | TemplateBatchSendBase;
+  base?: InlineBatchSendBase | TemplateBatchSendBase;
   requests: {
     to: BaseAddress[];
     cc?: BaseAddress[];
     bcc?: BaseAddress[];
-    custom_variables?: Record<string, string | number | boolean>;
+    reply_to?: BaseAddress[];
+    subject?: string;
+    text?: string;
+    html?: string;
+    category?: string; // Only allowed when not using template_uuid
+    template_uuid?: string;
+    template_variables?: Record<string, string>;
+    custom_variables?: Record<string, string>;
+    attachments?: Attachment[];
+    headers?: Record<string, string>;
   }[];
 }
 
