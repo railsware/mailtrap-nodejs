@@ -2,6 +2,8 @@ import { AxiosInstance } from "axios";
 
 import CONFIG from "../../../config";
 
+import { ContactList } from "../../../types/api/contactlist";
+
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 
@@ -16,9 +18,9 @@ export default class ContactListsApi {
   }
 
   /**
-   * Lists all contact lists for the account.
+   * Gets a list of contact lists.
    */
   public async list() {
-    return this.client.get(this.contactListsURL);
+    return this.client.get<ContactList[], ContactList[]>(this.contactListsURL);
   }
 }
