@@ -19,9 +19,9 @@ export default class ContactsBaseAPI {
     this.client = client;
     this.accountId = accountId;
     const contacts = new ContactsApi(this.client, this.accountId);
-    this.create = contacts.create;
-    this.update = contacts.update;
-    this.delete = contacts.delete;
-    this.list = contacts.list;
+    this.create = contacts.create.bind(contacts);
+    this.update = contacts.update.bind(contacts);
+    this.delete = contacts.delete.bind(contacts);
+    this.list = contacts.list.bind(contacts);
   }
 }
