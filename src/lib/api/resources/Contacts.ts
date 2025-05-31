@@ -37,10 +37,10 @@ export default class ContactsApi {
   /**
    * Updates an existing contact by ID or email.
    */
-  public async update(identifier: string, data: ContactUpdateData) {
+  public async update(identifier: string, contact: ContactUpdateData) {
     const url = `${this.contactsURL}/${identifier}`;
     return this.client.patch<ContactResponse, ContactResponse>(url, {
-      contact: data,
+      contact,
     });
   }
 
