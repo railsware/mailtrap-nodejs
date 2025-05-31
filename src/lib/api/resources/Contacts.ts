@@ -1,6 +1,8 @@
 import { AxiosInstance } from "axios";
-import { ContactData } from "../../../../types/mailtrap";
-import CONFIG from "../../../../config";
+
+import CONFIG from "../../../config";
+
+import { ContactData } from "../../../types/mailtrap";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;

@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-import CONFIG from "../../../../config";
+import CONFIG from "../../../config";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
