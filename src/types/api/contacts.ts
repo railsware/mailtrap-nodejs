@@ -1,16 +1,16 @@
-interface Contact {
+export interface Contact {
   id: string;
-  status: "subscribed" | "unsubscribed";
   email: string;
-  fields: Record<string, string | number>;
-  list_ids: number[];
   created_at: number;
   updated_at: number;
+  list_ids: number[];
+  status: "subscribed" | "unsubscribed";
+  fields: Record<string, string>;
 }
 
 export interface ContactData {
   email: string;
-  fields?: Record<string, string | number>;
+  fields?: Record<string, string>;
   list_ids?: number[];
   unsubscribed?: boolean;
 }
@@ -21,18 +21,5 @@ export interface ContactUpdateData extends ContactData {
 }
 
 export interface ContactResponse {
-  action: "updated" | "created" | "deleted";
   data: Contact;
-}
-
-export interface CreateContactResponse {
-  data: {
-    id: string;
-    status: "subscribed" | "unsubscribed";
-    email: string;
-    fields: Record<string, string>;
-    list_ids: number[];
-    created_at: number;
-    updated_at: number;
-  };
 }
