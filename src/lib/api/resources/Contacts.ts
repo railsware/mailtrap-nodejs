@@ -2,10 +2,11 @@ import { AxiosInstance } from "axios";
 
 import CONFIG from "../../../config";
 import {
-  Contact,
   ContactData,
+  ContactResponse,
   ContactUpdateData,
 } from "../../../types/api/contacts";
+import { ContactList } from "../../../types/api/contactlist";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
@@ -15,33 +16,46 @@ export default class ContactsApi {
 
   private contactsURL: string;
 
+  private contactListsURL: string;
+
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
     this.contactsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts`;
+    this.contactListsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/lists`;
   }
 
   /**
    * Creates a new contact.
    */
-  public async create(data: ContactData) {
-    return this.client.post<Contact, Contact>(this.contactsURL, {
+  public async create(contact: ContactData) {
+    return this.client.post<ContactResponse, ContactResponse>(
+      this.contactsURL,
+      { contact }
+    );
+  }
+
+  /**
+   * Updates an existing contact by ID or email.
+   */
+  public async update(identifier: string, data: ContactUpdateData) {
+    const url = `${this.contactsURL}/${identifier}`;
+    return this.client.patch<ContactResponse, ContactResponse>(url, {
       contact: data,
     });
   }
 
   /**
-   * Updates an existing contact.
+   * Deletes a contact by ID or email.
    */
-  public async update(id: number, data: ContactUpdateData) {
-    const url = `${this.contactsURL}/${id}`;
-    return this.client.patch<Contact, Contact>(url, { contact: data });
+  public async delete(identifier: string) {
+    const url = `${this.contactsURL}/${identifier}`;
+    return this.client.delete<ContactResponse, ContactResponse>(url);
   }
 
   /**
-   * Deletes a contact.
+   * Gets a list of contact lists.
    */
-  public async delete(id: number) {
-    const url = `${this.contactsURL}/${id}`;
-    return this.client.delete(url);
+  public async list() {
+    return this.client.get<ContactList[], ContactList[]>(this.contactListsURL);
   }
 }
