@@ -12,7 +12,7 @@ const client = new MailtrapClient({
 client.contacts.contactLists
   .list()
   .then(response => {
-    console.log("Contact lists:", response.data);
+    console.log("Contact lists:", response);
   })
   .catch(error => {
     console.error("Error fetching contact lists:", error);
