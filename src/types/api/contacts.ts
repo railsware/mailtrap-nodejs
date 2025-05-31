@@ -1,5 +1,5 @@
 export interface Contact {
-  id: number;
+  id: string;
   email: string;
   fields: Record<string, string>;
   list_ids: number[];
