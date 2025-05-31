@@ -9,7 +9,7 @@ const client = new MailtrapClient({
 });
 
 // List all contact lists
-client.contactLists
+client.contacts.contactLists
   .list()
   .then(response => {
     console.log("Contact lists:", response.data);
