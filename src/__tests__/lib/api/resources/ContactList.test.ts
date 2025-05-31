@@ -62,10 +62,18 @@ describe("lib/api/resources/contacts/ContactLists: ", () => {
       expect(result).toEqual(expectedResponseData);
     });
 
-    it("fails with error.", async () => {
-      const expectedErrorMessage = "Request failed with status code 404";
+    it("fails with error when API returns 403.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/lists`;
+      const expectedErrorMessage = "Request failed with status code 403";
 
       expect.assertions(2);
+
+      mock.onGet(endpoint).reply(403, {
+        response: {
+          status: 403,
+          statusText: "Forbidden",
+        },
+      });
 
       try {
         await contactListsAPI.list();
