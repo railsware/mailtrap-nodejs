@@ -1,9 +1,9 @@
 import { AxiosInstance } from "axios";
 
-import ContactsApi from "./resources/contacts/Contacts";
-import ContactListsApi from "./resources/contacts/ContactLists";
+import ContactsApi from "./resources/Contacts";
+import ContactListsApi from "./resources/ContactLists";
 
-export default class ContactsAPI {
+export default class ContactsBaseAPI {
   private client: AxiosInstance;
 
   private accountId?: number;
