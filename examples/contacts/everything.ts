@@ -14,7 +14,6 @@ const contactData = {
     first_name: "John",
     last_name: "Smith"
   },
-  list_ids: [1, 2, 3]
 };
 
 // Create contact
@@ -30,11 +29,9 @@ client.contacts
         fields: {
           first_name: "Johnny",
           last_name: "Smith",
-          company: "New Corp"
         }
       })
     console.log("Contact updated:", updateResponse.data);
-
     // Delete contact
     await client.contacts
       .delete(contactId)
@@ -43,3 +40,12 @@ client.contacts
   .catch(error => {
     console.error("Error in contact lifecycle:", error);
   }); 
+
+// List contacts
+client.contacts.list()
+  .then(response => {
+    console.log("Contact list:", response.data);
+  })
+  .catch(error => {
+    console.error("Error in contact list:", error);
+  });
