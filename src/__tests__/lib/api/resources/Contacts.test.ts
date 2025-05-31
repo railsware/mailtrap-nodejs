@@ -56,18 +56,17 @@ describe("lib/api/resources/Contacts: ", () => {
   };
 
   const updateContactResponse = {
-    action: "updated",
     data: {
-      id: "018dd5e3-f6d2-7c00-8f9b-e5c3f2d8a132",
+      id: "01972696-84ef-783b-8a87-48067db2d16b",
+      email: "john.smith111@example.com",
+      created_at: 1748699088076,
+      updated_at: 1748700400794,
+      list_ids: [],
       status: "subscribed",
-      email: "john.smith@example.com",
       fields: {
-        first_name: "John",
+        first_name: "Johnny",
         last_name: "Smith",
       },
-      list_ids: [1, 2, 3],
-      created_at: 1740659901189,
-      updated_at: 1742903266889,
     },
   };
 
@@ -176,7 +175,20 @@ describe("lib/api/resources/Contacts: ", () => {
 
     it("successfully deletes a contact.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/${contactId}`;
-      const expectedResponseData = { success: true };
+      const expectedResponseData = {
+        data: {
+          id: contactId,
+          status: "unsubscribed",
+          email: "john.smith@example.com",
+          fields: {
+            first_name: "John",
+            last_name: "Smith",
+          },
+          list_ids: [],
+          created_at: 1740659901189,
+          updated_at: 1742903266889,
+        },
+      };
 
       expect.assertions(2);
 
