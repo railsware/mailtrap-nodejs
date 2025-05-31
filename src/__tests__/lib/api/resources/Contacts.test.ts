@@ -132,7 +132,7 @@ describe("lib/api/resources/Contacts: ", () => {
   });
 
   describe("update(): ", () => {
-    const contactId = 12345;
+    const contactId = "018dd5e3-f6d2-7c00-8f9b-e5c3f2d8a132";
 
     it("successfully updates a contact.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/${contactId}`;
@@ -172,7 +172,7 @@ describe("lib/api/resources/Contacts: ", () => {
   });
 
   describe("delete(): ", () => {
-    const contactId = 12345;
+    const contactId = "018dd5e3-f6d2-7c00-8f9b-e5c3f2d8a132";
 
     it("successfully deletes a contact.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/${contactId}`;
@@ -197,6 +197,55 @@ describe("lib/api/resources/Contacts: ", () => {
 
       try {
         await contactsAPI.delete(contactId);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toEqual(expectedErrorMessage);
+        }
+      }
+    });
+  });
+
+  describe("list(): ", () => {
+    const contactListsResponse = [
+      {
+        id: 26730,
+        name: "Customers",
+      },
+      {
+        id: 26731,
+        name: "Old Contacts",
+      },
+    ];
+
+    it("successfully gets list of contact lists.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/lists`;
+      const expectedResponseData = contactListsResponse;
+
+      expect.assertions(2);
+
+      mock.onGet(endpoint).reply(200, expectedResponseData);
+      const result = await contactsAPI.list();
+
+      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(result).toEqual(expectedResponseData);
+    });
+
+    it("fails with error when API returns 403.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/lists`;
+      const expectedErrorMessage = "Request failed with status code 403";
+
+      expect.assertions(2);
+
+      mock.onGet(endpoint).reply(403, {
+        response: {
+          status: 403,
+          statusText: "Forbidden",
+        },
+      });
+
+      try {
+        await contactsAPI.list();
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
         if (error instanceof MailtrapError) {
