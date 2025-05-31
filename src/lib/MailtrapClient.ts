@@ -5,10 +5,11 @@ import axios, { AxiosInstance } from "axios";
 
 import encodeMailBuffers from "./mail-buffer-encoder";
 import handleSendingError from "./axios-logger";
+import MailtrapError from "./MailtrapError";
 
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
-import ContactsApi from "./api/resources/contacts/Contacts";
+import ContactsBaseAPI from "./api/Contacts";
 
 import CONFIG from "../config";
 
@@ -19,8 +20,6 @@ import {
   BatchSendResponse,
   BatchSendRequest,
 } from "../types/mailtrap";
-import MailtrapError from "./MailtrapError";
-import ContactListsApi from "./api/resources/contacts/ContactLists";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
@@ -108,14 +107,7 @@ export default class MailtrapClient {
    * Getter for Contacts API.
    */
   get contacts() {
-    return new ContactsApi(this.axios, this.accountId);
-  }
-
-  /**
-   * Getter for Contact Lists API.
-   */
-  get contactLists() {
-    return new ContactListsApi(this.axios, this.accountId);
+    return new ContactsBaseAPI(this.axios, this.accountId);
   }
 
   /**
