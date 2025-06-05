@@ -13,8 +13,6 @@ export default class ContactsBaseAPI {
 
   public delete: ContactsApi["delete"];
 
-  public list: ContactsApi["list"];
-
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
     this.accountId = accountId;
@@ -22,6 +20,5 @@ export default class ContactsBaseAPI {
     this.create = contacts.create.bind(contacts);
     this.update = contacts.update.bind(contacts);
     this.delete = contacts.delete.bind(contacts);
-    this.list = contacts.list.bind(contacts);
   }
 }
