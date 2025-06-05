@@ -127,7 +127,7 @@ export interface BatchSendRequest {
 export interface ContactFields {
   first_name?: string;
   last_name?: string;
-  [key: string]: string | undefined;
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface ContactData {

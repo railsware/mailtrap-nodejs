@@ -5,12 +5,12 @@ export interface Contact {
   updated_at: number;
   list_ids: number[];
   status: "subscribed" | "unsubscribed";
-  fields: Record<string, string>;
+  fields: Record<string, string | number | boolean>;
 }
 
 export interface ContactData {
   email: string;
-  fields?: Record<string, string>;
+  fields?: Record<string, string | number | boolean>;
   list_ids?: number[];
   unsubscribed?: boolean;
 }
