@@ -40,12 +40,3 @@ client.contacts
   .catch(error => {
     console.error("Error in contact lifecycle:", error);
   }); 
-
-// List contacts
-client.contacts.list()
-  .then(response => {
-    console.log("Contact list:", response.data);
-  })
-  .catch(error => {
-    console.error("Error in contact list:", error);
-  });
