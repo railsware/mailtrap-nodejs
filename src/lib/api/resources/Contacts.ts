@@ -6,7 +6,6 @@ import {
   ContactResponse,
   ContactUpdateData,
 } from "../../../types/api/contacts";
-import { ContactList } from "../../../types/api/contactlist";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
@@ -16,12 +15,9 @@ export default class ContactsApi {
 
   private contactsURL: string;
 
-  private contactListsURL: string;
-
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
     this.contactsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts`;
-    this.contactListsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/lists`;
   }
 
   /**
@@ -50,12 +46,5 @@ export default class ContactsApi {
   public async delete(identifier: string) {
     const url = `${this.contactsURL}/${identifier}`;
     return this.client.delete<ContactResponse, ContactResponse>(url);
-  }
-
-  /**
-   * Gets a list of contact lists.
-   */
-  public async list() {
-    return this.client.get<ContactList[], ContactList[]>(this.contactListsURL);
   }
 }
