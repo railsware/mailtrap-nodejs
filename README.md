@@ -61,8 +61,7 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
 ### Contacts API
 
- - [Contacts](examples/contacts/contacts.ts)
- - [Contact Lists](examples/contacts/contact-lists.ts)
+ - [Contacts](examples/contacts/everything.ts)
 
 ### Sending API
 
