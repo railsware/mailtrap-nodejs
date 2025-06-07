@@ -3,6 +3,8 @@ export interface ContactList {
   name: string;
 }
 
-export interface ContactListData {
+export type ContactLists = ContactList[];
+
+export interface ContactListOptions {
   name: string;
 }
