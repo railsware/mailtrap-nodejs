@@ -21,6 +21,15 @@ export default class ContactsApi {
   }
 
   /**
+   * Get a contact by ID or email.
+   */
+  public async get(idOrEmail: string) {
+    const url = `${this.contactsURL}/${idOrEmail}`;
+
+    return this.client.get<ContactResponse, ContactResponse>(url);
+  }
+
+  /**
    * Creates a new contact.
    */
   public async create(contact: ContactData) {
