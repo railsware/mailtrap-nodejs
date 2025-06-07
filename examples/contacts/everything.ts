@@ -16,12 +16,18 @@ const contactData = {
   },
 };
 
-// Create contact
+// Get contact by email
 client.contacts
-  .create(contactData)
+  .get(contactData.email)
   .then(async (response) => {
-    console.log("Contact created:", response.data);
-    const contactId = response.data.id;
+    console.log("Contact retrieved:", response.data);
+
+    // Create contact
+    const createResponse = await client.contacts
+      .create(contactData)
+
+    console.log("Contact created:", createResponse.data);
+    const contactId = createResponse.data.id;
 
     // Update contact
     const updateResponse = await client.contacts
@@ -39,4 +45,4 @@ client.contacts
   })
   .catch(error => {
     console.error("Error in contact lifecycle:", error);
-  }); 
+  });
