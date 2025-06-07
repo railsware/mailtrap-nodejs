@@ -16,31 +16,30 @@ const contactData = {
   },
 };
 
-// Get contact by email
+// Create contact first
 client.contacts
-  .get(contactData.email)
-  .then(async (response) => {
-    console.log("Contact retrieved:", response.data);
-
-    // Create contact
-    const createResponse = await client.contacts
-      .create(contactData)
-
+  .create(contactData)
+  .then(async (createResponse) => {
     console.log("Contact created:", createResponse.data);
     const contactId = createResponse.data.id;
+
+    // Get contact by email
+    const getResponse = await client.contacts.get(contactData.email);
+    console.log("Contact retrieved:", getResponse.data);
 
     // Update contact
     const updateResponse = await client.contacts
       .update(contactId, {
+        email: contactData.email,
         fields: {
           first_name: "Johnny",
           last_name: "Smith",
         }
       })
     console.log("Contact updated:", updateResponse.data);
+
     // Delete contact
-    await client.contacts
-      .delete(contactId)
+    await client.contacts.delete(contactId);
     console.log("Contact deleted");
   })
   .catch(error => {
