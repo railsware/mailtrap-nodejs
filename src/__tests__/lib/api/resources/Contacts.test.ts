@@ -95,6 +95,55 @@ describe("lib/api/resources/Contacts: ", () => {
     mock.reset();
   });
 
+  describe("get(): ", () => {
+    it("successfully gets a contact by email.", async () => {
+      const email = "john.smith@example.com";
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/${email}`;
+      const expectedResponseData = {
+        data: {
+          id: "018dd5e3-f6d2-7c00-8f9b-e5c3f2d8a132",
+          email: "john.smith@example.com",
+          created_at: 1748699088076,
+          updated_at: 1748699088076,
+          list_ids: [1, 2, 3],
+          status: "subscribed",
+          fields: {
+            first_name: "John",
+            last_name: "Smith",
+            zip_code: "11111",
+          },
+        },
+      };
+
+      expect.assertions(2);
+
+      mock.onGet(endpoint).reply(200, expectedResponseData);
+      const result = await contactsAPI.get(email);
+
+      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(result).toEqual(expectedResponseData);
+    });
+
+    it("fails with error when getting a contact.", async () => {
+      const email = "nonexistent@example.com";
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/${email}`;
+      const expectedErrorMessage = "Contact not found";
+
+      expect.assertions(2);
+
+      mock.onGet(endpoint).reply(404, { error: expectedErrorMessage });
+
+      try {
+        await contactsAPI.get(email);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toEqual(expectedErrorMessage);
+        }
+      }
+    });
+  });
+
   describe("create(): ", () => {
     it("successfully creates a contact.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts`;
