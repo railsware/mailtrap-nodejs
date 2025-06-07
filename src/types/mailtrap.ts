@@ -123,3 +123,13 @@ export interface BatchSendRequest {
     headers?: Record<string, string>;
   }[];
 }
+
+export interface ContactFields {
+  [key: string]: string | number | boolean | undefined;
+}
+
+export interface ContactData {
+  email: string;
+  fields?: ContactFields;
+  list_ids?: number[];
+}

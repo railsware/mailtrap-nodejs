@@ -7,8 +7,8 @@ import { Mail, MailtrapClient } from "../..";
 import MailtrapError from "../../lib/MailtrapError";
 
 import CONFIG from "../../config";
-import TestingAPI from "../../lib/api/Testing";
 import GeneralAPI from "../../lib/api/General";
+import TestingAPI from "../../lib/api/Testing";
 
 const { ERRORS, CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT, BULK_ENDPOINT, SENDING_ENDPOINT } = CLIENT_SETTINGS;
@@ -704,9 +704,23 @@ describe("lib/mailtrap-client: ", () => {
     });
 
     describe("get general(): ", () => {
-      it("returns testing API object, console warn is called twice.", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
         const client = new MailtrapClient({
           token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.general;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns general API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
         });
         expect.assertions(1);
 
