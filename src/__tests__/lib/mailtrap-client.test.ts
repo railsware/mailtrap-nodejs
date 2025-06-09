@@ -7,8 +7,8 @@ import { Mail, MailtrapClient } from "../..";
 import MailtrapError from "../../lib/MailtrapError";
 
 import CONFIG from "../../config";
-import TestingAPI from "../../lib/api/Testing";
 import GeneralAPI from "../../lib/api/General";
+import TestingAPI from "../../lib/api/Testing";
 
 const { ERRORS, CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT, BULK_ENDPOINT, SENDING_ENDPOINT } = CLIENT_SETTINGS;
