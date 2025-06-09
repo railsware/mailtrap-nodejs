@@ -1,13 +1,40 @@
+# Mailtrap Node.js client - Official
+
 ![TypeScript](https://img.shields.io/npm/types/mailtrap?logo=typescript&logoColor=white&label=%20)
 [![test](https://github.com/railsware/mailtrap-nodejs/actions/workflows/test.yml/badge.svg)](https://github.com/railsware/mailtrap-nodejs/actions/workflows/test.yml)
 [![NPM](https://shields.io/npm/v/mailtrap?logo=npm&logoColor=white)](https://www.npmjs.com/package/mailtrap)
 [![downloads](https://shields.io/npm/d18m/mailtrap)](https://www.npmjs.com/package/mailtrap)
 
-# Official Mailtrap Node.js client
+
+## Prerequisites
+
+To get the most of this official Mailtrap.io Node.js SDK:
+- [Create a Mailtrap account](https://mailtrap.io/signup)
+- [Verify your domain](https://mailtrap.io/sending/domains)
+
+## Supported functionality
 
 This NPM package offers integration with the [official API](https://api-docs.mailtrap.io/) for [Mailtrap](https://mailtrap.io).
 
-Quickly add email sending functionality to your Node.js application with Mailtrap.
+Quickly integrate Mailtrap with your Node.js app.
+
+Currently with this SDK you can:
+- Email API/SMTP
+  - Send an email (Transactional and Bulk streams)
+  - Send an email with a Template
+  - Send a batch of emails (Transactional and Bulk streams)
+- Email Sandbox
+  - Send an email
+  - Send an email with a template
+  - Message management
+  - Inbox management
+  - Project management
+- Contact management
+  - Contacts CRUD
+  - Lists CRUD
+- General
+  - Templates CRUD
+  - Suppressions management (find and delete)
 
 ## Installation
 
@@ -19,6 +46,7 @@ yarn add mailtrap
 # or, if you are using NPM:
 npm install mailtrap
 ```
+
 
 ## Usage
 
@@ -51,45 +79,7 @@ client
   .catch(console.error);
 ```
 
-Refer to the [`examples`](examples) folder for the source code of this and other advanced examples.
-
-### General API
-
- - [List User & Invite account accesses](examples/general/account-accesses.ts)
- - [Remove account access](examples/general/accounts.ts)
- - [Permissions](examples/general/permissions.ts)
-
-### Contacts API
-
- - [Contacts](examples/contacts/everything.ts)
-
-### Sending API
-
- - [Advanced](examples/sending/everything.ts)
- - [Minimal](examples/sending/minimal.ts)
- - [Send email using template](examples/sending/template.ts)
- - [Nodemailer transport](examples/sending/transport.ts)
-
-### Batch Sending API
-
- - [Send a batch of transactional emails](examples/batch/transactional.ts)
- - [Send a batch of bulk emails](examples/batch/bulk.ts)
- - [Send a batch of sandbox emails](examples/batch/sandbox.ts)
- - [Send a batch of emails from template](examples/batch/template.ts)
-
-### Email testing API
-
- - [Attachments](examples/testing/attachments.ts)
- - [Inboxes](examples/testing/inboxes.ts)
- - [Messages](examples/testing/messages.ts)
- - [Projects](examples/testing/projects.ts)
- - [Send mail using template](examples/testing/template.ts)
-
-### Bulk sending API
-
- - [Send mail](examples/bulk/send-mail.ts)
-
-### Nodemailer Transport
+## Nodemailer Transport
 
 > NOTE: [Nodemailer](https://www.npmjs.com/package/nodemailer) is needed as a dependency.
 
@@ -115,6 +105,46 @@ See transport usage below:
 
  - [Transport](examples/sending/transport.ts)
 
+## Examples
+
+Refer to the [`examples`](examples) folder for the source code of this and other advanced examples.
+
+### Contacts API
+
+ - [Contacts](examples/contacts/everything.ts)
+
+### Sending API
+
+ - [Advanced](examples/sending/everything.ts)
+ - [Minimal](examples/sending/minimal.ts)
+ - [Send email using template](examples/sending/template.ts)
+ - [Nodemailer transport](examples/sending/transport.ts)
+
+### Batch Sending API
+
+ - [Send a batch of transactional emails](examples/batch/transactional.ts)
+ - [Send a batch of bulk emails](examples/batch/bulk.ts)
+ - [Send a batch of sandbox emails](examples/batch/sandbox.ts)
+ - [Send a batch of emails from template](examples/batch/template.ts)
+
+### Bulk sending API
+
+ - [Send mail](examples/bulk/send-mail.ts)
+
+### Email Sandbox API
+
+ - [Attachments](examples/testing/attachments.ts)
+ - [Inboxes](examples/testing/inboxes.ts)
+ - [Messages](examples/testing/messages.ts)
+ - [Projects](examples/testing/projects.ts)
+ - [Send mail using template](examples/testing/template.ts)
+
+### General API
+
+ - [List User & Invite account accesses](examples/general/account-accesses.ts)
+ - [Remove account access](examples/general/accounts.ts)
+ - [Permissions](examples/general/permissions.ts)
+
 ## Development
 
 This library is developed using [TypeScript](https://www.typescriptlang.org).
@@ -135,4 +165,4 @@ Everyone interacting in the Mailtrap project's codebases, issue trackers, chat r
 
 ## Compatibility with previous releases
 
-Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. 
+Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). The package version 3 is a completely new package. 
