@@ -35,6 +35,10 @@ Currently with this SDK you can:
 - General
   - Templates CRUD
   - Suppressions management (find and delete)
+  - Account access management
+  - Permissions management
+  - List accounts you have access to
+ 
 
 ## Installation
 
