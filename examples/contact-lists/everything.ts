@@ -29,7 +29,7 @@ async function contactListsFlow() {
   console.log("Updated contact list:", updated);
 
   // Delete a contact list
-  await client.contactLists.delete(5205);
+  await client.contactLists.delete(all[0].id);
 }
 
 contactListsFlow();
