@@ -39,7 +39,7 @@ export default class ContactListsApi {
   }
 
   /**
-   * Creates a new contact.
+   * Creates a new contact list.
    */
   public async create(data: ContactListOptions) {
     return this.client.post<ContactList, ContactList>(
