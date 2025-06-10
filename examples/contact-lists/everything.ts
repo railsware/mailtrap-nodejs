@@ -23,7 +23,7 @@ async function contactListsFlow() {
   console.log("One contact list:", one);
 
   // Update a contact list
-  const updated = await client.contactLists.update(5205, {
+  const updated = await client.contactLists.update(all[0].id, {
     name: "Updated Test List",
   });
   console.log("Updated contact list:", updated);
