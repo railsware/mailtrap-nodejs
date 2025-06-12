@@ -41,7 +41,7 @@ describe("lib/api/resources/ContactLists: ", () => {
         expect(contactListsAPI).toHaveProperty("update");
         expect(contactListsAPI).toHaveProperty("delete");
         expect(contactListsAPI).toHaveProperty("get");
-        expect(contactListsAPI).toHaveProperty("getAll");
+        expect(contactListsAPI).toHaveProperty("getList");
       });
     });
   });
@@ -69,7 +69,7 @@ describe("lib/api/resources/ContactLists: ", () => {
       expect.assertions(2);
 
       mock.onGet(endpoint).reply(200, expectedResponseData);
-      const result = await contactListsAPI.getAll();
+      const result = await contactListsAPI.getList();
 
       expect(mock.history.get[0].url).toEqual(endpoint);
       expect(result).toEqual(expectedResponseData);
@@ -84,7 +84,7 @@ describe("lib/api/resources/ContactLists: ", () => {
       mock.onGet(endpoint).reply(400, { error: expectedErrorMessage });
 
       try {
-        await contactListsAPI.getAll();
+        await contactListsAPI.getList();
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
         if (error instanceof MailtrapError) {
