@@ -15,7 +15,7 @@ async function contactListsFlow() {
   });
 
   // Get all contact lists
-  const all = await client.contactLists.getAll();
+  const all = await client.contactLists.getList();
   console.log("All contact lists:", all);
 
   // Get a specific contact list
