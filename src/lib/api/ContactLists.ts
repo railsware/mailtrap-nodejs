@@ -11,7 +11,7 @@ export default class ContactListsBaseAPI {
 
   public get: ContactListsApi["get"];
 
-  public getAll: ContactListsApi["getAll"];
+  public getList: ContactListsApi["getList"];
 
   public update: ContactListsApi["update"];
 
@@ -23,7 +23,7 @@ export default class ContactListsBaseAPI {
     const contactLists = new ContactListsApi(this.client, this.accountId);
     this.create = contactLists.create.bind(contactLists);
     this.get = contactLists.get.bind(contactLists);
-    this.getAll = contactLists.getAll.bind(contactLists);
+    this.getList = contactLists.getList.bind(contactLists);
     this.update = contactLists.update.bind(contactLists);
     this.delete = contactLists.delete.bind(contactLists);
   }
