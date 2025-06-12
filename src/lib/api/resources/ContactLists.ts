@@ -23,7 +23,7 @@ export default class ContactListsApi {
   /**
    * Get all contact lists.
    */
-  public async getAll() {
+  public async getList() {
     const url = `${this.contactListsURL}`;
 
     return this.client.get<ContactLists, ContactLists>(url);
