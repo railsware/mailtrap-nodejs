@@ -10,6 +10,7 @@ import MailtrapError from "./MailtrapError";
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
 import ContactsBaseAPI from "./api/Contacts";
+import ContactListsBaseAPI from "./api/ContactLists";
 
 import CONFIG from "../config";
 
@@ -100,6 +101,10 @@ export default class MailtrapClient {
    * Getter for General API.
    */
   get general() {
+    if (!this.accountId) {
+      throw new MailtrapError(ACCOUNT_ID_MISSING);
+    }
+
     return new GeneralAPI(this.axios, this.accountId);
   }
 
@@ -107,7 +112,22 @@ export default class MailtrapClient {
    * Getter for Contacts API.
    */
   get contacts() {
+    if (!this.accountId) {
+      throw new MailtrapError(ACCOUNT_ID_MISSING);
+    }
+
     return new ContactsBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Contact Lists API.
+   */
+  get contactLists() {
+    if (!this.accountId) {
+      throw new MailtrapError(ACCOUNT_ID_MISSING);
+    }
+
+    return new ContactListsBaseAPI(this.axios, this.accountId);
   }
 
   /**
