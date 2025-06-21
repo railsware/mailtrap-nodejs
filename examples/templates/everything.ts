@@ -24,11 +24,11 @@ async function templatesFlow() {
   console.log("All templates:", allTemplates);
 
   // Get a specific template
-  const template = await client.templates.get(allTemplates[0].id);
+  const template = await client.templates.get(newTemplate.id);
   console.log("Template details:", template);
 
   // Update the template
-  const updatedTemplate = await client.templates.update(template.id, {
+  const updatedTemplate = await client.templates.update(newTemplate.id, {
     name: "Updated Welcome Email",
     subject: "Welcome to Our Amazing Service!",
     body_html: "<h1>Welcome!</h1><p>Thank you for joining our amazing service.</p>"
