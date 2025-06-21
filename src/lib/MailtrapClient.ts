@@ -22,6 +22,7 @@ import {
   BatchSendResponse,
   BatchSendRequest,
 } from "../types/mailtrap";
+import SuppressionsBaseAPI from "./api/Suppressions";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
@@ -131,12 +132,26 @@ export default class MailtrapClient {
     return new ContactListsBaseAPI(this.axios, this.accountId);
   }
 
+  /**
+   * Getter for Templates API.
+   */
   get templates() {
     if (!this.accountId) {
       throw new MailtrapError(ACCOUNT_ID_MISSING);
     }
 
     return new TemplatesBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Suppressions API.
+   */
+  get suppressions() {
+    if (!this.accountId) {
+      throw new MailtrapError(ACCOUNT_ID_MISSING);
+    }
+
+    return new SuppressionsBaseAPI(this.axios, this.accountId);
   }
 
   /**
