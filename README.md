@@ -76,6 +76,7 @@ Refer to the [`examples`](examples) folder for the source code of this and other
  - [Advanced](examples/sending/everything.ts)
  - [Minimal](examples/sending/minimal.ts)
  - [Send email using template](examples/sending/template.ts)
+ - [Suppressions](examples/sending/suppressions.ts)
  - [Nodemailer transport](examples/sending/transport.ts)
 
 ### Batch Sending API
