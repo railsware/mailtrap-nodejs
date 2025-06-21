@@ -61,25 +61,30 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
 ### Contacts API
 
- - [Contacts](examples/contacts/everything.ts)
+ - [Contacts CRUD](examples/contacts/everything.ts)
 
 ### Contact Lists API
 
- - [Contact Lists](examples/contact-lists/everything.ts)
+ - [Contact Lists CRUD](examples/contact-lists/everything.ts)
+
+### Templates API
+
+ - [Templates CRUD](examples/templates/everything.ts)
 
 ### Sending API
 
  - [Advanced](examples/sending/everything.ts)
  - [Minimal](examples/sending/minimal.ts)
  - [Send email using template](examples/sending/template.ts)
+ - [Suppressions](examples/sending/suppressions.ts)
  - [Nodemailer transport](examples/sending/transport.ts)
 
 ### Batch Sending API
 
- - [Send a batch of transactional emails](examples/batch/transactional.ts)
- - [Send a batch of bulk emails](examples/batch/bulk.ts)
- - [Send a batch of sandbox emails](examples/batch/sandbox.ts)
- - [Send a batch of emails from template](examples/batch/template.ts)
+ - [Transactional emails](examples/batch/transactional.ts)
+ - [Bulk emails](examples/batch/bulk.ts)
+ - [Sandbox emails](examples/batch/sandbox.ts)
+ - [Emails from template](examples/batch/template.ts)
 
 ### Email testing API
 
@@ -92,6 +97,7 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 ### Bulk sending API
 
  - [Send mail](examples/bulk/send-mail.ts)
+ - [Transport](examples/bulk/transport.ts)
 
 ### Nodemailer Transport
 
