@@ -84,6 +84,15 @@ export default class MailtrapClient {
   }
 
   /**
+   * Validates that account ID is present, throws MailtrapError if missing.
+   */
+  private validateAccountIdPresence(): void {
+    if (!this.accountId) {
+      throw new MailtrapError(ACCOUNT_ID_MISSING);
+    }
+  }
+
+  /**
    * Getter for Testing API. Warns if some of the required keys are missing.
    */
   get testing() {
@@ -91,9 +100,7 @@ export default class MailtrapClient {
       throw new MailtrapError(TEST_INBOX_ID_MISSING);
     }
 
-    if (!this.accountId) {
-      throw new MailtrapError(ACCOUNT_ID_MISSING);
-    }
+    this.validateAccountIdPresence();
 
     return new TestingAPI(this.axios, this.accountId);
   }
@@ -102,9 +109,7 @@ export default class MailtrapClient {
    * Getter for General API.
    */
   get general() {
-    if (!this.accountId) {
-      throw new MailtrapError(ACCOUNT_ID_MISSING);
-    }
+    this.validateAccountIdPresence();
 
     return new GeneralAPI(this.axios, this.accountId);
   }
@@ -113,9 +118,7 @@ export default class MailtrapClient {
    * Getter for Contacts API.
    */
   get contacts() {
-    if (!this.accountId) {
-      throw new MailtrapError(ACCOUNT_ID_MISSING);
-    }
+    this.validateAccountIdPresence();
 
     return new ContactsBaseAPI(this.axios, this.accountId);
   }
@@ -124,17 +127,13 @@ export default class MailtrapClient {
    * Getter for Contact Lists API.
    */
   get contactLists() {
-    if (!this.accountId) {
-      throw new MailtrapError(ACCOUNT_ID_MISSING);
-    }
+    this.validateAccountIdPresence();
 
     return new ContactListsBaseAPI(this.axios, this.accountId);
   }
 
   get templates() {
-    if (!this.accountId) {
-      throw new MailtrapError(ACCOUNT_ID_MISSING);
-    }
+    this.validateAccountIdPresence();
 
     return new TemplatesBaseAPI(this.axios, this.accountId);
   }
