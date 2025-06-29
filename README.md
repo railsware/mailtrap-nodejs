@@ -61,15 +61,15 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
 ### Contacts API
 
- - [Contacts CRUD](examples/contacts/everything.ts)
+ - [Contacts](examples/contacts/everything.ts)
 
 ### Contact Lists API
 
- - [Contact Lists CRUD](examples/contact-lists/everything.ts)
+ - [Contact Lists](examples/contact-lists/everything.ts)
 
 ### Templates API
 
- - [Templates CRUD](examples/templates/everything.ts)
+ - [Templates](examples/templates/everything.ts)
 
 ### Sending API
 
@@ -97,7 +97,7 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 ### Bulk sending API
 
  - [Send mail](examples/bulk/send-mail.ts)
- - [Transport](examples/bulk/transport.ts)
+ - [Nodemailer Transport](examples/bulk/transport.ts)
 
 ### Nodemailer Transport
 
