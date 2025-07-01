@@ -93,6 +93,15 @@ export default class MailtrapClient {
   }
 
   /**
+   * Validates that test inbox ID is present, throws MailtrapError if missing.
+   */
+  private validateTestInboxIdPresence(): void {
+    if (this.sandbox && !this.testInboxId) {
+      throw new MailtrapError(TEST_INBOX_ID_MISSING);
+    }
+  }
+
+  /**
    * Getter for Testing API. Warns if some of the required keys are missing.
    */
   get testing() {
@@ -164,9 +173,7 @@ export default class MailtrapClient {
   public async send(mail: Mail): Promise<SendResponse> {
     const host = this.determineHost();
 
-    if (this.sandbox && !this.testInboxId) {
-      throw new MailtrapError(TEST_INBOX_ID_MISSING);
-    }
+    this.validateTestInboxIdPresence();
 
     const url = `${host}/api/send${
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : ""
@@ -185,9 +192,13 @@ export default class MailtrapClient {
   ): Promise<BatchSendResponse> {
     const { requests, base } = request;
     const host = this.determineHost();
-    const ifSandbox =
+
+    this.validateTestInboxIdPresence();
+
+    const sandbox =
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
-    const url = `${host}/api/batch${ifSandbox}`;
+
+    const url = `${host}/api/batch${sandbox}`;
 
     const preparedBase = base ? encodeMailBuffers(base) : undefined;
     const preparedRequests = requests.map((singleRequest) =>
