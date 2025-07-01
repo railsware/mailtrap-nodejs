@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 
 import CONFIG from "../../../config";
-import { Suppression } from "../../../types/api/suppressions";
+import { ListOptions, Suppression } from "../../../types/api/suppressions";
 
 const { CLIENT_SETTINGS } = CONFIG;
 const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
@@ -22,9 +22,13 @@ export default class SuppressionsApi {
   /**
    * List and search suppressions by email. The endpoint returns up to 1000 suppressions per request.
    */
-  public async getList(email?: string) {
+  public async getList(options?: ListOptions) {
+    const params = {
+      ...(options?.email && { email: options.email }),
+    };
+
     return this.client.get<Suppression[], Suppression[]>(this.suppressionsURL, {
-      params: { email },
+      params,
     });
   }
 
