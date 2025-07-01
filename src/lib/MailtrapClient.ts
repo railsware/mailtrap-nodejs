@@ -32,7 +32,7 @@ const {
   TESTING_ENDPOINT,
   BULK_ENDPOINT,
 } = CLIENT_SETTINGS;
-const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE } =
+const { ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE, TEST_INBOX_ID_MISSING } =
   ERRORS;
 
 /**
@@ -96,10 +96,6 @@ export default class MailtrapClient {
    * Getter for Testing API. Warns if some of the required keys are missing.
    */
   get testing() {
-    if (!this.testInboxId) {
-      throw new MailtrapError(TEST_INBOX_ID_MISSING);
-    }
-
     this.validateAccountIdPresence();
 
     return new TestingAPI(this.axios, this.accountId);
@@ -132,6 +128,9 @@ export default class MailtrapClient {
     return new ContactListsBaseAPI(this.axios, this.accountId);
   }
 
+  /**
+   * Getter for Templates API.
+   */
   get templates() {
     this.validateAccountIdPresence();
 
@@ -164,8 +163,13 @@ export default class MailtrapClient {
    */
   public async send(mail: Mail): Promise<SendResponse> {
     const host = this.determineHost();
+
+    if (this.sandbox && !this.testInboxId) {
+      throw new MailtrapError(TEST_INBOX_ID_MISSING);
+    }
+
     const url = `${host}/api/send${
-      this.testInboxId ? `/${this.testInboxId}` : ""
+      this.sandbox && this.testInboxId ? `/${this.testInboxId}` : ""
     }`;
     const preparedMail = encodeMailBuffers(mail);
 
