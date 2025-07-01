@@ -349,6 +349,31 @@ describe("lib/mailtrap-client: ", () => {
     });
 
     describe("batch sending:", () => {
+      it("throws MailtrapError(TEST_INBOX_ID_MISSING) when batch sending in sandbox mode without testInboxId", async () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          sandbox: true,
+          accountId: 123,
+        });
+
+        const batchData = {
+          base: {
+            from: { email: "a@b.com", name: "Sender" },
+            subject: "Test",
+            text: "Body",
+          },
+          requests: [
+            {
+              to: [{ email: "c@d.com" }],
+            },
+          ],
+        };
+
+        await expect(client.batchSend(batchData)).rejects.toEqual(
+          new MailtrapError(TEST_INBOX_ID_MISSING)
+        );
+      });
+
       it("rejects with Mailtrap error when bulk and sandbox modes are used together", async () => {
         const batchClient = new MailtrapClient({
           token: "MY_API_TOKEN",
