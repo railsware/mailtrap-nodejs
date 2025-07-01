@@ -14,3 +14,7 @@ export type Suppression = {
   message_sender_email: string | null;
   message_subject: string | null;
 };
+
+export type ListOptions = {
+  email?: string;
+};
