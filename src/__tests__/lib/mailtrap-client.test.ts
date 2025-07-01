@@ -15,7 +15,7 @@ import TemplatesBaseAPI from "../../lib/api/Templates";
 
 const { ERRORS, CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT, BULK_ENDPOINT, SENDING_ENDPOINT } = CLIENT_SETTINGS;
-const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE } =
+const { ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE, TEST_INBOX_ID_MISSING } =
   ERRORS;
 
 describe("lib/mailtrap-client: ", () => {
@@ -329,6 +329,23 @@ describe("lib/mailtrap-client: ", () => {
           expect(err.cause).toBeInstanceOf(AxiosError);
         }
       }
+    });
+
+    it("throws MailtrapError(TEST_INBOX_ID_MISSING) when sending in sandbox mode without testInboxId", async () => {
+      const client = new MailtrapClient({
+        token: "MY_API_TOKEN",
+        sandbox: true,
+        accountId: 123,
+      });
+
+      await expect(
+        client.send({
+          from: { email: "a@b.com", name: "Sender" },
+          to: [{ email: "c@d.com" }],
+          subject: "Test",
+          text: "Body",
+        })
+      ).rejects.toEqual(new MailtrapError(TEST_INBOX_ID_MISSING));
     });
 
     describe("batch sending:", () => {
@@ -664,20 +681,6 @@ describe("lib/mailtrap-client: ", () => {
   });
 
   describe("get testing(): ", () => {
-    it("rejects with Mailtrap error, when `testInboxId` is missing.", () => {
-      const client = new MailtrapClient({
-        token: "MY_API_TOKEN",
-      });
-
-      expect.assertions(1);
-
-      try {
-        client.testing;
-      } catch (error) {
-        expect(error).toEqual(new MailtrapError(TEST_INBOX_ID_MISSING));
-      }
-    });
-
     it("rejects with Mailtrap error, when `accountId` is missing.", () => {
       const client = new MailtrapClient({
         token: "MY_API_TOKEN",
