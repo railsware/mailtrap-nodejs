@@ -32,7 +32,7 @@ const {
   TESTING_ENDPOINT,
   BULK_ENDPOINT,
 } = CLIENT_SETTINGS;
-const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE } =
+const { ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE, TEST_INBOX_ID_MISSING } =
   ERRORS;
 
 /**
@@ -93,13 +93,18 @@ export default class MailtrapClient {
   }
 
   /**
+   * Validates that test inbox ID is present, throws MailtrapError if missing.
+   */
+  private validateTestInboxIdPresence(): void {
+    if (this.sandbox && !this.testInboxId) {
+      throw new MailtrapError(TEST_INBOX_ID_MISSING);
+    }
+  }
+
+  /**
    * Getter for Testing API. Warns if some of the required keys are missing.
    */
   get testing() {
-    if (!this.testInboxId) {
-      throw new MailtrapError(TEST_INBOX_ID_MISSING);
-    }
-
     this.validateAccountIdPresence();
 
     return new TestingAPI(this.axios, this.accountId);
@@ -132,6 +137,9 @@ export default class MailtrapClient {
     return new ContactListsBaseAPI(this.axios, this.accountId);
   }
 
+  /**
+   * Getter for Templates API.
+   */
   get templates() {
     this.validateAccountIdPresence();
 
@@ -164,8 +172,11 @@ export default class MailtrapClient {
    */
   public async send(mail: Mail): Promise<SendResponse> {
     const host = this.determineHost();
+
+    this.validateTestInboxIdPresence();
+
     const url = `${host}/api/send${
-      this.testInboxId ? `/${this.testInboxId}` : ""
+      this.sandbox && this.testInboxId ? `/${this.testInboxId}` : ""
     }`;
     const preparedMail = encodeMailBuffers(mail);
 
@@ -181,9 +192,13 @@ export default class MailtrapClient {
   ): Promise<BatchSendResponse> {
     const { requests, base } = request;
     const host = this.determineHost();
-    const ifSandbox =
+
+    this.validateTestInboxIdPresence();
+
+    const sandbox =
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
-    const url = `${host}/api/batch${ifSandbox}`;
+
+    const url = `${host}/api/batch${sandbox}`;
 
     const preparedBase = base ? encodeMailBuffers(base) : undefined;
     const preparedRequests = requests.map((singleRequest) =>
