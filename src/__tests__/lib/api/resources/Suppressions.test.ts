@@ -109,7 +109,7 @@ describe("lib/api/resources/Suppressions: ", () => {
       expect.assertions(3);
 
       mock.onGet(endpoint, { params: { email } }).reply(200, [mockSuppression]);
-      const result = await suppressionsAPI.getList(email);
+      const result = await suppressionsAPI.getList({ email });
 
       expect(mock.history.get[0].url).toEqual(endpoint);
       expect(mock.history.get[0].params).toEqual({ email });
