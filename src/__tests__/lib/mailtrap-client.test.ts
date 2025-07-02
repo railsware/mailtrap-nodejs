@@ -709,7 +709,6 @@ describe("lib/mailtrap-client: ", () => {
     it("rejects with Mailtrap error, when `accountId` is missing.", () => {
       const client = new MailtrapClient({
         token: "MY_API_TOKEN",
-        testInboxId: 5,
       });
 
       expect.assertions(1);
@@ -721,11 +720,21 @@ describe("lib/mailtrap-client: ", () => {
       }
     });
 
+    it("returns testing API object when accountId is provided, even without testInboxId", () => {
+      const client = new MailtrapClient({
+        token: "MY_API_TOKEN",
+        accountId: 123,
+        // testInboxId is intentionally omitted
+      });
+      expect.assertions(1);
+
+      const testingClient = client.testing;
+      expect(testingClient).toBeInstanceOf(TestingAPI);
+    });
+
     it("returns testing API object, console warn is called twice.", () => {
       const client = new MailtrapClient({
         token: "MY_API_TOKEN",
-        sandbox: true,
-        testInboxId: 10,
         accountId: 10,
       });
       expect.assertions(1);
