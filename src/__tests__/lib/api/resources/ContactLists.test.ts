@@ -4,7 +4,7 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import ContactListsApi from "../../../../lib/api/resources/ContactLists";
 import handleSendingError from "../../../../lib/axios-logger";
 import MailtrapError from "../../../../lib/MailtrapError";
-import { ContactList, ContactLists } from "../../../../types/api/contactlist";
+import { ContactList } from "../../../../types/api/contactlist";
 
 import CONFIG from "../../../../config";
 
@@ -61,7 +61,7 @@ describe("lib/api/resources/ContactLists: ", () => {
   describe("getAll(): ", () => {
     it("successfully gets all contact lists.", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/lists`;
-      const expectedResponseData: ContactLists = [
+      const expectedResponseData: ContactList[] = [
         { id: 1, name: "Test List 1" },
         { id: 2, name: "Test List 2" },
       ];
