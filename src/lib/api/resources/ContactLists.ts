@@ -4,7 +4,6 @@ import CONFIG from "../../../config";
 import {
   ContactList,
   ContactListOptions,
-  ContactLists,
 } from "../../../types/api/contactlist";
 
 const { CLIENT_SETTINGS } = CONFIG;
@@ -26,7 +25,7 @@ export default class ContactListsApi {
   public async getList() {
     const url = `${this.contactListsURL}`;
 
-    return this.client.get<ContactLists, ContactLists>(url);
+    return this.client.get<ContactList[], ContactList[]>(url);
   }
 
   /**
