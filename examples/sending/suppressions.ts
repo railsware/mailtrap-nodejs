@@ -9,17 +9,17 @@ const client = new MailtrapClient({
 });
 
 async function suppressionsFlow() {
-  // Get all suppressions
-  const allSuppressions = await client.suppressions.getList();
-  console.log("All suppressions:", allSuppressions);
+  // Get suppressions (up to 1000 per request)
+  const suppressions = await client.suppressions.getList();
+  console.log("Suppressions (up to 1000):", suppressions);
 
   // Get suppressions filtered by email
-  const filteredSuppressions = await client.suppressions.getList("test@example.com");
+  const filteredSuppressions = await client.suppressions.getList({email: "test@example.com"});
   console.log("Filtered suppressions:", filteredSuppressions);
 
   // Delete a suppression by ID (if any exist)
-  if (allSuppressions.length > 0) {
-    const suppressionToDelete = allSuppressions[0];
+  if (suppressions.length > 0) {
+    const suppressionToDelete = suppressions[0];
     await client.suppressions.delete(suppressionToDelete.id);
     console.log(`Suppression ${suppressionToDelete.id} deleted successfully`);
   } else {
