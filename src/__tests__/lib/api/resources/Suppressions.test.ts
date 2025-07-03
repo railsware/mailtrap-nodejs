@@ -90,7 +90,7 @@ describe("lib/api/resources/Suppressions: ", () => {
   });
 
   describe("getList(): ", () => {
-    it("successfully gets all suppressions.", async () => {
+    it("successfully gets suppressions (up to 1000 per request).", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/suppressions`;
 
       expect.assertions(2);
@@ -116,13 +116,31 @@ describe("lib/api/resources/Suppressions: ", () => {
       expect(result).toEqual([mockSuppression]);
     });
 
-    it("fails with error.", async () => {
+    it("fails with unauthorized error (401).", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/suppressions`;
-      const expectedErrorMessage = "Request failed with status code 400";
+      const expectedErrorMessage = "Incorrect API token";
 
       expect.assertions(2);
 
-      mock.onGet(endpoint).reply(400, { error: expectedErrorMessage });
+      mock.onGet(endpoint).reply(401, { error: expectedErrorMessage });
+
+      try {
+        await suppressionsAPI.getList();
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toEqual(expectedErrorMessage);
+        }
+      }
+    });
+
+    it("fails with forbidden error (403).", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/suppressions`;
+      const expectedErrorMessage = "Access forbidden";
+
+      expect.assertions(2);
+
+      mock.onGet(endpoint).reply(403, { errors: expectedErrorMessage });
 
       try {
         await suppressionsAPI.getList();
@@ -149,13 +167,31 @@ describe("lib/api/resources/Suppressions: ", () => {
       expect(mock.history.delete[0].url).toEqual(endpoint);
     });
 
-    it("fails with error.", async () => {
+    it("fails with unauthorized error (401).", async () => {
       const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/suppressions/${suppressionId}`;
-      const expectedErrorMessage = "Request failed with status code 404";
+      const expectedErrorMessage = "Incorrect API token";
 
       expect.assertions(2);
 
-      mock.onDelete(endpoint).reply(404, { error: expectedErrorMessage });
+      mock.onDelete(endpoint).reply(401, { error: expectedErrorMessage });
+
+      try {
+        await suppressionsAPI.delete(suppressionId);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toEqual(expectedErrorMessage);
+        }
+      }
+    });
+
+    it("fails with forbidden error (403).", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/suppressions/${suppressionId}`;
+      const expectedErrorMessage = "Access forbidden";
+
+      expect.assertions(2);
+
+      mock.onDelete(endpoint).reply(403, { errors: expectedErrorMessage });
 
       try {
         await suppressionsAPI.delete(suppressionId);
