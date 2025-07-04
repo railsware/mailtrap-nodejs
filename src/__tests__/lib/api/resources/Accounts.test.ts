@@ -22,7 +22,7 @@ describe("lib/api/resources/Accounts: ", () => {
 
   describe("class Accounts(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(accountsAPI).toHaveProperty("getAllAccounts");
       });
     });

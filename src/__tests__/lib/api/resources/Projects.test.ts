@@ -24,7 +24,7 @@ describe("lib/api/resources/Projects: ", () => {
 
   describe("class Projects(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(projectsAPI).toHaveProperty("create");
         expect(projectsAPI).toHaveProperty("delete");
         expect(projectsAPI).toHaveProperty("getById");

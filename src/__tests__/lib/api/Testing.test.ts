@@ -8,7 +8,7 @@ describe("lib/api/Testing: ", () => {
 
   describe("class Testing(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(testingAPI).toHaveProperty("projects");
         expect(testingAPI).toHaveProperty("inboxes");
         expect(testingAPI).toHaveProperty("messages");

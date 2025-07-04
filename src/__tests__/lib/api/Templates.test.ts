@@ -8,7 +8,7 @@ describe("lib/api/Templates: ", () => {
 
   describe("class TemplatesBaseAPI(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(templatesAPI).toHaveProperty("create");
         expect(templatesAPI).toHaveProperty("getList");
         expect(templatesAPI).toHaveProperty("get");

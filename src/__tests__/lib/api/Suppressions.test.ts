@@ -8,7 +8,7 @@ describe("lib/api/Suppressions: ", () => {
 
   describe("class SuppressionsBaseAPI(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(suppressionsAPI).toHaveProperty("getList");
         expect(suppressionsAPI).toHaveProperty("delete");
       });

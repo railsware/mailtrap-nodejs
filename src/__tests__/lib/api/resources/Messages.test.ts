@@ -45,7 +45,7 @@ describe("lib/api/resources/Messages: ", () => {
 
   describe("class Messages(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(messagesAPI).toHaveProperty("deleteMessage");
         expect(messagesAPI).toHaveProperty("forward");
         expect(messagesAPI).toHaveProperty("get");
