@@ -22,6 +22,7 @@ import {
   BatchSendResponse,
   BatchSendRequest,
 } from "../types/mailtrap";
+import SuppressionsBaseAPI from "./api/Suppressions";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
@@ -144,6 +145,15 @@ export default class MailtrapClient {
     this.validateAccountIdPresence();
 
     return new TemplatesBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Suppressions API.
+   */
+  get suppressions() {
+    this.validateAccountIdPresence();
+
+    return new SuppressionsBaseAPI(this.axios, this.accountId);
   }
 
   /**

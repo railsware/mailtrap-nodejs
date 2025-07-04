@@ -42,7 +42,7 @@ describe("lib/api/resources/Inboxes: ", () => {
 
   describe("class Inboxes(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(inboxesAPI).toHaveProperty("cleanInbox");
         expect(inboxesAPI).toHaveProperty("create");
         expect(inboxesAPI).toHaveProperty("delete");

@@ -8,7 +8,7 @@ describe("lib/api/Contacts: ", () => {
 
   describe("class Contacts(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(contactsAPI).toHaveProperty("create");
         expect(contactsAPI).toHaveProperty("get");
         expect(contactsAPI).toHaveProperty("update");

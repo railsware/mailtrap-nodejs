@@ -8,7 +8,7 @@ describe("lib/api/General: ", () => {
 
   describe("class General(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(generalAPI).toHaveProperty("accountAccesses");
         expect(generalAPI).toHaveProperty("accounts");
         expect(generalAPI).toHaveProperty("permissions");
