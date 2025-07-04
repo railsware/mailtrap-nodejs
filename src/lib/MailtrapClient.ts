@@ -151,9 +151,7 @@ export default class MailtrapClient {
    * Getter for Suppressions API.
    */
   get suppressions() {
-    if (!this.accountId) {
-      throw new MailtrapError(ACCOUNT_ID_MISSING);
-    }
+    this.validateAccountIdPresence();
 
     return new SuppressionsBaseAPI(this.axios, this.accountId);
   }
