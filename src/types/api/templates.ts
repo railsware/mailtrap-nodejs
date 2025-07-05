@@ -25,5 +25,3 @@ export interface TemplateUpdateParams {
   body_html?: string;
   body_text?: string;
 }
-
-export type TemplateList = Template[];

@@ -3,8 +3,6 @@ export interface ContactList {
   name: string;
 }
 
-export type ContactLists = ContactList[];
-
 export interface ContactListOptions {
   name: string;
 }
