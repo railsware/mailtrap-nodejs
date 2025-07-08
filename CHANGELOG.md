@@ -1,3 +1,11 @@
+## [4.2.0] - 2025-07-08
+- Add support for [Batch Sending API](https://github.com/railsware/mailtrap-nodejs/pull/63).
+- Add support for [Contacts API](https://github.com/railsware/mailtrap-nodejs/pull/64).
+- Add support for [Contact Lists API](https://github.com/railsware/mailtrap-nodejs/pull/65).
+- Add support for [Templates API](https://github.com/railsware/mailtrap-nodejs/pull/67).
+- Add support for [Suppressions API](https://github.com/railsware/mailtrap-nodejs/pull/68).
+- Make `testInboxId` optional in the `MailtrapClient` configuration (https://github.com/railsware/mailtrap-nodejs/pull/70).
+
 ## [4.1.0] - 2025-04-18
 - Add support for `reply_to` in Sending API (in https://github.com/railsware/mailtrap-nodejs/pull/58, thanks to @aolamide).
 
