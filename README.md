@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-To get the most of this official Mailtrap.io Node.js SDK:
+To get the most out of this official Mailtrap.io Node.js SDK:
 - [Create a Mailtrap account](https://mailtrap.io/signup)
 - [Verify your domain](https://mailtrap.io/sending/domains)
 
@@ -18,10 +18,10 @@ This NPM package offers integration with the [official API](https://api-docs.mai
 
 Quickly integrate Mailtrap with your Node.js app.
 
-Currently with this SDK you can:
+Currently, with this SDK you can:
 - Email API/SMTP
   - Send an email (Transactional and Bulk streams)
-  - Send an email with a Template
+  - Send an email with a template
   - Send a batch of emails (Transactional and Bulk streams)
 - Email Sandbox (Testing)
   - Send an email
@@ -94,7 +94,7 @@ yarn add nodemailer
 npm install --s nodemailer
 ```
 
-If you're using Typescript, install `@types/nodemailer` as a `devDependency`.
+If you're using TypeScript, install `@types/nodemailer` as a `devDependency`.
 
 ```sh
 yarn add --dev @types/nodemailer
@@ -102,12 +102,11 @@ yarn add --dev @types/nodemailer
 # or, if you are using NPM:
 npm install --s-dev @types/nodemailer
 
-You can provide Mailtrap specific keys like `category`, `customVariables`, `templateUuid` and `templateVariables`.
+You can provide Mailtrap-specific keys like `category`, `customVariables`, `templateUuid`, and `templateVariables`.
 
-```
 See transport usage below:
 
- - [Transport](examples/sending/transport.ts)
+- [Transport](examples/sending/transport.ts)
 
 ## Examples
 
@@ -115,49 +114,49 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
 ### Contacts API
 
- - [Contacts](examples/contacts/everything.ts)
+- [Contacts](examples/contacts/everything.ts)
 
 ### Contact Lists API
 
- - [Contact Lists](examples/contact-lists/everything.ts)
+- [Contact Lists](examples/contact-lists/everything.ts)
 
 ### Sending API
 
- - [Advanced](examples/sending/everything.ts)
- - [Minimal](examples/sending/minimal.ts)
- - [Send email using template](examples/sending/template.ts)
- - [Suppressions management](examples/sending/suppressions.ts)
- - [Nodemailer transport](examples/sending/transport.ts)
+- [Advanced](examples/sending/everything.ts)
+- [Minimal](examples/sending/minimal.ts)
+- [Send email using template](examples/sending/template.ts)
+- [Suppressions management](examples/sending/suppressions.ts)
+- [Nodemailer transport](examples/sending/transport.ts)
 
 ### Batch Sending API
 
- - [Transactional emails](examples/batch/transactional.ts)
- - [Bulk emails](examples/batch/bulk.ts)
- - [Sandbox emails](examples/batch/sandbox.ts)
- - [Emails from template](examples/batch/template.ts)
+- [Transactional emails](examples/batch/transactional.ts)
+- [Bulk emails](examples/batch/bulk.ts)
+- [Sandbox emails](examples/batch/sandbox.ts)
+- [Emails from template](examples/batch/template.ts)
 
-### Bulk sending API
+### Bulk Sending API
 
- - [Send mail](examples/bulk/send-mail.ts)
- - [Nodemailer Transport](examples/bulk/transport.ts)
+- [Send mail](examples/bulk/send-mail.ts)
+- [Nodemailer Transport](examples/bulk/transport.ts)
 
 ### Templates API
 
- - [Templates](examples/templates/everything.ts)
+- [Templates](examples/templates/everything.ts)
 
 ### Email Sandbox (Testing) API
 
- - [Attachments](examples/testing/attachments.ts)
- - [Inboxes](examples/testing/inboxes.ts)
- - [Messages](examples/testing/messages.ts)
- - [Projects](examples/testing/projects.ts)
- - [Send mail using template](examples/testing/template.ts)
+- [Attachments](examples/testing/attachments.ts)
+- [Inboxes](examples/testing/inboxes.ts)
+- [Messages](examples/testing/messages.ts)
+- [Projects](examples/testing/projects.ts)
+- [Send mail using template](examples/testing/template.ts)
 
 ### General API
 
- - [List User & Invite account accesses](examples/general/account-accesses.ts)
- - [Remove account access](examples/general/accounts.ts)
- - [Permissions](examples/general/permissions.ts)
+- [List User & Invite account accesses](examples/general/account-accesses.ts)
+- [Remove account access](examples/general/accounts.ts)
+- [Permissions](examples/general/permissions.ts)
 
 ## Development
 
@@ -175,8 +174,8 @@ The package is available as open source under the terms of the [MIT License](htt
 
 ## Code of Conduct
 
-Everyone interacting in the Mailtrap project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
+Everyone interacting in the Mailtrap project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
 
 ## Compatibility with previous releases
 
-Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). The package version 3 is a completely new package. 
+Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. 
