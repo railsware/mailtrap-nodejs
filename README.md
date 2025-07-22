@@ -23,7 +23,7 @@ Currently with this SDK you can:
   - Send an email (Transactional and Bulk streams)
   - Send an email with a Template
   - Send a batch of emails (Transactional and Bulk streams)
-- Email Sandbox
+- Email Sandbox (Testing)
   - Send an email
   - Send an email with a template
   - Message management
@@ -117,25 +117,35 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 
  - [Contacts](examples/contacts/everything.ts)
 
+### Contact Lists API
+
+ - [Contact Lists](examples/contact-lists/everything.ts)
+
 ### Sending API
 
  - [Advanced](examples/sending/everything.ts)
  - [Minimal](examples/sending/minimal.ts)
  - [Send email using template](examples/sending/template.ts)
+ - [Suppressions management](examples/sending/suppressions.ts)
  - [Nodemailer transport](examples/sending/transport.ts)
 
 ### Batch Sending API
 
- - [Send a batch of transactional emails](examples/batch/transactional.ts)
- - [Send a batch of bulk emails](examples/batch/bulk.ts)
- - [Send a batch of sandbox emails](examples/batch/sandbox.ts)
- - [Send a batch of emails from template](examples/batch/template.ts)
+ - [Transactional emails](examples/batch/transactional.ts)
+ - [Bulk emails](examples/batch/bulk.ts)
+ - [Sandbox emails](examples/batch/sandbox.ts)
+ - [Emails from template](examples/batch/template.ts)
 
 ### Bulk sending API
 
  - [Send mail](examples/bulk/send-mail.ts)
+ - [Nodemailer Transport](examples/bulk/transport.ts)
 
-### Email Sandbox API
+### Templates API
+
+ - [Templates](examples/templates/everything.ts)
+
+### Email Sandbox (Testing) API
 
  - [Attachments](examples/testing/attachments.ts)
  - [Inboxes](examples/testing/inboxes.ts)
