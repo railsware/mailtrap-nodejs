@@ -34,7 +34,7 @@ describe("lib/api/resources/Attachments: ", () => {
 
   describe("class Attachments(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(attachmentsAPI).toHaveProperty("get");
         expect(attachmentsAPI).toHaveProperty("getList");
       });

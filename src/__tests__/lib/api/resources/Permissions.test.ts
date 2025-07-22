@@ -28,7 +28,7 @@ describe("lib/api/resources/Permissions: ", () => {
 
   describe("class Permissions(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(permissionsAPI).toHaveProperty("getResources");
         expect(permissionsAPI).toHaveProperty("bulkPermissionsUpdate");
       });

@@ -9,10 +9,14 @@ import MailtrapError from "../../lib/MailtrapError";
 import CONFIG from "../../config";
 import GeneralAPI from "../../lib/api/General";
 import TestingAPI from "../../lib/api/Testing";
+import ContactLists from "../../lib/api/ContactLists";
+import Contacts from "../../lib/api/Contacts";
+import TemplatesBaseAPI from "../../lib/api/Templates";
+import SuppressionsBaseAPI from "../../lib/api/Suppressions";
 
 const { ERRORS, CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT, BULK_ENDPOINT, SENDING_ENDPOINT } = CLIENT_SETTINGS;
-const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE } =
+const { ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE, TEST_INBOX_ID_MISSING } =
   ERRORS;
 
 describe("lib/mailtrap-client: ", () => {
@@ -328,7 +332,49 @@ describe("lib/mailtrap-client: ", () => {
       }
     });
 
+    it("throws MailtrapError(TEST_INBOX_ID_MISSING) when sending in sandbox mode without testInboxId", async () => {
+      const client = new MailtrapClient({
+        token: "MY_API_TOKEN",
+        sandbox: true,
+        accountId: 123,
+      });
+
+      await expect(
+        client.send({
+          from: { email: "a@b.com", name: "Sender" },
+          to: [{ email: "c@d.com" }],
+          subject: "Test",
+          text: "Body",
+        })
+      ).rejects.toEqual(new MailtrapError(TEST_INBOX_ID_MISSING));
+    });
+
     describe("batch sending:", () => {
+      it("throws MailtrapError(TEST_INBOX_ID_MISSING) when batch sending in sandbox mode without testInboxId", async () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          sandbox: true,
+          accountId: 123,
+        });
+
+        const batchData = {
+          base: {
+            from: { email: "a@b.com", name: "Sender" },
+            subject: "Test",
+            text: "Body",
+          },
+          requests: [
+            {
+              to: [{ email: "c@d.com" }],
+            },
+          ],
+        };
+
+        await expect(client.batchSend(batchData)).rejects.toEqual(
+          new MailtrapError(TEST_INBOX_ID_MISSING)
+        );
+      });
+
       it("rejects with Mailtrap error when bulk and sandbox modes are used together", async () => {
         const batchClient = new MailtrapClient({
           token: "MY_API_TOKEN",
@@ -661,24 +707,9 @@ describe("lib/mailtrap-client: ", () => {
   });
 
   describe("get testing(): ", () => {
-    it("rejects with Mailtrap error, when `testInboxId` is missing.", () => {
-      const client = new MailtrapClient({
-        token: "MY_API_TOKEN",
-      });
-
-      expect.assertions(1);
-
-      try {
-        client.testing;
-      } catch (error) {
-        expect(error).toEqual(new MailtrapError(TEST_INBOX_ID_MISSING));
-      }
-    });
-
     it("rejects with Mailtrap error, when `accountId` is missing.", () => {
       const client = new MailtrapClient({
         token: "MY_API_TOKEN",
-        testInboxId: 5,
       });
 
       expect.assertions(1);
@@ -690,11 +721,21 @@ describe("lib/mailtrap-client: ", () => {
       }
     });
 
+    it("returns testing API object when accountId is provided, even without testInboxId", () => {
+      const client = new MailtrapClient({
+        token: "MY_API_TOKEN",
+        accountId: 123,
+        // testInboxId is intentionally omitted
+      });
+      expect.assertions(1);
+
+      const testingClient = client.testing;
+      expect(testingClient).toBeInstanceOf(TestingAPI);
+    });
+
     it("returns testing API object, console warn is called twice.", () => {
       const client = new MailtrapClient({
         token: "MY_API_TOKEN",
-        sandbox: true,
-        testInboxId: 10,
         accountId: 10,
       });
       expect.assertions(1);
@@ -704,14 +745,132 @@ describe("lib/mailtrap-client: ", () => {
     });
 
     describe("get general(): ", () => {
-      it("returns testing API object, console warn is called twice.", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
         const client = new MailtrapClient({
           token: "MY_API_TOKEN",
         });
         expect.assertions(1);
 
+        try {
+          client.general;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns general API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
         const generalClient = client.general;
         expect(generalClient).toBeInstanceOf(GeneralAPI);
+      });
+    });
+
+    describe("get contacts(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.contacts;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns contacts API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
+        const contactsClient = client.contacts;
+        expect(contactsClient).toBeInstanceOf(Contacts);
+      });
+    });
+
+    describe("get contactLists(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.contactLists;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns contact lists API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
+        const contactListsClient = client.contactLists;
+        expect(contactListsClient).toBeInstanceOf(ContactLists);
+      });
+    });
+
+    describe("get templates(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.templates;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns templates API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
+        const templatesClient = client.templates;
+        expect(templatesClient).toBeInstanceOf(TemplatesBaseAPI);
+      });
+    });
+
+    describe("get suppressions(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.suppressions;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns suppressions API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
+        const suppressionsClient = client.suppressions;
+        expect(suppressionsClient).toBeInstanceOf(SuppressionsBaseAPI);
       });
     });
   });

@@ -42,7 +42,7 @@ describe("lib/api/resources/AccountAccesses: ", () => {
 
   describe("class AccountAccesses(): ", () => {
     describe("init: ", () => {
-      it("initalizes with all necessary params.", () => {
+      it("initializes with all necessary params.", () => {
         expect(accountAccessesAPI).toHaveProperty("listAccountAccesses");
         expect(accountAccessesAPI).toHaveProperty("removeAccountAccess");
       });

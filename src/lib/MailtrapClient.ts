@@ -10,6 +10,8 @@ import MailtrapError from "./MailtrapError";
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
 import ContactsBaseAPI from "./api/Contacts";
+import ContactListsBaseAPI from "./api/ContactLists";
+import TemplatesBaseAPI from "./api/Templates";
 
 import CONFIG from "../config";
 
@@ -20,6 +22,7 @@ import {
   BatchSendResponse,
   BatchSendRequest,
 } from "../types/mailtrap";
+import SuppressionsBaseAPI from "./api/Suppressions";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
@@ -30,7 +33,7 @@ const {
   TESTING_ENDPOINT,
   BULK_ENDPOINT,
 } = CLIENT_SETTINGS;
-const { TEST_INBOX_ID_MISSING, ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE } =
+const { ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE, TEST_INBOX_ID_MISSING } =
   ERRORS;
 
 /**
@@ -82,16 +85,28 @@ export default class MailtrapClient {
   }
 
   /**
-   * Getter for Testing API. Warns if some of the required keys are missing.
+   * Validates that account ID is present, throws MailtrapError if missing.
    */
-  get testing() {
-    if (!this.testInboxId) {
-      throw new MailtrapError(TEST_INBOX_ID_MISSING);
-    }
-
+  private validateAccountIdPresence(): void {
     if (!this.accountId) {
       throw new MailtrapError(ACCOUNT_ID_MISSING);
     }
+  }
+
+  /**
+   * Validates that test inbox ID is present, throws MailtrapError if missing.
+   */
+  private validateTestInboxIdPresence(): void {
+    if (this.sandbox && !this.testInboxId) {
+      throw new MailtrapError(TEST_INBOX_ID_MISSING);
+    }
+  }
+
+  /**
+   * Getter for Testing API. Warns if some of the required keys are missing.
+   */
+  get testing() {
+    this.validateAccountIdPresence();
 
     return new TestingAPI(this.axios, this.accountId);
   }
@@ -100,6 +115,8 @@ export default class MailtrapClient {
    * Getter for General API.
    */
   get general() {
+    this.validateAccountIdPresence();
+
     return new GeneralAPI(this.axios, this.accountId);
   }
 
@@ -107,7 +124,36 @@ export default class MailtrapClient {
    * Getter for Contacts API.
    */
   get contacts() {
+    this.validateAccountIdPresence();
+
     return new ContactsBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Contact Lists API.
+   */
+  get contactLists() {
+    this.validateAccountIdPresence();
+
+    return new ContactListsBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Templates API.
+   */
+  get templates() {
+    this.validateAccountIdPresence();
+
+    return new TemplatesBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Suppressions API.
+   */
+  get suppressions() {
+    this.validateAccountIdPresence();
+
+    return new SuppressionsBaseAPI(this.axios, this.accountId);
   }
 
   /**
@@ -136,8 +182,11 @@ export default class MailtrapClient {
    */
   public async send(mail: Mail): Promise<SendResponse> {
     const host = this.determineHost();
+
+    this.validateTestInboxIdPresence();
+
     const url = `${host}/api/send${
-      this.testInboxId ? `/${this.testInboxId}` : ""
+      this.sandbox && this.testInboxId ? `/${this.testInboxId}` : ""
     }`;
     const preparedMail = encodeMailBuffers(mail);
 
@@ -153,9 +202,13 @@ export default class MailtrapClient {
   ): Promise<BatchSendResponse> {
     const { requests, base } = request;
     const host = this.determineHost();
-    const ifSandbox =
+
+    this.validateTestInboxIdPresence();
+
+    const sandbox =
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : "";
-    const url = `${host}/api/batch${ifSandbox}`;
+
+    const url = `${host}/api/batch${sandbox}`;
 
     const preparedBase = base ? encodeMailBuffers(base) : undefined;
     const preparedRequests = requests.map((singleRequest) =>
