@@ -5,6 +5,13 @@ type ShareLinks = {
   viewer: string;
 };
 
+type Permissions = {
+  can_read: boolean;
+  can_update: boolean;
+  can_destroy: boolean;
+  can_leave: boolean;
+};
+
 export type Project = {
   id: number;
   name: string;
