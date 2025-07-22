@@ -101,6 +101,7 @@ yarn add --dev @types/nodemailer
 
 # or, if you are using NPM:
 npm install --s-dev @types/nodemailer
+```
 
 You can provide Mailtrap-specific keys like `category`, `customVariables`, `templateUuid`, and `templateVariables`.
 
