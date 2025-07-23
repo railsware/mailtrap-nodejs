@@ -91,7 +91,7 @@ client
 yarn add nodemailer
 
 # or, if you are using NPM:
-npm install --s nodemailer
+npm install nodemailer
 ```
 
 If you're using TypeScript, install `@types/nodemailer` as a `devDependency`.
@@ -100,7 +100,7 @@ If you're using TypeScript, install `@types/nodemailer` as a `devDependency`.
 yarn add --dev @types/nodemailer
 
 # or, if you are using NPM:
-npm install --s-dev @types/nodemailer
+npm install -D @types/nodemailer
 ```
 
 You can provide Mailtrap-specific keys like `category`, `customVariables`, `templateUuid`, and `templateVariables`.
