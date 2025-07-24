@@ -10,8 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "declarationMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": false
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "examples"]
