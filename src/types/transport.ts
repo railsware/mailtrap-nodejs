@@ -1,6 +1,6 @@
 import NodemailerMail = require("nodemailer/lib/mailer");
 
-import { Transporter } from "nodemailer";
+import { Transport, Transporter } from "nodemailer";
 import {
   SendResponse,
   SendError,
@@ -51,3 +51,5 @@ export interface MailtrapTransporter extends Transporter<MailtrapResponse> {
     mailOptions: MailtrapMailOptions | MailtrapMailOptionsSandbox
   ): Promise<MailtrapResponse>;
 }
+
+export type MailMessage<T> = Parameters<Transport<T>["send"]>[0];
