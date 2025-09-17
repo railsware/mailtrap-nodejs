@@ -1,5 +1,4 @@
 import { Transport } from "nodemailer";
-import MailMessage from "nodemailer/lib/mailer/mail-message";
 
 import MailtrapClient from "./MailtrapClient";
 import normalizeCallback from "./normalizer";
@@ -11,6 +10,7 @@ import {
   MailtrapResponse,
   MailtrapTransporter,
   NormalizeCallback,
+  MailMessage,
 } from "../types/transport";
 
 const { TRANSPORT_SETTINGS } = CONFIG;
