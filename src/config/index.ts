@@ -18,6 +18,7 @@ export default {
     GENERAL_ENDPOINT: "https://mailtrap.io",
     USER_AGENT:
       "mailtrap-nodejs (https://github.com/railsware/mailtrap-nodejs)",
+    MCP_USER_AGENT: "mailtrap-mcp (https://github.com/railsware/mailtrap-mcp)",
     MAX_REDIRECTS: 0,
     TIMEOUT: 10000,
   },

@@ -6,12 +6,14 @@ import axios, { AxiosInstance } from "axios";
 import encodeMailBuffers from "./mail-buffer-encoder";
 import handleSendingError from "./axios-logger";
 import MailtrapError from "./MailtrapError";
+import getDynamicUserAgent from "./get-agent";
 
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
 import ContactsBaseAPI from "./api/Contacts";
 import ContactListsBaseAPI from "./api/ContactLists";
 import TemplatesBaseAPI from "./api/Templates";
+import SuppressionsBaseAPI from "./api/Suppressions";
 
 import CONFIG from "../config";
 
@@ -22,13 +24,11 @@ import {
   BatchSendResponse,
   BatchSendRequest,
 } from "../types/mailtrap";
-import SuppressionsBaseAPI from "./api/Suppressions";
 
 const { CLIENT_SETTINGS, ERRORS } = CONFIG;
 const {
   SENDING_ENDPOINT,
   MAX_REDIRECTS,
-  USER_AGENT,
   TIMEOUT,
   TESTING_ENDPOINT,
   BULK_ENDPOINT,
@@ -66,7 +66,7 @@ export default class MailtrapClient {
       headers: {
         Authorization: `Bearer ${token}`,
         Connection: "keep-alive",
-        "User-Agent": USER_AGENT,
+        "User-Agent": getDynamicUserAgent(),
       },
       maxRedirects: MAX_REDIRECTS,
       timeout: TIMEOUT,
@@ -182,12 +182,12 @@ export default class MailtrapClient {
    */
   public async send(mail: Mail): Promise<SendResponse> {
     const host = this.determineHost();
-
     this.validateTestInboxIdPresence();
 
     const url = `${host}/api/send${
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : ""
     }`;
+
     const preparedMail = encodeMailBuffers(mail);
 
     return this.axios.post<SendResponse, SendResponse>(url, preparedMail);
