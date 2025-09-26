@@ -59,28 +59,17 @@ function isCallStackMCP(): boolean {
 }
 
 /**
- * Determines if the code is running in a Mailtrap MCP context.
- * Uses multiple detection methods to ensure accurate context identification.
- * @returns true if running in MCP context, false otherwise
- */
-function isMailtrapMCPContext(): boolean {
-  return (
-    isMainModuleMCP() ||
-    isWorkingDirectoryMCP() ||
-    isCallStackMCP() ||
-    isMCPRuntimeContext()
-  );
-}
-
-/**
  * Gets the appropriate User-Agent string based on the current context.
  * @returns The User-Agent string for the current context
  */
 function getDynamicUserAgent(): string {
-  const isMCP = isMailtrapMCPContext();
-  const selectedUA = isMCP ? MCP_USER_AGENT : USER_AGENT;
+  const isMailtrapMCPContext =
+    isMainModuleMCP() ||
+    isWorkingDirectoryMCP() ||
+    isCallStackMCP() ||
+    isMCPRuntimeContext();
 
-  return selectedUA;
+  return isMailtrapMCPContext ? MCP_USER_AGENT : USER_AGENT;
 }
 
 export default getDynamicUserAgent;
