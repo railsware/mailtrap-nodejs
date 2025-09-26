@@ -17,6 +17,21 @@ function isMainModuleMCP(): boolean {
 }
 
 /**
+ * Checks if running in MCP runtime context (Claude Desktop).
+ * @returns true if main module is from MCP runtime
+ */
+function isMCPRuntimeContext(): boolean {
+  const mainFile = require?.main?.filename;
+
+  return !!(
+    mainFile &&
+    (mainFile.includes("mcp-runtime") ||
+      mainFile.includes("nodeHost.js") ||
+      mainFile.includes("Claude.app"))
+  );
+}
+
+/**
  * Checks if the current working directory indicates MCP context.
  * @returns true if cwd contains "mailtrap-mcp" and is not in node_modules
  */
@@ -49,7 +64,12 @@ function isCallStackMCP(): boolean {
  * @returns true if running in MCP context, false otherwise
  */
 function isMailtrapMCPContext(): boolean {
-  return isMainModuleMCP() || isWorkingDirectoryMCP() || isCallStackMCP();
+  return (
+    isMainModuleMCP() ||
+    isWorkingDirectoryMCP() ||
+    isCallStackMCP() ||
+    isMCPRuntimeContext()
+  );
 }
 
 /**
@@ -57,7 +77,10 @@ function isMailtrapMCPContext(): boolean {
  * @returns The User-Agent string for the current context
  */
 function getDynamicUserAgent(): string {
-  return isMailtrapMCPContext() ? MCP_USER_AGENT : USER_AGENT;
+  const isMCP = isMailtrapMCPContext();
+  const selectedUA = isMCP ? MCP_USER_AGENT : USER_AGENT;
+
+  return selectedUA;
 }
 
 export default getDynamicUserAgent;
