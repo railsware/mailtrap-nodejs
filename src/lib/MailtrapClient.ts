@@ -182,12 +182,12 @@ export default class MailtrapClient {
    */
   public async send(mail: Mail): Promise<SendResponse> {
     const host = this.determineHost();
-
     this.validateTestInboxIdPresence();
 
     const url = `${host}/api/send${
       this.sandbox && this.testInboxId ? `/${this.testInboxId}` : ""
     }`;
+
     const preparedMail = encodeMailBuffers(mail);
 
     return this.axios.post<SendResponse, SendResponse>(url, preparedMail);
