@@ -6,7 +6,6 @@ import axios, { AxiosInstance } from "axios";
 import encodeMailBuffers from "./mail-buffer-encoder";
 import handleSendingError from "./axios-logger";
 import MailtrapError from "./MailtrapError";
-import getDynamicUserAgent from "./get-agent";
 
 import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
@@ -32,6 +31,7 @@ const {
   TIMEOUT,
   TESTING_ENDPOINT,
   BULK_ENDPOINT,
+  USER_AGENT,
 } = CLIENT_SETTINGS;
 const { ACCOUNT_ID_MISSING, BULK_SANDBOX_INCOMPATIBLE, TEST_INBOX_ID_MISSING } =
   ERRORS;
@@ -59,6 +59,7 @@ export default class MailtrapClient {
     accountId,
     bulk = false,
     sandbox = false,
+    userAgent,
   }: MailtrapClientConfig) {
     this.axios = axios.create({
       httpAgent: new http.Agent({ keepAlive: true }),
@@ -66,7 +67,7 @@ export default class MailtrapClient {
       headers: {
         Authorization: `Bearer ${token}`,
         Connection: "keep-alive",
-        "User-Agent": getDynamicUserAgent(),
+        "User-Agent": userAgent || USER_AGENT,
       },
       maxRedirects: MAX_REDIRECTS,
       timeout: TIMEOUT,
