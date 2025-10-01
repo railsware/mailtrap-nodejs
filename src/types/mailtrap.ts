@@ -67,6 +67,7 @@ export type MailtrapClientConfig = {
   accountId?: number;
   bulk?: boolean;
   sandbox?: boolean;
+  userAgent?: string;
 };
 
 export type BatchMail = Mail[];
