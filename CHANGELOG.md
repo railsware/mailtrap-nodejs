@@ -1,3 +1,9 @@
+## [4.3.0] - 2025-10-02
+- feat: add Permissions type to projects API for enhanced access control by @narekhovhannisyan in https://github.com/railsware/mailtrap-nodejs/pull/80
+- update readme by @yanchuk in https://github.com/railsware/mailtrap-nodejs/pull/66
+- build(deps): bump axios from 1.8.2 to 1.12.0 by @dependabot[bot] in https://github.com/railsware/mailtrap-nodejs/pull/86
+- Dynamic user agent by @narekhovhannisyan in https://github.com/railsware/mailtrap-nodejs/pull/85
+
 ## [4.2.0] - 2025-07-08
 - Add support for [Batch Sending API](https://github.com/railsware/mailtrap-nodejs/pull/63).
 - Add support for [Contacts API](https://github.com/railsware/mailtrap-nodejs/pull/64).
