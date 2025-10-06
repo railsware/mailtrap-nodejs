@@ -3,13 +3,11 @@ import { MailtrapClient } from "mailtrap";
 const TOKEN = "<YOUR-TOKEN-HERE>";
 const ACCOUNT_ID = "<YOUR-ACCOUNT-ID-HERE>"
 
-// Initialize the client with your token and account ID
 const client = new MailtrapClient({
   token: TOKEN,
-  accountId: ACCOUNT_ID, // Your account ID
+  accountId: ACCOUNT_ID,
 });
 
-// Example usage of ContactFields API
 async function contactFieldsExample() {
   try {
     // Get all contact fields
@@ -41,5 +39,4 @@ async function contactFieldsExample() {
   }
 }
 
-// Run the example
 contactFieldsExample();
