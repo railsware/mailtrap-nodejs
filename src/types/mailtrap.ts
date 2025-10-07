@@ -64,7 +64,7 @@ export type SendError = {
 export type MailtrapClientConfig = {
   token: string;
   testInboxId?: number;
-  accountId?: number;
+  accountId: number;
   bulk?: boolean;
   sandbox?: boolean;
   userAgent?: string;
