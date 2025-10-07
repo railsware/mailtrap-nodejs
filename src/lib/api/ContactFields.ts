@@ -3,10 +3,6 @@ import { AxiosInstance } from "axios";
 import ContactFieldsApi from "./resources/ContactFields";
 
 export default class ContactFieldsBaseAPI {
-  private client: AxiosInstance;
-
-  private accountId: number;
-
   public create: ContactFieldsApi["create"];
 
   public get: ContactFieldsApi["get"];
@@ -18,9 +14,7 @@ export default class ContactFieldsBaseAPI {
   public delete: ContactFieldsApi["delete"];
 
   constructor(client: AxiosInstance, accountId: number) {
-    this.client = client;
-    this.accountId = accountId;
-    const contactFields = new ContactFieldsApi(this.client, this.accountId);
+    const contactFields = new ContactFieldsApi(client, accountId);
     this.create = contactFields.create.bind(contactFields);
     this.get = contactFields.get.bind(contactFields);
     this.getList = contactFields.getList.bind(contactFields);

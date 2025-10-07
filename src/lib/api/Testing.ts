@@ -6,10 +6,6 @@ import MessagesApi from "./resources/Messages";
 import AttachmentsApi from "./resources/Attachments";
 
 export default class TestingAPI {
-  private client: AxiosInstance;
-
-  private accountId: number;
-
   public projects: ProjectsApi;
 
   public inboxes: InboxesApi;
@@ -19,11 +15,9 @@ export default class TestingAPI {
   public attachments: AttachmentsApi;
 
   constructor(client: AxiosInstance, accountId: number) {
-    this.client = client;
-    this.accountId = accountId;
-    this.projects = new ProjectsApi(this.client, this.accountId);
-    this.inboxes = new InboxesApi(this.client, this.accountId);
-    this.messages = new MessagesApi(this.client, this.accountId);
-    this.attachments = new AttachmentsApi(this.client, this.accountId);
+    this.projects = new ProjectsApi(client, accountId);
+    this.inboxes = new InboxesApi(client, accountId);
+    this.messages = new MessagesApi(client, accountId);
+    this.attachments = new AttachmentsApi(client, accountId);
   }
 }
