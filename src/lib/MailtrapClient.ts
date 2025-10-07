@@ -45,7 +45,7 @@ export default class MailtrapClient {
 
   private testInboxId?: number;
 
-  private accountId: number;
+  private accountId?: number;
 
   private bulk: boolean;
 
@@ -89,10 +89,11 @@ export default class MailtrapClient {
   /**
    * Validates that account ID is present, throws MailtrapError if missing.
    */
-  private validateAccountIdPresence(): void {
+  private validateAccountIdPresence(): number {
     if (!this.accountId) {
       throw new MailtrapError(ACCOUNT_ID_MISSING);
     }
+    return this.accountId;
   }
 
   /**
@@ -108,63 +109,56 @@ export default class MailtrapClient {
    * Getter for Testing API. Warns if some of the required keys are missing.
    */
   get testing() {
-    this.validateAccountIdPresence();
-
-    return new TestingAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new TestingAPI(this.axios, accountId);
   }
 
   /**
    * Getter for General API.
    */
   get general() {
-    this.validateAccountIdPresence();
-
-    return new GeneralAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new GeneralAPI(this.axios, accountId);
   }
 
   /**
    * Getter for Contacts API.
    */
   get contacts() {
-    this.validateAccountIdPresence();
-
-    return new ContactsBaseAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new ContactsBaseAPI(this.axios, accountId);
   }
 
   /**
    * Getter for Contact Lists API.
    */
   get contactLists() {
-    this.validateAccountIdPresence();
-
-    return new ContactListsBaseAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new ContactListsBaseAPI(this.axios, accountId);
   }
 
   /**
    * Getter for Contact Fields API.
    */
   get contactFields() {
-    this.validateAccountIdPresence();
-
-    return new ContactFieldsBaseAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new ContactFieldsBaseAPI(this.axios, accountId);
   }
 
   /**
    * Getter for Templates API.
    */
   get templates() {
-    this.validateAccountIdPresence();
-
-    return new TemplatesBaseAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new TemplatesBaseAPI(this.axios, accountId);
   }
 
   /**
    * Getter for Suppressions API.
    */
   get suppressions() {
-    this.validateAccountIdPresence();
-
-    return new SuppressionsBaseAPI(this.axios, this.accountId);
+    const accountId = this.validateAccountIdPresence();
+    return new SuppressionsBaseAPI(this.axios, accountId);
   }
 
   /**
