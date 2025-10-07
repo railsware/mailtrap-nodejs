@@ -45,7 +45,7 @@ export default class MailtrapClient {
 
   private testInboxId?: number;
 
-  private accountId?: number;
+  private accountId: number;
 
   private bulk: boolean;
 
