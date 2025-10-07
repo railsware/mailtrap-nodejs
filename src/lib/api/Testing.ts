@@ -8,7 +8,7 @@ import AttachmentsApi from "./resources/Attachments";
 export default class TestingAPI {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   public projects: ProjectsApi;
 
@@ -18,7 +18,7 @@ export default class TestingAPI {
 
   public attachments: AttachmentsApi;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     this.projects = new ProjectsApi(this.client, this.accountId);

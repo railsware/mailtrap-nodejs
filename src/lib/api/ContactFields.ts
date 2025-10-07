@@ -5,7 +5,7 @@ import ContactFieldsApi from "./resources/ContactFields";
 export default class ContactFieldsBaseAPI {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   public create: ContactFieldsApi["create"];
 
@@ -17,7 +17,7 @@ export default class ContactFieldsBaseAPI {
 
   public delete: ContactFieldsApi["delete"];
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     const contactFields = new ContactFieldsApi(this.client, this.accountId);

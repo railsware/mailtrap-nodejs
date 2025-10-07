@@ -5,7 +5,7 @@ import TemplatesApi from "./resources/Templates";
 export default class TemplatesBaseAPI {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   public get: TemplatesApi["get"];
 
@@ -17,7 +17,7 @@ export default class TemplatesBaseAPI {
 
   public delete: TemplatesApi["delete"];
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     const templates = new TemplatesApi(this.client, this.accountId);

@@ -5,7 +5,7 @@ import ContactListsApi from "./resources/ContactLists";
 export default class ContactListsBaseAPI {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   public create: ContactListsApi["create"];
 
@@ -17,7 +17,7 @@ export default class ContactListsBaseAPI {
 
   public delete: ContactListsApi["delete"];
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     const contactLists = new ContactListsApi(this.client, this.accountId);

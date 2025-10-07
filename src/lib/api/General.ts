@@ -7,7 +7,7 @@ import PermissionsApi from "./resources/Permissions";
 export default class GeneralAPI {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   public accountAccesses: AccountAccessesApi;
 
@@ -15,7 +15,7 @@ export default class GeneralAPI {
 
   public permissions: PermissionsApi;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     this.accountAccesses = new AccountAccessesApi(this.client, this.accountId);
