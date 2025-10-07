@@ -13,11 +13,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class PermissionsApi {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   private permissionsURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     this.permissionsURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/account_accesses`;

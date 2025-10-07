@@ -9,11 +9,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class SuppressionsApi {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   private suppressionsURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     this.suppressionsURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/suppressions`;

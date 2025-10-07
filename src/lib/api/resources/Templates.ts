@@ -13,11 +13,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class TemplatesApi {
   private client: AxiosInstance;
 
-  private accountId?: number;
+  private accountId: number;
 
   private templatesURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.accountId = accountId;
     this.templatesURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/email_templates`;
