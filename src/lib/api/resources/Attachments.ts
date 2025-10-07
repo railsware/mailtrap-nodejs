@@ -10,14 +10,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class AttachmentsApi {
   private client: AxiosInstance;
 
-  private accountId: number;
-
   private inboxesURL: string;
 
   constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
-    this.accountId = accountId;
-    this.inboxesURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/inboxes`;
+    this.inboxesURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes`;
   }
 
   /**
