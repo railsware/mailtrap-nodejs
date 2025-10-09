@@ -11,6 +11,7 @@ import GeneralAPI from "./api/General";
 import TestingAPI from "./api/Testing";
 import ContactsBaseAPI from "./api/Contacts";
 import ContactListsBaseAPI from "./api/ContactLists";
+import ContactFieldsBaseAPI from "./api/ContactFields";
 import TemplatesBaseAPI from "./api/Templates";
 import SuppressionsBaseAPI from "./api/Suppressions";
 
@@ -137,6 +138,15 @@ export default class MailtrapClient {
     this.validateAccountIdPresence();
 
     return new ContactListsBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Contact Fields API.
+   */
+  get contactFields() {
+    this.validateAccountIdPresence();
+
+    return new ContactFieldsBaseAPI(this.axios, this.accountId);
   }
 
   /**
