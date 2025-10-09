@@ -14,6 +14,7 @@ import ContactListsBaseAPI from "./api/ContactLists";
 import ContactFieldsBaseAPI from "./api/ContactFields";
 import TemplatesBaseAPI from "./api/Templates";
 import SuppressionsBaseAPI from "./api/Suppressions";
+import SendingDomainsBaseAPI from "./api/SendingDomains";
 
 import CONFIG from "../config";
 
@@ -165,6 +166,15 @@ export default class MailtrapClient {
     this.validateAccountIdPresence();
 
     return new SuppressionsBaseAPI(this.axios, this.accountId);
+  }
+
+  /**
+   * Getter for Sending Domains API.
+   */
+  get sendingDomains() {
+    this.validateAccountIdPresence();
+
+    return new SendingDomainsBaseAPI(this.axios, this.accountId!);
   }
 
   /**
