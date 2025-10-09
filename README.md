@@ -185,3 +185,4 @@ Everyone interacting in the Mailtrap project's codebases, issue trackers, chat r
 ## Compatibility with previous releases
 
 Versions of this package up to 2.0.2 were an [unofficial client](https://github.com/vchin/mailtrap-client) developed by [@vchin](https://github.com/vchin). Package version 3 is a completely new package. 
+
