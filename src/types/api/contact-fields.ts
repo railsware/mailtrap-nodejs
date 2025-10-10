@@ -1,3 +1,8 @@
+/**
+ * Contact field definition/schema used for managing field types.
+ * Represents the structure and metadata of a contact field (e.g., field name, data type, merge tag).
+ * Used by Contact Fields API for CRUD operations on field definitions.
+ */
 export interface ContactField {
   id: number;
   name: string;

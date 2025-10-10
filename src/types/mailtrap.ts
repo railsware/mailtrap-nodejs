@@ -125,6 +125,10 @@ export interface BatchSendRequest {
   }[];
 }
 
+/**
+ * Dynamic contact field values used when creating or updating contacts.
+ * Represents the actual data stored in contact fields (e.g., first_name: "John", phone: "123-456-7890").
+ */
 export interface ContactFields {
   [key: string]: string | number | boolean | undefined;
 }
