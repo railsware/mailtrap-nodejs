@@ -1,39 +1,38 @@
-import MailtrapClient from "../../src/lib/MailtrapClient";
+import { MailtrapClient } from "mailtrap";
+
+const TOKEN = "<YOUR-TOKEN-HERE>";
+const ACCOUNT_ID = "<YOUR-ACCOUNT-ID-HERE>";
 
 const client = new MailtrapClient({
-  token: "YOUR_API_TOKEN",
-  accountId: 12345, // Your account ID
+  token: TOKEN,
+  accountId: ACCOUNT_ID,
 });
 
-async function sendingDomainsExample() {
-  try {
-    // Get all sending domains§
-    const sendingDomains = await client.sendingDomains.getList();
-    console.log("Sending domains:", sendingDomains);
+async function sendingDomainsFlow() {
+  // Get all sending domains
+  const all = await client.sendingDomains.getList();
+  console.log("All sending domains:", all);
 
-    // Create a new sending domain
-    const newDomain = await client.sendingDomains.create({
-      domain_name: "example.com",
-    });
-    console.log("Created domain:", newDomain);
+  // Get a specific sending domain
+  const one = await client.sendingDomains.get(all[0].id);
+  console.log("One sending domain:", one);
 
-    // Get a specific sending domain by ID
-    const domain = await client.sendingDomains.get(newDomain.id);
-    console.log("Domain details:", domain);
+  // Send setup instructions
+  const setupResponse = await client.sendingDomains.sendSetupInstructions(
+    all[0].id,
+    "admin@example.com"
+  );
+  console.log("Setup instructions sent:", setupResponse);
 
-    // Send setup instructions
-    const setupResponse = await client.sendingDomains.sendSetupInstructions(
-      newDomain.id,
-      "admin@example.com"
-    );
-    console.log("Setup instructions response:", setupResponse);
+  // Create a new sending domain
+  const created = await client.sendingDomains.create({
+    domain_name: "example.com",
+  });
+  console.log("Created sending domain:", created);
 
-    // Delete the sending domain
-    await client.sendingDomains.delete(newDomain.id);
-    console.log("Domain deleted successfully");
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  // Delete a sending domain
+  await client.sendingDomains.delete(created.id);
+  console.log("Sending domain deleted");
 }
 
-sendingDomainsExample();
+sendingDomainsFlow();
