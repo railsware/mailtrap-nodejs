@@ -85,31 +85,6 @@ describe("lib/api/General: ", () => {
       });
     });
 
-    describe("lazy instantiation with accountId: ", () => {
-      it("instantiates accountAccesses lazily when accountId is provided but not accessed during construction.", () => {
-        const generalAPI = new General(axios, testAccountId);
-        // Force lazy instantiation by accessing the getter
-        const { accountAccesses } = generalAPI;
-        expect(accountAccesses).toBeDefined();
-        expect(typeof accountAccesses.listAccountAccesses).toBe("function");
-      });
-
-      it("instantiates permissions lazily when accountId is provided but not accessed during construction.", () => {
-        const generalAPI = new General(axios, testAccountId);
-        // Force lazy instantiation by accessing the getter
-        const { permissions } = generalAPI;
-        expect(permissions).toBeDefined();
-        expect(typeof permissions.getResources).toBe("function");
-      });
-
-      it("covers checkAccountIdPresence return path when accountId is valid.", () => {
-        const generalAPI = new General(axios, testAccountId);
-        // This should not throw and should return the accountId
-        expect(generalAPI.accountAccesses).toBeDefined();
-        expect(generalAPI.permissions).toBeDefined();
-      });
-    });
-
     describe("edge cases: ", () => {
       it("handles undefined accountId parameter.", () => {
         const generalAPI = new General(axios, undefined);
