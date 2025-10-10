@@ -149,6 +149,17 @@ describe("lib/api/General: ", () => {
           generalAPI.accountAccesses;
         }).toThrow();
       });
+
+      it("handles accountId value of 0 correctly.", () => {
+        const generalAPI = new General(axios, 0);
+        expect(generalAPI.accounts).toBeDefined();
+        expect(generalAPI.accountAccesses).toBeDefined();
+        expect(generalAPI.permissions).toBeDefined();
+        expect(typeof generalAPI.accountAccesses.listAccountAccesses).toBe(
+          "function"
+        );
+        expect(typeof generalAPI.permissions.getResources).toBe("function");
+      });
     });
   });
 });
