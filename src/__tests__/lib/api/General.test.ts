@@ -15,7 +15,7 @@ describe("lib/api/General: ", () => {
         expect(generalAPI).toHaveProperty("permissions");
       });
 
-      it("instantiates account-specific APIs immediately when accountId is provided.", () => {
+      it("lazily instantiates account-specific APIs via getters when accountId is provided.", () => {
         expect(generalAPI.accountAccesses).toBeDefined();
         expect(generalAPI.permissions).toBeDefined();
         expect(generalAPI.accounts).toBeDefined();
@@ -107,27 +107,6 @@ describe("lib/api/General: ", () => {
         // This should not throw and should return the accountId
         expect(generalAPI.accountAccesses).toBeDefined();
         expect(generalAPI.permissions).toBeDefined();
-      });
-    });
-
-    describe("lazy instantiation edge case: ", () => {
-      it("covers lazy instantiation path when accountId is provided but instances are null.", () => {
-        // Create a GeneralAPI instance with accountId
-        const generalAPI = new General(axios, testAccountId);
-
-        // Manually set instances to null to force lazy instantiation
-        // This simulates the case where accountId is provided but instances weren't created
-        (generalAPI as any).accountAccessesInstance = null;
-        (generalAPI as any).permissionsInstance = null;
-
-        // Now accessing the getters should trigger lazy instantiation
-        const { accountAccesses } = generalAPI;
-        const { permissions } = generalAPI;
-
-        expect(accountAccesses).toBeDefined();
-        expect(permissions).toBeDefined();
-        expect(typeof accountAccesses.listAccountAccesses).toBe("function");
-        expect(typeof permissions.getResources).toBe("function");
       });
     });
 
