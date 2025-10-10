@@ -15,7 +15,7 @@ export default class ContactsApi {
 
   private contactsURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.contactsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts`;
   }

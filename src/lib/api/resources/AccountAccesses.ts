@@ -14,14 +14,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class AccountsAccessesApi {
   private client: AxiosInstance;
 
-  private accountId?: number;
-
   private accountAccessesURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
-    this.accountId = accountId;
-    this.accountAccessesURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/account_accesses`;
+    this.accountAccessesURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/account_accesses`;
   }
 
   /**
