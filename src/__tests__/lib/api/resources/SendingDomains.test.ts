@@ -84,7 +84,7 @@ describe("lib/api/SendingDomains: ", () => {
           .onGet(
             `https://mailtrap.io/api/accounts/${testAccountId}/sending_domains`
           )
-          .reply(200, mockSendingDomains);
+          .reply(200, { data: mockSendingDomains });
 
         const result = await sendingDomainsAPI.getList();
 
