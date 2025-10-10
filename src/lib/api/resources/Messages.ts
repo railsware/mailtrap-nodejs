@@ -18,7 +18,7 @@ export default class MessagesApi {
 
   private messagesURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
     this.messagesURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes`;
   }

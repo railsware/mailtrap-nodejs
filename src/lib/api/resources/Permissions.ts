@@ -13,14 +13,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class PermissionsApi {
   private client: AxiosInstance;
 
-  private accountId?: number;
-
   private permissionsURL: string;
 
-  constructor(client: AxiosInstance, accountId?: number) {
+  constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
-    this.accountId = accountId;
-    this.permissionsURL = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/account_accesses`;
+    this.permissionsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/account_accesses`;
   }
 
   /**
@@ -36,7 +33,7 @@ export default class PermissionsApi {
     accountAccessId: number,
     permissions: PermissionResourceParams[]
   ) {
-    const url = `${GENERAL_ENDPOINT}/api/accounts/${this.accountId}/account_accesses/${accountAccessId}/permissions/bulk`;
+    const url = `${this.permissionsURL}/${accountAccessId}/permissions/bulk`;
 
     const flattenPermissionObjects = permissions.map((permission) => ({
       resource_id: permission.resourceId,
