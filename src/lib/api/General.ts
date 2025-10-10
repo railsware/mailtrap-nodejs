@@ -17,7 +17,7 @@ export default class GeneralAPI {
 
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
-    this.accountId = accountId || null;
+    this.accountId = accountId ?? null;
     this.accounts = new AccountsApi(client);
 
     // Only instantiate account-specific APIs if accountId is provided
