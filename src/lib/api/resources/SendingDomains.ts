@@ -4,6 +4,7 @@ import CONFIG from "../../../config";
 import {
   CreateSendingDomainParams,
   SendingDomain,
+  SendingDomainsResponse,
   SetupInstructionsResponse,
 } from "../../../types/api/sending-domains";
 
@@ -27,7 +28,12 @@ export default class SendingDomainsApi {
   public async getList() {
     const url = this.sendingDomainsURL;
 
-    return this.client.get<SendingDomain[], SendingDomain[]>(url);
+    const response = await this.client.get<
+      SendingDomainsResponse,
+      SendingDomainsResponse
+    >(url);
+
+    return response.data;
   }
 
   /**
