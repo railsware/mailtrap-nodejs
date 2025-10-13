@@ -88,7 +88,7 @@ describe("lib/api/SendingDomains: ", () => {
 
         const result = await sendingDomainsAPI.getList();
 
-        expect(result).toEqual(mockSendingDomains);
+        expect(result).toEqual({ data: mockSendingDomains });
       });
     });
 
@@ -184,9 +184,10 @@ describe("lib/api/SendingDomains: ", () => {
 
         mock
           .onPost(
-            `https://mailtrap.io/api/accounts/${testAccountId}/sending_domains`
+            `https://mailtrap.io/api/accounts/${testAccountId}/sending_domains`,
+            { sending_domain: createParams }
           )
-          .reply(200, mockSendingDomain);
+          .reply(201, mockSendingDomain);
 
         const result = await sendingDomainsAPI.create(createParams);
 
