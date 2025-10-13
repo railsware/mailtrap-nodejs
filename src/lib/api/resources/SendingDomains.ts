@@ -5,7 +5,6 @@ import {
   CreateSendingDomainParams,
   SendingDomain,
   SendingDomainsResponse,
-  SetupInstructionsResponse,
 } from "../../../types/api/sending-domains";
 
 const { CLIENT_SETTINGS } = CONFIG;
@@ -69,11 +68,8 @@ export default class SendingDomainsApi {
    * @returns Returns a success message
    */
   public async sendSetupInstructions(id: number, email: string) {
-    const url = `${this.sendingDomainsURL}/${id}/setup_instructions`;
+    const url = `${this.sendingDomainsURL}/${id}/send_setup_instructions`;
 
-    return this.client.post<
-      SetupInstructionsResponse,
-      SetupInstructionsResponse
-    >(url, { email });
+    return this.client.post(url, { email });
   }
 }
