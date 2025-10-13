@@ -215,22 +215,19 @@ describe("lib/api/SendingDomains: ", () => {
       it("should send setup instructions for a sending domain.", async () => {
         const sendingDomainId = 999;
         const email = "admin@example.com";
-        const mockResponse: SetupInstructionsResponse = {
-          message: "Setup instructions sent successfully.",
-        };
 
         mock
           .onPost(
-            `https://mailtrap.io/api/accounts/${testAccountId}/sending_domains/${sendingDomainId}/setup_instructions`
+            `https://mailtrap.io/api/accounts/${testAccountId}/sending_domains/${sendingDomainId}/send_setup_instructions`
           )
-          .reply(200, mockResponse);
+          .reply(204);
 
         const result = await sendingDomainsAPI.sendSetupInstructions(
           sendingDomainId,
           email
         );
 
-        expect(result).toEqual(mockResponse);
+        expect(result).toBeUndefined();
       });
     });
   });
