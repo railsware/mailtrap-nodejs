@@ -28,12 +28,7 @@ export default class SendingDomainsApi {
   public async getList() {
     const url = this.sendingDomainsURL;
 
-    const response = await this.client.get<
-      SendingDomainsResponse,
-      SendingDomainsResponse
-    >(url);
-
-    return response.data;
+    return this.client.get<SendingDomainsResponse, SendingDomainsResponse>(url);
   }
 
   /**
@@ -52,7 +47,7 @@ export default class SendingDomainsApi {
    */
   public async create(params: CreateSendingDomainParams) {
     const url = this.sendingDomainsURL;
-    const data = { domain: params };
+    const data = { sending_domain: params };
 
     return this.client.post<SendingDomain, SendingDomain>(url, data);
   }
