@@ -6,7 +6,6 @@ import {
   SendingDomain,
   DnsRecord,
   SendingDomainPermissions,
-  SetupInstructionsResponse,
 } from "../../../../types/api/sending-domains";
 
 describe("lib/api/SendingDomains: ", () => {
