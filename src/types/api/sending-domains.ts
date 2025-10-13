@@ -19,7 +19,7 @@ export interface SendingDomain {
   demo: boolean;
   compliance_status: string;
   dns_verified: boolean;
-  dns_verified_at: string;
+  dns_verified_at: string | null;
   dns_records: DnsRecord[];
   open_tracking_enabled: boolean;
   click_tracking_enabled: boolean;
@@ -27,7 +27,7 @@ export interface SendingDomain {
   custom_domain_tracking_enabled: boolean;
   health_alerts_enabled: boolean;
   critical_alerts_enabled: boolean;
-  alert_recipient_email: string;
+  alert_recipient_email: string | null;
   permissions: SendingDomainPermissions;
 }
 
