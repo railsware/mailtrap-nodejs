@@ -35,10 +35,6 @@ export interface CreateSendingDomainParams {
   domain_name: string;
 }
 
-export interface SetupInstructionsResponse {
-  message: string;
-}
-
 export interface SendingDomainsResponse {
   data: SendingDomain[];
 }
