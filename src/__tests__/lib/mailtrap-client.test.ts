@@ -13,6 +13,7 @@ import ContactLists from "../../lib/api/ContactLists";
 import Contacts from "../../lib/api/Contacts";
 import TemplatesBaseAPI from "../../lib/api/Templates";
 import SuppressionsBaseAPI from "../../lib/api/Suppressions";
+import SendingDomainsBaseAPI from "../../lib/api/SendingDomains";
 
 const { ERRORS, CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT, BULK_ENDPOINT, SENDING_ENDPOINT } = CLIENT_SETTINGS;
@@ -871,6 +872,32 @@ describe("lib/mailtrap-client: ", () => {
 
         const suppressionsClient = client.suppressions;
         expect(suppressionsClient).toBeInstanceOf(SuppressionsBaseAPI);
+      });
+    });
+
+    describe("get sendingDomains(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        expect.assertions(1);
+
+        const client = new MailtrapClient({
+          token: "test-token",
+        });
+
+        expect(() => client.sendingDomains).toThrow(
+          "accountId is missing, some features of testing API may not work properly."
+        );
+      });
+
+      it("returns sending domains API object when accountId is provided.", () => {
+        expect.assertions(1);
+
+        const client = new MailtrapClient({
+          token: "test-token",
+          accountId: 123,
+        });
+
+        const sendingDomainsClient = client.sendingDomains;
+        expect(sendingDomainsClient).toBeInstanceOf(SendingDomainsBaseAPI);
       });
     });
   });
