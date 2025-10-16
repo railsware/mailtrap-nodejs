@@ -39,6 +39,13 @@
   ],
   "license": "MIT",
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
   "peerDependencies": {
     "@types/nodemailer": "^6.4.9",
     "nodemailer": "^7.0.7"
