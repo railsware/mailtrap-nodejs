@@ -7,14 +7,15 @@ import encodeMailBuffers from "./mail-buffer-encoder";
 import handleSendingError from "./axios-logger";
 import MailtrapError from "./MailtrapError";
 
-import GeneralAPI from "./api/General";
-import TestingAPI from "./api/Testing";
 import ContactsBaseAPI from "./api/Contacts";
-import ContactListsBaseAPI from "./api/ContactLists";
 import ContactFieldsBaseAPI from "./api/ContactFields";
+import ContactListsBaseAPI from "./api/ContactLists";
+import ContactImportsBaseAPI from "./api/ContactImports";
+import GeneralAPI from "./api/General";
 import TemplatesBaseAPI from "./api/Templates";
 import SuppressionsBaseAPI from "./api/Suppressions";
 import SendingDomainsBaseAPI from "./api/SendingDomains";
+import TestingAPI from "./api/Testing";
 
 import CONFIG from "../config";
 
@@ -147,6 +148,14 @@ export default class MailtrapClient {
   }
 
   /**
+   * Getter for Contact Imports API.
+   */
+  get contactImports() {
+    const accountId = this.validateAccountIdPresence();
+    return new ContactImportsBaseAPI(this.axios, accountId);
+  }
+
+  /**
    * Getter for Templates API.
    */
   get templates() {
@@ -166,9 +175,8 @@ export default class MailtrapClient {
    * Getter for Sending Domains API.
    */
   get sendingDomains() {
-    this.validateAccountIdPresence();
-
-    return new SendingDomainsBaseAPI(this.axios, this.accountId!);
+    const accountId = this.validateAccountIdPresence();
+    return new SendingDomainsBaseAPI(this.axios, accountId);
   }
 
   /**
