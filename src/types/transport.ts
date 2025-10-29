@@ -36,7 +36,7 @@ export interface MailtrapMailOptions extends NodemailerMail.Options {
   customVariables?: CustomVariables;
   category?: string;
   templateUuid?: string;
-  templateVariables?: Record<string, string | number | boolean>;
+  templateVariables?: TemplateVariables;
   sandbox?: boolean | undefined;
 }
 
