@@ -53,10 +53,12 @@
   },
   "repository": "https://github.com/railsware/mailtrap-nodejs",
   "scripts": {
+    "build": "rm -rf dist && tsc --project tsconfig.build.json",
     "lint": "yarn lint:eslint && yarn lint:tsc",
     "lint:eslint": "yarn run eslint . --ext .js,.ts",
     "lint:tsc": "tsc -p . --noEmit --incremental false",
-    "prepublish": "rm -rf dist && tsc --project tsconfig.build.json",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn build",
     "test": "jest --verbose",
     "coverage": "jest --coverage"
   },
