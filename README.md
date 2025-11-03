@@ -33,6 +33,7 @@ Currently, with this SDK you can:
   - Contacts CRUD
   - Lists CRUD
   - Contact Fields CRUD
+  - Contact Events
 - General
   - Templates CRUD
   - Suppressions management (find and delete)
@@ -125,6 +126,10 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 ### Contact Fields API
 
 - [Contact Fields](examples/contact-fields/everything.ts)
+
+### Contact Events API
+
+- [Contact Events](examples/contact-events/everything.ts)
 
 ### Sending API
 
