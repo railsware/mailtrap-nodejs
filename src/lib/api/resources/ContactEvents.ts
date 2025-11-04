@@ -12,11 +12,11 @@ const { GENERAL_ENDPOINT } = CLIENT_SETTINGS;
 export default class ContactEventsApi {
   private client: AxiosInstance;
 
-  private contactEventsURL: string;
+  private contactsURL: string;
 
   constructor(client: AxiosInstance, accountId: number) {
     this.client = client;
-    this.contactEventsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts/`;
+    this.contactsURL = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/contacts`;
   }
 
   /**
@@ -26,7 +26,7 @@ export default class ContactEventsApi {
     contactIdentifier: number | string,
     data: ContactEventOptions
   ) {
-    const url = `${this.contactEventsURL}/${contactIdentifier}/events`;
+    const url = `${this.contactsURL}/${contactIdentifier}/events`;
 
     return this.client.post<ContactEventResponse, ContactEventResponse>(
       url,
