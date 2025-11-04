@@ -12,7 +12,7 @@ async function createContactEvent() {
   try {
     const email = `john.smith+${Date.now()}@example.com`;
     let contactId: string;
-    // Try to get existing first
+    // Try to get existing contact first
     try {
       const existing = await client.contacts.get(email);
       contactId = existing.data.id;
