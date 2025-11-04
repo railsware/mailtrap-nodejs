@@ -26,7 +26,14 @@ export type CommonMail = {
   reply_to?: Address;
 };
 
-export type TemplateVariables = Record<string, string | number | boolean>;
+export type TemplateValue =
+  | string
+  | number
+  | boolean
+  | TemplateValue[]
+  | { [key: string]: TemplateValue };
+
+export type TemplateVariables = Record<string, TemplateValue>;
 
 type MailFromTemplateContent = {
   template_uuid: string;
@@ -101,7 +108,7 @@ interface InlineBatchSendBase extends Omit<Mail, "to"> {
 interface TemplateBatchSendBase extends Omit<Mail, "to"> {
   from: BaseAddress;
   template_uuid: string; // Required for template usage
-  template_variables?: Record<string, string>;
+  template_variables?: TemplateVariables;
   custom_variables?: Record<string, string>;
   reply_to?: BaseAddress;
 }
@@ -118,7 +125,7 @@ export interface BatchSendRequest {
     html?: string;
     category?: string; // Only allowed when not using template_uuid
     template_uuid?: string;
-    template_variables?: Record<string, string>;
+    template_variables?: TemplateVariables;
     custom_variables?: Record<string, string>;
     attachments?: Attachment[];
     headers?: Record<string, string>;
