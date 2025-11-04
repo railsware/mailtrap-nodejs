@@ -55,4 +55,3 @@ async function createContactEvent() {
 
 createContactEvent();
 
-
