@@ -30,13 +30,14 @@ Currently, with this SDK you can:
   - Inbox management
   - Project management
 - Contact management
-  - Contacts CRUD
-  - Lists CRUD
-  - Contact Fields CRUD
+  - Contacts
   - Contact Exports
+  - Contact Fields
+  - Contact Imports
+  - Contact Lists
 - General
-  - Templates CRUD
-  - Suppressions management (find and delete)
+  - Templates
+  - Suppressions management
   - Account access management
   - Permissions management
   - List accounts you have access to
@@ -130,6 +131,9 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 ### Contact Exports API
 
 - [Contact Exports](examples/contact-exports/everything.ts)
+### Contact Imports API
+
+- [Contact Imports](examples/contact-imports/everything.ts)
 
 ### Sending API
 
