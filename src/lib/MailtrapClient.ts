@@ -10,8 +10,10 @@ import MailtrapError from "./MailtrapError";
 import ContactsBaseAPI from "./api/Contacts";
 import ContactEventsBaseAPI from "./api/ContactEvents";
 import ContactListsBaseAPI from "./api/ContactLists";
+import ContactExportsBaseAPI from "./api/ContactExports";
 import ContactFieldsBaseAPI from "./api/ContactFields";
 import ContactImportsBaseAPI from "./api/ContactImports";
+import ContactListsBaseAPI from "./api/ContactLists";
 import GeneralAPI from "./api/General";
 import TemplatesBaseAPI from "./api/Templates";
 import SuppressionsBaseAPI from "./api/Suppressions";
@@ -138,6 +140,14 @@ export default class MailtrapClient {
   get contactEvents() {
     const accountId = this.validateAccountIdPresence();
     return new ContactEventsBaseAPI(this.axios, accountId);
+  }
+   
+  /**   
+   * Getter for Contact Exports API.
+   */
+  get contactExports() {
+    const accountId = this.validateAccountIdPresence();
+    return new ContactExportsBaseAPI(this.axios, accountId);
   }
 
   /**
