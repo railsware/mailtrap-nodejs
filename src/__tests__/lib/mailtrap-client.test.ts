@@ -11,6 +11,7 @@ import GeneralAPI from "../../lib/api/General";
 import TestingAPI from "../../lib/api/Testing";
 import ContactLists from "../../lib/api/ContactLists";
 import Contacts from "../../lib/api/Contacts";
+import ContactExportsBaseAPI from "../../lib/api/ContactExports";
 import TemplatesBaseAPI from "../../lib/api/Templates";
 import SuppressionsBaseAPI from "../../lib/api/Suppressions";
 import SendingDomainsBaseAPI from "../../lib/api/SendingDomains";
@@ -820,6 +821,32 @@ describe("lib/mailtrap-client: ", () => {
 
         const contactListsClient = client.contactLists;
         expect(contactListsClient).toBeInstanceOf(ContactLists);
+      });
+    });
+
+    describe("get contactExports(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.contactExports;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns contact exports API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
+        const contactExportsClient = client.contactExports;
+        expect(contactExportsClient).toBeInstanceOf(ContactExportsBaseAPI);
       });
     });
 

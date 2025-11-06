@@ -8,9 +8,10 @@ import handleSendingError from "./axios-logger";
 import MailtrapError from "./MailtrapError";
 
 import ContactsBaseAPI from "./api/Contacts";
+import ContactExportsBaseAPI from "./api/ContactExports";
 import ContactFieldsBaseAPI from "./api/ContactFields";
-import ContactListsBaseAPI from "./api/ContactLists";
 import ContactImportsBaseAPI from "./api/ContactImports";
+import ContactListsBaseAPI from "./api/ContactLists";
 import GeneralAPI from "./api/General";
 import TemplatesBaseAPI from "./api/Templates";
 import SuppressionsBaseAPI from "./api/Suppressions";
@@ -129,6 +130,14 @@ export default class MailtrapClient {
   get contacts() {
     const accountId = this.validateAccountIdPresence();
     return new ContactsBaseAPI(this.axios, accountId);
+  }
+
+  /**
+   * Getter for Contact Exports API.
+   */
+  get contactExports() {
+    const accountId = this.validateAccountIdPresence();
+    return new ContactExportsBaseAPI(this.axios, accountId);
   }
 
   /**
