@@ -15,6 +15,7 @@ import ContactExportsBaseAPI from "../../lib/api/ContactExports";
 import TemplatesBaseAPI from "../../lib/api/Templates";
 import SuppressionsBaseAPI from "../../lib/api/Suppressions";
 import SendingDomainsBaseAPI from "../../lib/api/SendingDomains";
+import ContactEventsBaseAPI from "../../lib/api/ContactEvents";
 
 const { ERRORS, CLIENT_SETTINGS } = CONFIG;
 const { TESTING_ENDPOINT, BULK_ENDPOINT, SENDING_ENDPOINT } = CLIENT_SETTINGS;
@@ -925,6 +926,32 @@ describe("lib/mailtrap-client: ", () => {
 
         const sendingDomainsClient = client.sendingDomains;
         expect(sendingDomainsClient).toBeInstanceOf(SendingDomainsBaseAPI);
+      });
+    });
+
+    describe("get contactEvents(): ", () => {
+      it("rejects with Mailtrap error, when `accountId` is missing.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+        });
+        expect.assertions(1);
+
+        try {
+          client.contactEvents;
+        } catch (error) {
+          expect(error).toEqual(new MailtrapError(ACCOUNT_ID_MISSING));
+        }
+      });
+
+      it("returns contact events API object when accountId is provided.", () => {
+        const client = new MailtrapClient({
+          token: "MY_API_TOKEN",
+          accountId: 10,
+        });
+        expect.assertions(1);
+
+        const contactEventsClient = client.contactEvents;
+        expect(contactEventsClient).toBeInstanceOf(ContactEventsBaseAPI);
       });
     });
   });

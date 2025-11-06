@@ -20,9 +20,9 @@ Quickly integrate Mailtrap with your Node.js app.
 
 Currently, with this SDK you can:
 - Email API/SMTP
-  - Send an email (Transactional and Bulk streams)
+  - Send an email
   - Send an email with a template
-  - Send a batch of emails (Transactional and Bulk streams)
+  - Send a batch of emails
 - Email Sandbox (Testing)
   - Send an email
   - Send an email with a template
@@ -30,11 +30,12 @@ Currently, with this SDK you can:
   - Inbox management
   - Project management
 - Contact management
-  - Contacts
+  - Contact Events
   - Contact Exports
   - Contact Fields
   - Contact Imports
   - Contact Lists
+  - Contacts
 - General
   - Templates
   - Suppressions management
@@ -116,24 +117,29 @@ See transport usage below:
 
 Refer to the [`examples`](examples) folder for the source code of this and other advanced examples.
 
-### Contacts API
+### Contact Events API
 
-- [Contacts](examples/contacts/everything.ts)
+- [Contact Events](examples/contact-events/everything.ts)
 
-### Contact Lists API
+### Contact Exports API
 
-- [Contact Lists](examples/contact-lists/everything.ts)
+- [Contact Exports](examples/contact-exports/everything.ts)
 
 ### Contact Fields API
 
 - [Contact Fields](examples/contact-fields/everything.ts)
 
-### Contact Exports API
-
-- [Contact Exports](examples/contact-exports/everything.ts)
 ### Contact Imports API
 
 - [Contact Imports](examples/contact-imports/everything.ts)
+
+### Contact Lists API
+
+- [Contact Lists](examples/contact-lists/everything.ts)
+
+### Contacts API
+
+- [Contacts](examples/contacts/everything.ts)
 
 ### Sending API
 
