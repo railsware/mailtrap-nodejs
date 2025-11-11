@@ -41,6 +41,7 @@ Currently, with this SDK you can:
   - Suppressions management
   - Account access management
   - Permissions management
+  - Billing usage management
   - List accounts you have access to
  
 
@@ -178,6 +179,7 @@ Refer to the [`examples`](examples) folder for the source code of this and other
 - [List User & Invite account accesses](examples/general/account-accesses.ts)
 - [Remove account access](examples/general/accounts.ts)
 - [Permissions](examples/general/permissions.ts)
+- [Billing usage](examples/general/billing.ts)
 
 ## Development
 
