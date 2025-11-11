@@ -198,8 +198,6 @@ describe("lib/api/resources/ContactImports: ", () => {
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
         if (error instanceof MailtrapError) {
-          // axios-logger now properly extracts error messages from array of objects
-          // Format: "identifier: field: messages | identifier: messages"
           expect(error.message).toBe(
             "invalid-email-1: email: is invalid, is required | invalid-email-2: Contact limit exceeded"
           );
