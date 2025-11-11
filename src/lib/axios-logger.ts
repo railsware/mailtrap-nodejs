@@ -19,6 +19,7 @@ const hasErrorProperty = <T extends keyof AxiosErrorObject>(
  */
 function formatFieldError(field: string, fieldErrors: unknown[]): string {
   const messages = fieldErrors.map((err) => String(err)).join(", ");
+
   return field === "base" ? messages : `${field}: ${messages}`;
 }
 
@@ -54,6 +55,7 @@ function extractNestedErrors(
   ) {
     return extractFieldErrors(errorObj.errors as Record<string, unknown>);
   }
+
   return null;
 }
 
@@ -69,6 +71,7 @@ function extractDirectErrors(errorObj: Record<string, unknown>): string[] {
       acc[field] = value;
       return acc;
     }, {} as Record<string, unknown>);
+
   return extractFieldErrors(directErrors);
 }
 
@@ -114,22 +117,22 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
     return defaultMessage;
   }
 
-  // Handle case where error is in `data.error`
+  // error is in `data.error`
   if ("error" in data && data.error) {
     return String(data.error);
   }
 
-  // Handle case where errors are in `data.errors`
+  // errors are in `data.errors`
   if ("errors" in data && data.errors) {
     const { errors } = data;
 
-    // Case 1: errors is an array of strings
+    // errors is an array of strings
     if (Array.isArray(errors) && errors.length > 0) {
       if (typeof errors[0] === "string") {
         return errors.join(",");
       }
 
-      // Case 2: errors is an array of objects
+      // errors is an array of objects
       if (typeof errors[0] === "object" && errors[0] !== null) {
         const extracted = extractMessagesFromErrorObjects(
           errors as Array<Record<string, unknown>>
@@ -140,13 +143,13 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
       }
     }
 
-    // Case 3: errors is an object (could have name/base or field-specific errors)
+    // errors is an object (could have name/base or field-specific errors)
     if (
       typeof errors === "object" &&
       !Array.isArray(errors) &&
       errors !== null
     ) {
-      // Check for name/base properties first (legacy format)
+      // check for name/base properties first (legacy format)
       const errorNames =
         hasErrorProperty(errors, "name") && errors.name.join(", ");
       const errorBase =
@@ -155,7 +158,7 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
       if (errorNames) return errorNames;
       if (errorBase) return errorBase;
 
-      // Extract field-specific errors (e.g., { "email": ["is invalid", ...] })
+      // extract field-specific errors (e.g., { "email": ["is invalid", ...] })
       const fieldMessages = extractFieldErrors(
         errors as Record<string, unknown>
       );
@@ -165,7 +168,7 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
       }
     }
 
-    // Fallback: try to stringify if it's an object
+    // try to stringify if it's an object
     if (typeof errors === "object") {
       return String(errors);
     }
@@ -181,7 +184,6 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
  * Context information (status code, URL, etc.) is available in error.cause.
  */
 function buildErrorMessage(error: AxiosError): string {
-  // Extract the primary error message from response data
   const primaryMessage = error.response?.data
     ? extractErrorMessage(error.response.data, error.message)
     : error.message;
