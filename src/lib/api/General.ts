@@ -46,7 +46,7 @@ export default class GeneralAPI {
   }
 
   /**
-   * Singleton getter for Permissions API.
+   * Singleton getter for Account Accesses API.
    */
   public get accountAccesses(): AccountAccessesApi {
     if (this.accountAccessesInstance === null) {
