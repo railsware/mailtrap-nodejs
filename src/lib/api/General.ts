@@ -73,7 +73,7 @@ export default class GeneralAPI {
   }
 
   /**
-   * Getter for Billing API.
+   * Singleton getter for Billing API.
    */
   public get billing(): BillingApi {
     if (this.billingInstance === null) {
