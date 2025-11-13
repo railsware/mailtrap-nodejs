@@ -422,5 +422,254 @@ describe("lib/axios-logger: ", () => {
         }
       }
     });
+
+    it("returns identifier when error object has no messages but has identifier", () => {
+      const responseData = {
+        errors: [
+          {
+            email: "test@example.com",
+            // No errors property, just identifier
+          },
+        ],
+      };
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Request failed",
+        "422",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 422,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 422,
+        statusText: "Unprocessable Entity",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toBe("test@example.com");
+        }
+      }
+    });
+
+    it("returns default message when data is not an object", () => {
+      const responseData = "string data";
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Network error",
+        "500",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 500,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 500,
+        statusText: "Internal Server Error",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toBe("Network error");
+        }
+      }
+    });
+
+    it("returns default message when data is null", () => {
+      const responseData = null;
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Network error",
+        "500",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 500,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 500,
+        statusText: "Internal Server Error",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toBe("Network error");
+        }
+      }
+    });
+
+    it("returns default message when response data has no error or errors", () => {
+      const responseData = { success: true };
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Request failed",
+        "200",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 200,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toBe("Request failed");
+        }
+      }
+    });
+
+    it("handles error object with no identifier and no messages", () => {
+      const responseData = {
+        errors: [
+          {
+            // No email, no id, no errors property, and someOtherField is not an array
+            someOtherField: "value",
+          },
+        ],
+      };
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Request failed",
+        "422",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 422,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 422,
+        statusText: "Unprocessable Entity",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          // When all error objects return null, extractMessagesFromErrorObjects returns empty string ""
+          // Empty string is falsy, so if (extracted) fails and falls through to stringify
+          // Since errors is an array, typeof errors === "object" is true, so it stringifies
+          expect(error.message).toBe("[object Object]");
+        }
+      }
+    });
+
+    it("handles errors object that doesn't match any pattern", () => {
+      const responseData = {
+        errors: {
+          // Not name/base, and not an array of field errors
+          someField: "not an array",
+        },
+      };
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Request failed",
+        "422",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 422,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 422,
+        statusText: "Unprocessable Entity",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          // Should stringify the errors object
+          expect(error.message).toBe("[object Object]");
+        }
+      }
+    });
+
+    it("handles errors as non-array, non-object value", () => {
+      const responseData = {
+        errors: "string error",
+      };
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Request failed",
+        "422",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 422,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 422,
+        statusText: "Unprocessable Entity",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          expect(error.message).toBe("string error");
+        }
+      }
+    });
   });
 });
