@@ -462,8 +462,8 @@ describe("lib/axios-logger: ", () => {
       }
     });
 
-    it("returns default message when data is not an object", () => {
-      const responseData = "string data";
+    it("preserves plain-text error responses", () => {
+      const responseData = "Plain text error message";
       // @ts-ignore
       const axiosError = new AxiosError(
         "Network error",
@@ -489,7 +489,41 @@ describe("lib/axios-logger: ", () => {
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
         if (error instanceof MailtrapError) {
-          expect(error.message).toBe("Network error");
+          // Plain-text responses should be preserved
+          expect(error.message).toBe("Plain text error message");
+        }
+      }
+    });
+
+    it("converts non-object, non-string data to string", () => {
+      const responseData = 404;
+      // @ts-ignore
+      const axiosError = new AxiosError(
+        "Network error",
+        "500",
+        { headers: {} } as any,
+        {
+          data: responseData,
+          status: 500,
+        }
+      );
+      axiosError.response = {
+        data: responseData,
+        status: 500,
+        statusText: "Internal Server Error",
+        headers: {},
+        config: {} as any,
+      };
+
+      expect.assertions(2);
+
+      try {
+        axiosLogger(axiosError);
+      } catch (error) {
+        expect(error).toBeInstanceOf(MailtrapError);
+        if (error instanceof MailtrapError) {
+          // Non-object types should be converted to string
+          expect(error.message).toBe("404");
         }
       }
     });
@@ -593,9 +627,8 @@ describe("lib/axios-logger: ", () => {
         expect(error).toBeInstanceOf(MailtrapError);
         if (error instanceof MailtrapError) {
           // When all error objects return null, extractMessagesFromErrorObjects returns empty string ""
-          // Empty string is falsy, so if (extracted) fails and falls through to stringify
-          // Since errors is an array, typeof errors === "object" is true, so it stringifies
-          expect(error.message).toBe("[object Object]");
+          // Empty string is falsy, so if (extracted) fails and falls through to default message
+          expect(error.message).toBe("Request failed");
         }
       }
     });
@@ -632,8 +665,8 @@ describe("lib/axios-logger: ", () => {
       } catch (error) {
         expect(error).toBeInstanceOf(MailtrapError);
         if (error instanceof MailtrapError) {
-          // Should stringify the errors object
-          expect(error.message).toBe("[object Object]");
+          // Should fall back to default error message when errors shape is unrecognized
+          expect(error.message).toBe("Request failed");
         }
       }
     });
