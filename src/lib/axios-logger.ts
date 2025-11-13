@@ -113,7 +113,18 @@ function extractMessagesFromErrorObjects(
  * Extracts error message from server response data.
  */
 function extractErrorMessage(data: unknown, defaultMessage: string): string {
-  if (!data || typeof data !== "object") {
+  // Preserve plain-text error responses
+  if (typeof data === "string") {
+    return data;
+  }
+
+  // Convert other non-object types to string
+  if (data && typeof data !== "object") {
+    return String(data);
+  }
+
+  // Fall back to default message for null/undefined
+  if (!data) {
     return defaultMessage;
   }
 
@@ -166,14 +177,13 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
       if (fieldMessages.length > 0) {
         return fieldMessages.join("; ");
       }
+
+      // If errors object doesn't match any recognized pattern, fall back to default message
+      return defaultMessage;
     }
 
-    // try to stringify if it's an object
-    if (typeof errors === "object") {
-      return String(errors);
-    }
-
-    return String(errors);
+    // If errors doesn't match any recognized format, fall back to default message
+    return defaultMessage;
   }
 
   return defaultMessage;
