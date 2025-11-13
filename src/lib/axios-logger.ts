@@ -124,7 +124,7 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
   }
 
   // Fall back to default message for null/undefined
-  if (!data) {
+  if (!data || typeof data !== "object") {
     return defaultMessage;
   }
 
