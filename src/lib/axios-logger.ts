@@ -123,11 +123,13 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
     return String(data);
   }
 
-  // Fall back to default message for null/undefined
-  if (!data || typeof data !== "object") {
+  // Fall back to default message for null/undefined or non-objects
+  // Note: null is typeof "object" in JavaScript, so we check it explicitly
+  if (data === null || data === undefined || typeof data !== "object") {
     return defaultMessage;
   }
 
+  // At this point, TypeScript knows data is a non-null object
   // error is in `data.error`
   if ("error" in data && data.error) {
     return String(data.error);
@@ -136,6 +138,11 @@ function extractErrorMessage(data: unknown, defaultMessage: string): string {
   // errors are in `data.errors`
   if ("errors" in data && data.errors) {
     const { errors } = data;
+
+    // errors is a string
+    if (typeof errors === "string") {
+      return errors;
+    }
 
     // errors is an array of strings
     if (Array.isArray(errors) && errors.length > 0) {
