@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 
 import AccountAccessesApi from "./resources/AccountAccesses";
 import AccountsApi from "./resources/Accounts";
+import BillingApi from "./resources/Billing";
 import PermissionsApi from "./resources/Permissions";
 
 export default class GeneralAPI {
@@ -14,6 +15,8 @@ export default class GeneralAPI {
   private accountAccessesInstance: AccountAccessesApi | null = null;
 
   private permissionsInstance: PermissionsApi | null = null;
+
+  private billingInstance: BillingApi | null = null;
 
   constructor(client: AxiosInstance, accountId?: number) {
     this.client = client;
@@ -30,6 +33,9 @@ export default class GeneralAPI {
     }
   }
 
+  /**
+   * Checks if the account ID is present.
+   */
   private checkAccountIdPresence(): number {
     if (this.accountId === null) {
       throw new Error(
@@ -39,6 +45,9 @@ export default class GeneralAPI {
     return this.accountId;
   }
 
+  /**
+   * Singleton getter for Account Accesses API.
+   */
   public get accountAccesses(): AccountAccessesApi {
     if (this.accountAccessesInstance === null) {
       const accountId = this.checkAccountIdPresence();
@@ -51,6 +60,9 @@ export default class GeneralAPI {
     return this.accountAccessesInstance;
   }
 
+  /**
+   * Singleton getter for Permissions API.
+   */
   public get permissions(): PermissionsApi {
     if (this.permissionsInstance === null) {
       const accountId = this.checkAccountIdPresence();
@@ -58,5 +70,17 @@ export default class GeneralAPI {
     }
 
     return this.permissionsInstance;
+  }
+
+  /**
+   * Singleton getter for Billing API.
+   */
+  public get billing(): BillingApi {
+    if (this.billingInstance === null) {
+      const accountId = this.checkAccountIdPresence();
+      this.billingInstance = new BillingApi(this.client, accountId);
+    }
+
+    return this.billingInstance;
   }
 }
