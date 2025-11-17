@@ -56,7 +56,7 @@ Mailtrap lets you test safely in the Email Sandbox and then switch to Production
 
 Example `.env` variables (or export in shell):
 
-```
+```bash
 MAILTRAP_API_KEY=your_api_token # https://mailtrap.io/api-tokens
 MAILTRAP_USE_SANDBOX=true       # true/false toggle
 MAILTRAP_INBOX_ID=123456        # Only needed for sandbox
