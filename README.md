@@ -7,7 +7,7 @@
 
 ## Prerequisites
 
-To get the most of this official Mailtrap.io Node.js SDK:
+To get the most out of this official Mailtrap.io Node.js SDK:
 
 - [Create a Mailtrap account](https://mailtrap.io/signup)
 
