@@ -13,11 +13,13 @@ describe("lib/api/General: ", () => {
         expect(generalAPI).toHaveProperty("accountAccesses");
         expect(generalAPI).toHaveProperty("accounts");
         expect(generalAPI).toHaveProperty("permissions");
+        expect(generalAPI).toHaveProperty("billing");
       });
 
       it("lazily instantiates account-specific APIs via getters when accountId is provided.", () => {
         expect(generalAPI.accountAccesses).toBeDefined();
         expect(generalAPI.permissions).toBeDefined();
+        expect(generalAPI.billing).toBeDefined();
         expect(generalAPI.accounts).toBeDefined();
       });
     });
@@ -56,6 +58,15 @@ describe("lib/api/General: ", () => {
           "Account ID is required for this operation. Please provide accountId when creating GeneralAPI instance."
         );
       });
+
+      it("throws error when accessing billing without accountId.", () => {
+        expect(() => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          generalAPI.billing;
+        }).toThrow(
+          "Account ID is required for this operation. Please provide accountId when creating GeneralAPI instance."
+        );
+      });
     });
 
     describe("account discovery functionality: ", () => {
@@ -78,10 +89,14 @@ describe("lib/api/General: ", () => {
       it("maintains existing API surface for account-specific operations.", () => {
         expect(generalAPI.accountAccesses).toBeDefined();
         expect(generalAPI.permissions).toBeDefined();
+        expect(generalAPI.billing).toBeDefined();
         expect(typeof generalAPI.accountAccesses.listAccountAccesses).toBe(
           "function"
         );
         expect(typeof generalAPI.permissions.getResources).toBe("function");
+        expect(typeof generalAPI.billing.getCurrentBillingCycleUsage).toBe(
+          "function"
+        );
       });
     });
 
@@ -109,10 +124,14 @@ describe("lib/api/General: ", () => {
         expect(generalAPI.accounts).toBeDefined();
         expect(generalAPI.accountAccesses).toBeDefined();
         expect(generalAPI.permissions).toBeDefined();
+        expect(generalAPI.billing).toBeDefined();
         expect(typeof generalAPI.accountAccesses.listAccountAccesses).toBe(
           "function"
         );
         expect(typeof generalAPI.permissions.getResources).toBe("function");
+        expect(typeof generalAPI.billing.getCurrentBillingCycleUsage).toBe(
+          "function"
+        );
       });
     });
   });

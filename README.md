@@ -280,7 +280,7 @@ General API:
 
 - Suppressions (find & delete) – [`sending/suppressions.ts`](examples/sending/suppressions.ts)
 
-- Billing info – (no example yet) ← add in future
+- Billing info – [`general/billing.ts`](examples/general/billing.ts)
 
 - Accounts info – [`general/accounts.ts`](examples/general/accounts.ts)
 
