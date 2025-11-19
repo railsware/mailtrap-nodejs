@@ -185,6 +185,70 @@ describe("lib/api/resources/Messages: ", () => {
       expect(result).toEqual(expectedResponseData);
     });
 
+    it("successfully gets messages with last_id parameter.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes/${inboxId}/messages`;
+      const lastId = 100;
+      const expectedResponseData = [responseData];
+
+      mock
+        .onGet(endpoint, { params: { last_id: lastId } })
+        .reply(200, expectedResponseData);
+
+      const result = await messagesAPI.get(inboxId, { last_id: lastId });
+
+      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(mock.history.get[0].params).toEqual({ last_id: lastId });
+      expect(result).toEqual(expectedResponseData);
+    });
+
+    it("successfully gets messages with page parameter.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes/${inboxId}/messages`;
+      const page = 2;
+      const expectedResponseData = [responseData];
+
+      mock
+        .onGet(endpoint, { params: { page } })
+        .reply(200, expectedResponseData);
+
+      const result = await messagesAPI.get(inboxId, { page });
+
+      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(mock.history.get[0].params).toEqual({ page });
+      expect(result).toEqual(expectedResponseData);
+    });
+
+    it("successfully gets messages with search parameter.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes/${inboxId}/messages`;
+      const search = "test query";
+      const expectedResponseData = [responseData];
+
+      mock
+        .onGet(endpoint, { params: { search } })
+        .reply(200, expectedResponseData);
+
+      const result = await messagesAPI.get(inboxId, { search });
+
+      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(mock.history.get[0].params).toEqual({ search });
+      expect(result).toEqual(expectedResponseData);
+    });
+
+    it("successfully gets messages with all query parameters.", async () => {
+      const endpoint = `${GENERAL_ENDPOINT}/api/accounts/${accountId}/inboxes/${inboxId}/messages`;
+      const options = { last_id: 100, page: 2, search: "test query" };
+      const expectedResponseData = [responseData];
+
+      mock
+        .onGet(endpoint, { params: options })
+        .reply(200, expectedResponseData);
+
+      const result = await messagesAPI.get(inboxId, options);
+
+      expect(mock.history.get[0].url).toEqual(endpoint);
+      expect(mock.history.get[0].params).toEqual(options);
+      expect(result).toEqual(expectedResponseData);
+    });
+
     it("fails with error.", async () => {
       const expectedErrorMessage = "Request failed with status code 404";
 

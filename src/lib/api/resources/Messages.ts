@@ -5,6 +5,7 @@ import CONFIG from "../../../config";
 import {
   EmailHeaders,
   Message,
+  MessageListOptions,
   MessageUpdateParams,
   Report,
   SpamReport,
@@ -58,10 +59,16 @@ export default class MessagesApi {
   /**
    * Gets all messages in inboxes.
    */
-  public async get(inboxId: number) {
+  public async get(inboxId: number, options?: MessageListOptions) {
     const url = `${this.messagesURL}/${inboxId}/messages`;
 
-    return this.client.get<Message[], Message[]>(url);
+    const params = {
+      ...(options?.last_id !== undefined && { last_id: options.last_id }),
+      ...(options?.page !== undefined && { page: options.page }),
+      ...(options?.search && { search: options.search }),
+    };
+
+    return this.client.get<Message[], Message[]>(url, { params });
   }
 
   /**

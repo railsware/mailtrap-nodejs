@@ -1,3 +1,8 @@
+export type SmtpInformationData = {
+  mail_from_addr: string;
+  client_ip: string;
+};
+
 export type Message = {
   id: number;
   inbox_id: number;
@@ -22,6 +27,7 @@ export type Message = {
   blacklists_report_info: boolean;
   smtp_information: {
     ok: boolean;
+    data?: SmtpInformationData;
   };
 };
 
@@ -68,4 +74,10 @@ export type SpamReport = {
 
 export type MessageUpdateParams = {
   isRead: boolean;
+};
+
+export type MessageListOptions = {
+  last_id?: number;
+  page?: number;
+  search?: string;
 };
